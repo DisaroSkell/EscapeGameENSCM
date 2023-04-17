@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMouvements : MonoBehaviour
-{
+public class CameraMouvements : MonoBehaviour {
     public CameraState state
     {
         set

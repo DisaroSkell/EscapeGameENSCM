@@ -1,5 +1,4 @@
-public enum CameraState
-{
+public enum CameraState {
     Unfocused,
     FocusingCabinet,
     FocusingDesk1,
