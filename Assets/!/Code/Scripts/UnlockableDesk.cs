@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UnlockableDesk : MonoBehaviour, UnlockableIf {
+public class UnlockableDesk : MonoBehaviour, UnlockableIf, IPointerClickHandler {
     public PadlockInteraction padlock;
 
     public bool IsLocked() {
@@ -21,7 +22,7 @@ public class UnlockableDesk : MonoBehaviour, UnlockableIf {
         }
     }
 
-    void OnMouseUpAsButton() {
+    public void OnPointerClick(PointerEventData eventData) {
         this.TryOpen();
     }
 }
