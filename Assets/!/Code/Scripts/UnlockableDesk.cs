@@ -12,4 +12,16 @@ public class UnlockableDesk : MonoBehaviour, UnlockableIf {
     public void Unlock() {
         padlock.gameObject.SetActive(false);
     }
+
+    public void TryOpen() {
+        if (this.IsLocked()) {
+            Debug.Log("Desk is locked !");
+        } else {
+            Debug.Log("Opening desk...");
+        }
+    }
+
+    void OnMouseUpAsButton() {
+        this.TryOpen();
+    }
 }

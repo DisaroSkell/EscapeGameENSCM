@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2850487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: 0500000002000000010000000300000004000000
   currentTry: 
+  pickerAlternatives: 0123456789
 --- !u!1 &429004321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,6 +1055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1129239414}
   - component: {fileID: 1129239415}
+  - component: {fileID: 1129239416}
   m_Layer: 0
   m_Name: drawersDeskWithPadlock
   m_TagString: Untagged
@@ -1091,6 +1093,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   padlock: {fileID: 342333481}
+--- !u!65 &1129239416
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129239413}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.86904025, y: 1.2795634, z: 2.111692}
+  m_Center: {x: -1.7079653, y: 0.5328567, z: -2.6781218}
 --- !u!1 &1326162233
 GameObject:
   m_ObjectHideFlags: 0
