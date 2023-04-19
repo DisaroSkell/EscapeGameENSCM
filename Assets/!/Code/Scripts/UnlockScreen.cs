@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* UnlockScreen class to manage UI elements for padlock interactions.
+Allows the user to input a code.
+It unlocks the padlock and closes the UI if it is correct. */
 public class UnlockScreen : MonoBehaviour {
     private PadlockInteraction padlock;
 
@@ -10,6 +13,10 @@ public class UnlockScreen : MonoBehaviour {
 
     private DigitPicker[] pickers;
 
+    /// <summary>
+    /// Function to call as a constructor just after instantiation.
+    /// </summary>
+    /// <param name="PadlockInteraction">Padlock linked to the Unlock Screen.</param>
     public void Initialize(PadlockInteraction padlock) {
         this.padlock = padlock;
 
@@ -24,6 +31,11 @@ public class UnlockScreen : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// This function rotates up a digit of the padlock.
+    /// It then updates the displayed digit based on the change that occured on the padlock.
+    /// </summary>
+    /// <param name="DigitPicker">Picker that needs a rotation.</param>
     public void RotateUpPicker(DigitPicker picker) {
         int index = Array.IndexOf(pickers, picker);
 
@@ -33,6 +45,11 @@ public class UnlockScreen : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// This function rotates down a digit of the padlock.
+    /// It then updates the displayed digit based on the change that occured on the padlock.
+    /// </summary>
+    /// <param name="DigitPicker">Picker that needs a rotation.</param>
     public void RotateDownPicker(DigitPicker picker) {
         int index = Array.IndexOf(pickers, picker);
 
@@ -42,6 +59,10 @@ public class UnlockScreen : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Function that checks if the current try matches the code of the padlock.
+    /// It either deactivates the padlock or displays an incorrect code message.
+    /// </summary>
     public void ConfirmTry() {
         if (padlock.code == new string (padlock.currentTry)) {
             Debug.Log("Correct code");

@@ -1,3 +1,4 @@
+/* Interface for unlockable objects. */
 public interface UnlockableIf {
     public bool IsLocked();
 
