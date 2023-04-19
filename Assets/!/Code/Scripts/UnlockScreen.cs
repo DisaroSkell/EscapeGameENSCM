@@ -20,7 +20,7 @@ public class UnlockScreen : MonoBehaviour {
             Vector3 coords = new Vector3((float)(this.transform.position.x + (distXFromCenter+i)*100), this.transform.position.y);
 
             this.pickers[i] = (DigitPicker)Instantiate(digitPickerUI, coords, Quaternion.identity, this.transform);
-            this.pickers[i].Initialize(padlock.currentTry[i]);
+            this.pickers[i].Initialize(padlock.currentTry[i], this);
         }
     }
 
@@ -29,6 +29,7 @@ public class UnlockScreen : MonoBehaviour {
 
         if (index >= 0 && index < padlock.currentTry.Length) {
             padlock.RotateUpAt(index);
+            picker.UpdateDigit(padlock.currentTry[index]);
         }
     }
 
@@ -37,6 +38,7 @@ public class UnlockScreen : MonoBehaviour {
 
         if (index >= 0 && index < padlock.currentTry.Length) {
             padlock.RotateDownAt(index);
+            picker.UpdateDigit(padlock.currentTry[index]);
         }
     }
 

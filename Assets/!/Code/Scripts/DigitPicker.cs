@@ -7,9 +7,22 @@ public class DigitPicker : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI textMeshPro;
 
-    public void Initialize(char digit) {
-        textMeshPro.text = digit.ToString();
+    private UnlockScreen parent;
+
+    public void Initialize(char digit, UnlockScreen parent) {
+        this.textMeshPro.text = digit.ToString();
+        this.parent = parent;
     }
 
-    // TODO call parent function to rotate (+/-)
+    public void UpdateDigit(char digit) {
+        this.textMeshPro.text = digit.ToString();
+    }
+
+    public void RotateUp() {
+        this.parent.RotateUpPicker(this);
+    }
+
+    public void RotateDown() {
+        this.parent.RotateDownPicker(this);
+    }
 }
