@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1575467122312364584
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -166
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632385489740827994, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675769822416574190, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: a86e19098cd6fe74d98298781d64d758, type: 3}
+    - target: {fileID: 6046220957106614485, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
+      propertyPath: m_Name
+      value: Picto_nuis_gravement_sante
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
