@@ -5,6 +5,7 @@ using UnityEngine;
 /* The CameraMovements class sets the focus of the camera using an animator. */
 public class CameraMouvements : MonoBehaviour {
     public GameObject returnButton;
+    public GameObject rooms;
 
     public CameraState state {
         // Changing the state changes the animator to make camera focus the right object
@@ -28,6 +29,6 @@ public class CameraMouvements : MonoBehaviour {
 
         this.returnButton.SetActive(false);
 
-        // TODO : Colliders
+        FocusChanger.EnableCollidersFromChildren(rooms.transform);
     }
 }
