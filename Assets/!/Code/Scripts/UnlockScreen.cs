@@ -72,4 +72,8 @@ public class UnlockScreen : MonoBehaviour {
             Debug.Log("Incorrect code");
         }
     }
+
+    public void CloseWindow() {
+        Destroy(this.gameObject);
+    }
 }
