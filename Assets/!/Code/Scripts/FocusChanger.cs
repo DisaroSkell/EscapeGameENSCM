@@ -9,7 +9,12 @@ public class FocusChanger : MonoBehaviour, IPointerClickHandler {
 
     public CameraMouvements camMove;
 
+    public GameObject returnButton;
+
     public void OnPointerClick(PointerEventData eventData) {
         camMove.state = aim;
+        returnButton.SetActive(true);
+
+        // TODO : Colliders
     }
 }

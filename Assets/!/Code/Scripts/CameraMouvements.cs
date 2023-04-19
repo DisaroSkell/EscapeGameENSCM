@@ -4,6 +4,8 @@ using UnityEngine;
 
 /* The CameraMovements class sets the focus of the camera using an animator. */
 public class CameraMouvements : MonoBehaviour {
+    public GameObject returnButton;
+
     public CameraState state {
         // Changing the state changes the animator to make camera focus the right object
         set {
@@ -15,5 +17,17 @@ public class CameraMouvements : MonoBehaviour {
 
     void Start() {
         state = CameraState.Unfocused;
+    }
+
+    /// <summary>
+    /// This function sets the state of the camera to Unfocused.
+    /// Used by the Return button of Unity.
+    /// </summary>
+    public void ResetFocus() {
+        this.state = CameraState.Unfocused;
+
+        this.returnButton.SetActive(false);
+
+        // TODO : Colliders
     }
 }
