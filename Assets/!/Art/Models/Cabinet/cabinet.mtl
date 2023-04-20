@@ -22,7 +22,7 @@ Kd 1.0 1.0 1.0
 Ks 0.441 0.441 0.441
 Ns 10.0
 Ni 1.5
-map_Kd ../Textures/darkWood.jpg
+map_Kd Textures/WoodTextures/darkWood.jpg
 
 newmtl Cylinder31_7
 illum 2
