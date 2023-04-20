@@ -6,5 +6,6 @@ public enum CameraState {
     TableGroup2, // Focus = 3
     FocusingDesk1, // Focus = 4
     FocusingDesk2, // Focus = 5
-    FocusingPeriodicTable // Focus = 6
+    FocusingPeriodicTable, // Focus = 6
+    UnfocusedRoom2 // Focus = 7
 }

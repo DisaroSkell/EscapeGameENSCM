@@ -31,4 +31,10 @@ public class CameraMouvements : MonoBehaviour {
 
         FocusChanger.EnableCollidersFromChildren(rooms.transform);
     }
+
+    public void Room2() {
+        this.state = CameraState.UnfocusedRoom2;
+
+        this.returnButton.SetActive(true);
+    }
 }
