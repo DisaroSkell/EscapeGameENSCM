@@ -9,6 +9,7 @@ public class Camera_Notes : MonoBehaviour
     public GameObject camera_Main;
     public GameObject canvas_notes;
     public GameObject Image_notes;
+    public GameObject clear_window;
 
     public void ToggleVisibilityNotes(){
         if (canvas_notes.activeSelf){
@@ -24,4 +25,15 @@ public class Camera_Notes : MonoBehaviour
             camera_Main.SetActive(false);
         }
     }
+    
+    public void SelectClear()
+    {
+        clear_window.SetActive(true);
+    }
+
+    public void CloseClearWindow()
+    {
+        clear_window.SetActive(false);
+    }
+
 }

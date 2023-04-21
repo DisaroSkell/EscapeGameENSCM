@@ -36,24 +36,10 @@ namespace FreeDraw
 
 
         // Call these these to change the pen settings
-        public void SetMarkerRed()
+        public void SetMarkerBlack()
         {
             Color c = Color.black;
             c.a = Transparency;
-            SetMarkerColour(c);
-            Drawable.drawable.SetPenBrush();
-        }
-        public void SetMarkerGreen()
-        {
-            Color c = Color.green;
-            c.a = Transparency;
-            SetMarkerColour(c);
-            Drawable.drawable.SetPenBrush();
-        }
-        public void SetMarkerBlue()
-        {
-            Color c = Color.blue;
-            c.a = Transparency;                                                                                                                        
             SetMarkerColour(c);
             Drawable.drawable.SetPenBrush();
         }
@@ -68,6 +54,11 @@ namespace FreeDraw
         public void PartialSetEraser()
         {
             SetMarkerColour(new Color(255f, 255f, 255f, 0.5f));
+        }
+
+        public void ClearAll()
+        {
+            Drawable.drawable.ResetCanvas();
         }
     }
 }
