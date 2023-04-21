@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 /* Desk with a padlock.
 Allows the user to try opening it by clicking on it. */
 public class UnlockableDesk : MonoBehaviour, UnlockableIf, IPointerClickHandler {
     public PadlockInteraction padlock;
+
+     [SerializeField] UnityEvent m_MyEvent;
 
     public bool IsLocked() {
         return padlock.gameObject.activeSelf;
@@ -21,6 +24,7 @@ public class UnlockableDesk : MonoBehaviour, UnlockableIf, IPointerClickHandler 
             Debug.Log("Desk is locked !");
         } else {
             Debug.Log("Opening desk...");
+            m_MyEvent.Invoke();
         }
     }
 
