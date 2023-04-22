@@ -13,12 +13,23 @@ MonoBehaviour:
   m_Name: PosterInventory
   m_EditorClassIdentifier: 
   Container:
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
-  - item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
+  - parent: {fileID: 0}
+    item: {fileID: 0}
