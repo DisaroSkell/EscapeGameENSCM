@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Picto_altere_item
   m_EditorClassIdentifier: 
   prefab: {fileID: 7751487916705101643, guid: ca5aaf3608c45df46b2edca13b84b587, type: 3}
-  type: 1
-  description: 
+  type: 2
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}

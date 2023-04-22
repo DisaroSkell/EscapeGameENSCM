@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Picto_pollue_item
   m_EditorClassIdentifier: 
   prefab: {fileID: 5328695006630299211, guid: b293c898ea7e8204598ba0d4412ad4cf, type: 3}
-  type: 1
-  description: 
+  type: 2
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}

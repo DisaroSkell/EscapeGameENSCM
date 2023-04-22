@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Picto_flambe_item
   m_EditorClassIdentifier: 
   prefab: {fileID: 6046220957106614485, guid: 26c7606663c8ea74385bd6797b56cb64, type: 3}
-  type: 1
-  description: 
+  type: 2
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}

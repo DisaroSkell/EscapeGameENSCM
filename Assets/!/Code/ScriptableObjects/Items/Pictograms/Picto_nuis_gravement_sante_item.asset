@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Picto_nuis_gravement_sante_item
   m_EditorClassIdentifier: 
   prefab: {fileID: 5059040935244002045, guid: 91ffbd8e019c5854da0df731eeee9e35, type: 3}
-  type: 1
-  description: 
+  type: 2
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Picto_sous_pression_item
   m_EditorClassIdentifier: 
   prefab: {fileID: 7054882454691114526, guid: daa07ba9480eeaa459b15b98fde7f0e7, type: 3}
-  type: 1
-  description: 
+  type: 2
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}
