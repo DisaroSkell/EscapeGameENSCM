@@ -107,6 +107,7 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         // GUARD: item has the same type as the inventory
         AbstractDragAndDropInventoryDisplay? inv = mouse.inventoryDisplayTo;
         if(inv is null) return;
+        if(inv.inventory.GetItem(mouse.indexTo ) is not null) return;
         ItemType? invType = inv.inventory.type;
         if(invType != ItemType.All && mouse.itemFrom?.type != invType) return;
         inv.inventory.SetItem(mouse.indexTo, mouse.itemFrom);
