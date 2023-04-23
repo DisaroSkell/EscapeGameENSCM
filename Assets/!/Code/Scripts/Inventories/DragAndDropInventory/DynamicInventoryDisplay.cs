@@ -103,12 +103,10 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
 
     
     private void EndDragOnPlacementInventory() {
-        Debug.Log("je dépose l'item dans l'affiche");
         PlayerMouse mouse = this.player.playerMouse;
         // GUARD: item has the same type as the inventory
         AbstractDragAndDropInventoryDisplay? inv = mouse.inventoryDisplayTo;
         if(inv is null) return;
-        Debug.Log("inv is not null");
         ItemType? invType = inv.inventory.type;
         if(invType != ItemType.All && mouse.itemFrom?.type != invType) return;
         inv.inventory.SetItem(mouse.indexTo, mouse.itemFrom);

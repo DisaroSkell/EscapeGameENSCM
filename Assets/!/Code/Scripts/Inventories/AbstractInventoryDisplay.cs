@@ -16,7 +16,6 @@ public abstract class AbstractInventoryDisplay : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        Debug.Log("start");
         CreateDisplay();
     }
     public abstract void Display();

@@ -16,7 +16,6 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
 
     public override void CreateDisplay()
     {
-        Debug.Log("test");
         for (int i = 0; i < this.inventory.Length; i++)
         {
             Transform child = panel.transform.GetChild(i);

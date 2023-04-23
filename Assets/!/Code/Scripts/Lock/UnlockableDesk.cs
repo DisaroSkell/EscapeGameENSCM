@@ -23,7 +23,6 @@ public class UnlockableDesk : MonoBehaviour, UnlockableIf, IPointerClickHandler 
         if (this.IsLocked()) {
             Debug.Log("Desk is locked !");
         } else {
-            Debug.Log("Opening desk...");
             m_MyEvent.Invoke();
         }
     }
