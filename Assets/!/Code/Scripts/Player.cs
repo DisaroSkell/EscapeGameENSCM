@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public MouseItem mouseItem = new MouseItem();
     public PlayerMouse playerMouse = new PlayerMouse();
     
     void Start() {

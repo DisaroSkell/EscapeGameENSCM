@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dcc90f8a1a3e9b4c8eeca93a8fb2194, type: 3}
-  m_Name: DrawerDeskInventory2
+  m_Name: DrawerDeskInventory
   m_EditorClassIdentifier: 
   type: 0
   Container:
   - {fileID: 11400000, guid: 20316262935a65c44ab115ef8d927eea, type: 2}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 184205ad7431e2a449b10103d4630e5f, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: d21933c29bb361147abb3f2420029f29, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
