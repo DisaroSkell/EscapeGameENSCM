@@ -15,4 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 6061711076875915812, guid: de1807d8c6bd2ef48b3aa25949d72dff, type: 3}
   type: 1
   inventory: {fileID: 11400000, guid: 37966203f66402a4ca912ef7bedd9293, type: 2}
-  oneImageSpriteOfThePDF: {fileID: 21300000, guid: 8b7514298469c3d45853f433420c5fef, type: 3}
+  folderRessourcesName: cahier_de_laboratoire

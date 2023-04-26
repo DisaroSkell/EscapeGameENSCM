@@ -49,7 +49,7 @@ public class GenerateDocument : MonoBehaviour
     }
 
     // fonction pour afficher les images dans le panel
-    void DisplayImagesInPanel(List<Texture2D> images)
+    void DisplayImagesInPanel(List<Sprite> images)
     {
         RectTransform contentRectTransform = imagesContainer.GetComponent<RectTransform>();
         float totalImageHeight = 0f;
@@ -58,21 +58,21 @@ public class GenerateDocument : MonoBehaviour
         if (images.Count > 0)
         {
             // calculate height of first image
-            float firstImageAspectRatio = (float)images[0].width / (float)images[0].height;
+            float firstImageAspectRatio = (float)images[0].texture.width / (float)images[0].texture.height;
             firstImageHeight = (contentRectTransform.rect.width - sideGap * 2) / firstImageAspectRatio;
         }
 
         // Vector3 imagePosition = new Vector3(0, 0, 0);
         int i = 0;
-        foreach (Texture2D image in images)
+        foreach (Sprite image in images)
         {
-            float aspectRatio = (float)images[i].width / (float)images[i].height;
+            float aspectRatio = (float)images[i].texture.width / (float)images[i].texture.height;
             float imageWidth = contentRectTransform.rect.width - sideGap * 2;
             float imageHeight = imageWidth / aspectRatio;
             
             GameObject imageObject = Instantiate(imagePrefab, imagesContainer.transform);
             Image imageComponent = imageObject.GetComponent<Image>();
-            imageComponent.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2(0.5f, 0.5f));
+            imageComponent.sprite = Sprite.Create(image.texture, new Rect(0, 0, image.texture.width, image.texture.height), new Vector2(0.5f, 0.5f));
             imageComponent.rectTransform.sizeDelta = new Vector2(imageWidth, imageHeight);
             RectTransform imageRT = imageObject.GetComponent<RectTransform>();
             imageRT.pivot = new Vector2(imageRT.pivot.x, 1f);
@@ -97,13 +97,13 @@ public class GenerateDocument : MonoBehaviour
         }
     }
 
-    void AdjustContentSize(List<Texture2D> images) {
+    void AdjustContentSize(List<Sprite> images) {
         RectTransform contentRectTransform = imagesContainer.GetComponent<RectTransform>();
         float totalImageHeight = 0f;
 
-        foreach (Texture2D image in images)
+        foreach (Sprite image in images)
         {
-            float aspectRatio = (float)image.width / (float)image.height;
+            float aspectRatio = (float)image.texture.width / (float)image.texture.height;
             float imageHeight = (contentRectTransform.rect.width - 2*(float) sideGap) / aspectRatio;
             totalImageHeight += imageHeight + imageGap;
         }
@@ -122,8 +122,8 @@ public class GenerateDocument : MonoBehaviour
             Destroy(imagesContainer.transform.GetChild(i).gameObject);
         }
         
-        Texture2D[] folderTextures = Resources.LoadAll<Texture2D>(folderRessourcesName);
-        List<Texture2D> images = folderTextures.ToList();
+        Sprite[] folderTextures = Resources.LoadAll<Sprite>(folderRessourcesName);
+        List<Sprite> images = folderTextures.ToList();
 
         AdjustContentSize(images);
         DisplayImagesInPanel(images);
