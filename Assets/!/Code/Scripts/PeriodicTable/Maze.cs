@@ -1,5 +1,3 @@
-using System;
-
 public class Maze {
     private int size {
         get {
@@ -10,9 +8,10 @@ public class Maze {
     private int nbGates;
 
     public MazeCell[][] maze;
-    public WallBreaker wallBreaker;
+    public PathBuilder pathBuilder;
 
     public Maze(int hSize, int vSize) {
+        nbGates = 0;
         maze = new MazeCell[vSize][];
 
         for (int i = 0; i < vSize; i++) {
@@ -25,21 +24,49 @@ public class Maze {
     }
 
     public void Explore() {
-        this.wallBreaker.CreatePaths(this);
-        this.OpenTwoEntry();
+        this.pathBuilder.CreatePaths(this);
+        this.OpenTwoGate();
     }
 
-    public void OpenTwoEntry() {
-        this.OpenWall(0, 0, 'W');
-        this.OpenWall(this.size - 1, this.size - 1, 'E');
+    public void OpenTwoGate() {
+        this.OpenWall(0, 0, Direction.West);
+        this.OpenWall(this.size - 1, this.size - 1, Direction.East);
+        
+        this.nbGates += 2;
+    }
+
+    public void OpenTwoGateAt((int, int) gate1, (int, int) gate2) {
+        if (this.nbGates != 0) {
+            return;
+        }
+
+        Direction direction = Direction.None;
+        
+        if (gate1.Item1 == 0) direction = Direction.North;
+        if (gate1.Item1 == size-1) direction = Direction.South;
+        if (gate1.Item2 == 0) direction = Direction.West;
+        if (gate1.Item2 == size-1) direction = Direction.East;
+
+        OpenWall(gate1.Item1, gate1.Item2, direction);
+
+        direction = Direction.None;
+        
+        if (gate2.Item1 == 0) direction = Direction.North;
+        if (gate2.Item1 == size-1) direction = Direction.South;
+        if (gate2.Item2 == 0) direction = Direction.West;
+        if (gate2.Item2 == size-1) direction = Direction.East;
+
+        OpenWall(gate2.Item1, gate2.Item2, direction);
+        
+        this.nbGates += 2;
     }
 
     public int GetNbGates() {
         return this.nbGates;
     }
 
-    public void OpenWall(int l, int c, char direction) {
-        if (((l == 0 && direction == 'N') || (l == size-1 && direction == 'S') || (c == 0 && direction == 'W') || (c == size-1 && direction == 'E'))) {
+    public void OpenWall(int l, int c, Direction direction) {
+        if (((l == 0 && direction == Direction.North) || (l == size-1 && direction == Direction.South) || (c == 0 && direction == Direction.West) || (c == size-1 && direction == Direction.East))) {
             if (this.GetNbGates() >= 2) {
                 return;
             }
@@ -47,31 +74,35 @@ public class Maze {
         }
         this.maze[l][c].OpenWall(direction);
         switch (direction) {
-            case 'N' :
+            case Direction.North :
                 if (l > 0){
-                    this.maze[l-1][c].OpenWall('S');
+                    this.maze[l-1][c].OpenWall(Direction.South);
                 }
                 break;
-            case 'S' :
+            case Direction.South :
                 if (l < this.size - 1){
-                    this.maze[l+1][c].OpenWall('N');
+                    this.maze[l+1][c].OpenWall(Direction.North);
                 }
                 break;
-            case 'E' :
+            case Direction.East :
                 if (c < this.size - 1){
-                    this.maze[l][c+1].OpenWall('W');
+                    this.maze[l][c+1].OpenWall(Direction.West);
                 }
                 break;
-            case 'W' :
+            case Direction.West :
                 if (c > 0){
-                    this.maze[l][c-1].OpenWall('E');
+                    this.maze[l][c-1].OpenWall(Direction.East);
                 }
                 break;
         }
     }
 
-    public bool IsOpened(int l, int c, char direction) {
+    public bool IsOpened(int l, int c, Direction direction) {
         return this.maze[l][c].IsOpened(direction);
+    }
+
+    public MazeCell GetCellAt(int l, int c) {
+        return this.maze[l][c];
     }
 
     public MazeCell GetCopyOfCell(int l, int c) {
@@ -98,20 +129,20 @@ public class Maze {
         return n;
     }
 
-    public int[] FindNeighbourCellWithDirection(int l, int c, char direction) {
+    public int[] FindNeighbourCellWithDirection(int l, int c, Direction direction) {
         int[] tmp = {l, c};
 
         switch (direction) {
-            case 'N' :
+            case Direction.North :
                 tmp[0] -= 1;
                 break;
-            case 'S' :
+            case Direction.South :
                 tmp[0] += 1;
                 break;
-            case 'E' :
+            case Direction.East :
                 tmp[1] += 1;
                 break;
-            case 'W' :
+            case Direction.West :
                 tmp[1] -= 1;
                 break;
         }
@@ -151,11 +182,19 @@ public class Maze {
         return this.size;
     }
 
-    public int GetBreakerLine() {
-        return this.wallBreaker.GetLine();
+    public int GetHSize() {
+        return this.maze[0].Length;
     }
 
-    public int GetBreakerColumn() {
-        return this.wallBreaker.GetColumn();
+    public int GetVSize() {
+        return this.maze.Length;
+    }
+
+    public int GetBuilderLine() {
+        return this.pathBuilder.GetLine();
+    }
+
+    public int GetBuilderColumn() {
+        return this.pathBuilder.GetColumn();
     }
 }

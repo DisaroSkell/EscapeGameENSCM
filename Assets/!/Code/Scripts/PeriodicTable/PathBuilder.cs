@@ -1,10 +1,10 @@
 using System;
 
-public class WallBreaker {
+public class PathBuilder {
     private int line;
     private int column;
 
-    public WallBreaker(int l, int c){
+    public PathBuilder(int l, int c){
         this.line = l;
         this.column = c;
     }
@@ -27,7 +27,7 @@ public class WallBreaker {
 
     public void CreatePaths(Maze maze) {
         while(!maze.IsMazeVisited()){
-            char direction = ChooseNeighbourDirection(maze);
+            Direction direction = ChooseNeighbourDirection(maze);
             int[] ncPos = maze.FindNeighbourCellWithDirection(this.GetColumn(), this.GetLine(), direction);
             
             if(!maze.IsCellVisited(ncPos[0], ncPos[1])){
@@ -36,23 +36,27 @@ public class WallBreaker {
             }
 
             switch (direction) {
-                case 'N' :
+                case Direction.North :
                     this.SetColumn(this.GetColumn() - 1);
                     break;
-                case 'S' :
+                case Direction.South :
                     this.SetColumn(this.GetColumn() + 1);
                     break;
-                case 'E' :
+                case Direction.East :
                     this.SetLine(this.GetLine() + 1);
                     break;
-                case 'W' :
+                case Direction.West :
                     this.SetLine(this.GetLine() - 1);
                     break;
             }
         }
     }
 
-    private char ChooseNeighbourDirection(Maze maze){
+    public void CreatePath(Maze maze, MazePath path) {
+        // TODO
+    }
+
+    private Direction ChooseNeighbourDirection(Maze maze){
         Random r = new Random();
         bool[] possibleDirection = maze.Neighbour(this.GetColumn(), this.GetLine());
         bool possible = false;
@@ -63,12 +67,12 @@ public class WallBreaker {
         }
 
         switch(n){
-            case 0 : return 'N';
-            case 1 : return 'S';
-            case 2 : return 'E';
-            case 3 : return 'W';
+            case 0 : return Direction.North;
+            case 1 : return Direction.South;
+            case 2 : return Direction.East;
+            case 3 : return Direction.West;
         }
 
-        return ' ';
+        return Direction.None;
     }
 }

@@ -4,7 +4,7 @@ public class MazeCell {
     public bool west;
     public bool south;
 
-    // mark if the cell has been visited by the wallBreaker
+    // mark if the cell has been visited by the pathBuilder
     public bool visited;
 
     public MazeCell() {
@@ -19,32 +19,32 @@ public class MazeCell {
         return(this.north && this.south && this.east && this.west);
     }
 
-    public void OpenWall(char direction) {
+    public void OpenWall(Direction direction) {
         switch(direction){
-            case 'N' :
+            case Direction.North :
                 this.north = false;
                 break;
-            case 'S' :
+            case Direction.South :
                 this.south = false;
                 break;
-            case 'E' :
+            case Direction.East :
                 this.east = false;
                 break;
-            case 'W' :
+            case Direction.West :
                 this.west = false;
                 break;
         }
     }
 
-    public bool IsOpened(char direction) {
+    public bool IsOpened(Direction direction) {
         switch(direction){
-            case 'N':
+            case Direction.North :
                 return !this.north;
-            case 'S':
+            case Direction.South :
                 return !this.south;
-            case 'E':
+            case Direction.East :
                 return !this.east;
-            case 'W':
+            case Direction.West :
                 return !this.west;
             default :
                 return false;
