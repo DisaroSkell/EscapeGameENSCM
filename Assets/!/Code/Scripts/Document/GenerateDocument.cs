@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
+using System.Linq;
 
 public class GenerateDocument : MonoBehaviour
 {
     public GameObject imagePrefab;  // le prefab de l'objet Image à instancier
     public Transform scrollerPanel;  // le transform parent du panel qui contiendra les images
-    public Sprite oneImageSpriteOfThePDF; // one image sprite of the pdf
+
+    public string folderRessourcesName; // name of the folder of images in Assets/Ressources
 
     public GameObject imagesContainer; // object that contain all images
 
@@ -120,9 +121,10 @@ public class GenerateDocument : MonoBehaviour
             // Delete each child
             Destroy(imagesContainer.transform.GetChild(i).gameObject);
         }
-        string assetPath = AssetDatabase.GetAssetPath(oneImageSpriteOfThePDF);
-        string path = System.IO.Path.GetDirectoryName(assetPath);
-        List<Texture2D> images = LoadImagesFromFolder(path);
+        
+        Texture2D[] folderTextures = Resources.LoadAll<Texture2D>(folderRessourcesName);
+        List<Texture2D> images = folderTextures.ToList();
+
         AdjustContentSize(images);
         DisplayImagesInPanel(images);
     }

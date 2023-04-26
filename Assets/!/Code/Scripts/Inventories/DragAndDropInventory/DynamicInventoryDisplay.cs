@@ -87,7 +87,7 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
 
         // set images to Document Generator and display images in the event
         UnityAction handleDocumentClickedUnityAction = () => { 
-            documentGenerator.oneImageSpriteOfThePDF = itemObject.oneImageSpriteOfThePDF;
+            documentGenerator.folderRessourcesName = itemObject.folderRessourcesName;
             documentGenerator.Display(); 
         };
         newItem.OnPointerClickEvent.AddListener(handleDocumentClickedUnityAction);
