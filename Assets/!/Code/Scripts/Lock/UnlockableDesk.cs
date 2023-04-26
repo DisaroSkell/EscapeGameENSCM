@@ -9,7 +9,7 @@ Allows the user to try opening it by clicking on it. */
 public class UnlockableDesk : MonoBehaviour, UnlockableIf, IPointerClickHandler {
     public PadlockInteraction padlock;
 
-     [SerializeField] UnityEvent m_MyEvent;
+    [SerializeField] UnityEvent m_MyEvent;
 
     public bool IsLocked() {
         return padlock.gameObject.activeSelf;

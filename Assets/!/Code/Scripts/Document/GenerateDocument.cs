@@ -7,8 +7,12 @@ using UnityEditor;
 public class GenerateDocument : MonoBehaviour
 {
     public GameObject imagePrefab;  // le prefab de l'objet Image à instancier
-    public Transform parentPanel;  // le transform parent du panel qui contiendra les images
+    public Transform scrollerPanel;  // le transform parent du panel qui contiendra les images
     public Sprite oneImageSpriteOfThePDF; // one image sprite of the pdf
+
+    public GameObject imagesContainer; // object that contain all images
+
+    public GameObject documentViewer;
     public float imageGap = 10f;   // l'écart voulu entre chaque image en pixels
     public float sideGap = 20f;    // l'écart voulu sur les côtés en pixels
 
@@ -46,13 +50,7 @@ public class GenerateDocument : MonoBehaviour
     // fonction pour afficher les images dans le panel
     void DisplayImagesInPanel(List<Texture2D> images)
     {
-        /*
-        float panelWidth = this.parentPanel.GetComponent<RectTransform>().rect.width;
-        float imageWidth = panelWidth - (2 * sideGap);
-        float imageHeight = imageWidth / images[0].width * images[0].height;
-        */
-
-        RectTransform contentRectTransform = this.GetComponent<RectTransform>();
+        RectTransform contentRectTransform = imagesContainer.GetComponent<RectTransform>();
         float totalImageHeight = 0f;
         float firstImageHeight = 0f;
 
@@ -71,7 +69,7 @@ public class GenerateDocument : MonoBehaviour
             float imageWidth = contentRectTransform.rect.width - sideGap * 2;
             float imageHeight = imageWidth / aspectRatio;
             
-            GameObject imageObject = Instantiate(imagePrefab, this.transform);
+            GameObject imageObject = Instantiate(imagePrefab, imagesContainer.transform);
             Image imageComponent = imageObject.GetComponent<Image>();
             imageComponent.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2(0.5f, 0.5f));
             imageComponent.rectTransform.sizeDelta = new Vector2(imageWidth, imageHeight);
@@ -99,7 +97,7 @@ public class GenerateDocument : MonoBehaviour
     }
 
     void AdjustContentSize(List<Texture2D> images) {
-        RectTransform contentRectTransform = this.GetComponent<RectTransform>();
+        RectTransform contentRectTransform = imagesContainer.GetComponent<RectTransform>();
         float totalImageHeight = 0f;
 
         foreach (Texture2D image in images)
@@ -118,9 +116,9 @@ public class GenerateDocument : MonoBehaviour
     // exemple d'utilisation : chargement des images depuis un dossier et affichage dans le panel
     public void Display()
     {
-        for (int i = 0; i < this.transform.childCount; i++) {
+        for (int i = 0; i < imagesContainer.transform.childCount; i++) {
             // Delete each child
-            Destroy(this.transform.GetChild(i).gameObject);
+            Destroy(imagesContainer.transform.GetChild(i).gameObject);
         }
         string assetPath = AssetDatabase.GetAssetPath(oneImageSpriteOfThePDF);
         string path = System.IO.Path.GetDirectoryName(assetPath);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 #nullable enable
@@ -39,25 +40,59 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
 
         if(this.takeInventory) {
             if(item is not null) {
-                SetObjClickable(obj, item);
+                SetObjPickable(obj, item);
             }
+        }
+        else if (item is not null && item.GetType() == typeof(DocumentObject)) {
+            SetObjViewable(obj, (DocumentObject)item);
         }
         else {
             LinkDragEvents(obj);
         }
     }
 
-    private void SetObjClickable(GameObject obj, ItemObject itemObject) {
+    private void SetObjPickable(GameObject obj, ItemObject itemObject) {
+        // collider to interact with the object
         BoxCollider2D bc = obj.AddComponent<BoxCollider2D>();
+        // attached item to the object
+        Item newItem = obj.AddComponent<Item>();
+        newItem.item = itemObject;
+        newItem.inventory = itemObject.inventory;
+        // add event on click to remove item from the TakeInventory
+        UnityAction handleItemClickedUnityAction = () => { this.HandleItemClicked(newItem); };
+        newItem.OnPointerClickEvent.AddListener(handleItemClickedUnityAction);
+        // add event to destroy item and set it into the new inventory
+        newItem.OnPointerClickEvent.AddListener(newItem.PickUpItem);
+    }
+
+    public void HandleItemClicked(Item item) {
+        this.inventory.RemoveItem(item.item);
+    }
+
+    private void SetObjViewable(GameObject obj, DocumentObject itemObject) {
+        // get the document generator object
+        GenerateDocument documentGenerator = this.gameObject.GetComponent<GenerateDocument>();
+
+        // set collider to interact with the object 
+        BoxCollider2D bc = obj.AddComponent<BoxCollider2D>();
+        // attcahed item to the object
         Item newItem = obj.AddComponent<Item>();
         newItem.item = itemObject;
         newItem.inventory = itemObject.inventory;
 
-        newItem.OnItemClicked += HandleItemClicked;
-    }
+        // set a panel opener to open the document panel when document is clicked
+        PanelOpener panelOpener = obj.AddComponent<PanelOpener>();
+        panelOpener.Panel = documentGenerator.documentViewer;
+        newItem.OnPointerClickEvent.AddListener(panelOpener.OpenPanel);
 
-    private void HandleItemClicked(ItemObject item) {
-        this.inventory.RemoveItem(item);
+        // set images to Document Generator and display images in the event
+        UnityAction handleDocumentClickedUnityAction = () => { 
+            documentGenerator.oneImageSpriteOfThePDF = itemObject.oneImageSpriteOfThePDF;
+            documentGenerator.Display(); 
+        };
+        newItem.OnPointerClickEvent.AddListener(handleDocumentClickedUnityAction);
+
+
     }
 
     /// <summary>

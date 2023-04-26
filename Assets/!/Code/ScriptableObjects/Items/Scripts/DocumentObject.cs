@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DocumentObject : ItemObject
 {
-
+    public Sprite oneImageSpriteOfThePDF;
     public void Awake() {
         type = ItemType.Document;
     }
