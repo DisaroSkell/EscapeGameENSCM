@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +11,12 @@ public class MazePath {
     public MazePath(Maze maze, (int, int)[] indexSet, Direction[] directions) {
         if (indexSet.Length != indexSet.Distinct().Count()) {
             // STOP HERE: Can't create path from duplicates cells
+            throw new ArgumentException("Can't have duplicates in indexSet !", "indexSet");
         }
 
         if (indexSet.Length != directions.Length) {
             // STOP HERE: Must have a direction (even if it's Direction.None) for every cell
+            throw new ArgumentException("directions must be the same length as indexSet !", "directions");
         }
 
         this.indexSet = new List<(int, int)>();
@@ -37,6 +40,7 @@ public class MazePath {
                         }
                     } else {
                         // STOP HERE: We are going opposite direction => can't create path
+                        throw new ArgumentException("directions[i] must provide a correct direction to go from indexSet[i] to indexSet[i+1] !", "directions");
                     }
                     break;
                 case Direction.South :
@@ -49,6 +53,7 @@ public class MazePath {
                         }
                     } else {
                         // STOP HERE: We are going opposite direction => can't create path
+                        throw new ArgumentException("directions[i] must provide a correct direction to go from indexSet[i] to indexSet[i+1] !", "directions");
                     }
                     break;
                 case Direction.East :
@@ -61,6 +66,7 @@ public class MazePath {
                         }
                     } else {
                         // STOP HERE: We are going opposite direction => can't create path
+                        throw new ArgumentException("directions[i] must provide a correct direction to go from indexSet[i] to indexSet[i+1] !", "directions");
                     }
                     break;
                 case Direction.West :
@@ -73,6 +79,7 @@ public class MazePath {
                         }
                     } else {
                         // STOP HERE: We are going opposite direction => can't create path
+                        throw new ArgumentException("directions[i] must provide a correct direction to go from indexSet[i] to indexSet[i+1] !", "directions");
                     }
                     break;
             }
@@ -118,6 +125,7 @@ public class MazePath {
                 }
             } else {
                 // STOP HERE: Not aligned with next cell => Missing direction
+                throw new ArgumentException("directions[i] must provide a direction to go from indexSet[i] to indexSet[i+1] if their indexes are not aligned !", "directions");
             }
         }
         // We add last cell
@@ -125,6 +133,7 @@ public class MazePath {
 
         if (this.indexSet.Count != this.indexSet.Distinct().Count()) {
             // STOP HERE: We added the same cell twice => not a valid way
+            throw new ArgumentException("Can't create a path that does not cross himself !");
         }
     }
 
