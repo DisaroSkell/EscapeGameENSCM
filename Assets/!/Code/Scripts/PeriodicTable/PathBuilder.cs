@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class PathBuilder {
     private int line;
@@ -53,7 +54,19 @@ public class PathBuilder {
     }
 
     public void CreatePath(Maze maze, MazePath path) {
-        // TODO
+        List<(int, int)> indexSet = path.getIndexSet();
+        List<Direction> directions = path.getDirections();
+
+        // We open the 2 gates
+        maze.OpenTwoGateAt(indexSet[0], indexSet[indexSet.Count-1]);
+        
+        // We go through the path.indexSet and path.directions to open the according walls in the maze
+        List<Direction>.Enumerator directionsIt = directions.GetEnumerator();
+
+        foreach (var coord in indexSet) {
+            directionsIt.MoveNext();
+            maze.OpenWall(coord.Item1, coord.Item2, directionsIt.Current);
+        }
     }
 
     private Direction ChooseNeighbourDirection(Maze maze){
