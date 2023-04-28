@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Camera_Notes : MonoBehaviour
 {
@@ -13,16 +14,40 @@ public class Camera_Notes : MonoBehaviour
 
     public void ToggleVisibilityNotes(){
         if (canvas_notes.activeSelf){
-            camera_notes.SetActive(false);
+            this.DisableCamera(camera_notes);
+
             canvas_notes.SetActive(false);
             Image_notes.SetActive(false);
-            camera_Main.SetActive(true);
+
+            this.EnableCamera(camera_Main);
         }
         else{
-            camera_notes.SetActive(true);
+            this.EnableCamera(camera_notes);
+
             canvas_notes.SetActive(true);
             Image_notes.SetActive(true);
-            camera_Main.SetActive(false);
+
+            this.DisableCamera(camera_Main);
+        }
+    }
+
+    private void DisableCamera(GameObject camera) {
+        camera.GetComponent<Camera>().enabled = false;
+
+        PhysicsRaycaster raycaster = camera.GetComponent<PhysicsRaycaster>();
+        
+        if (raycaster) {
+            raycaster.enabled = false;
+        }
+    }
+
+    private void EnableCamera(GameObject camera) {
+        camera.GetComponent<Camera>().enabled = true;
+
+        PhysicsRaycaster raycaster = camera.GetComponent<PhysicsRaycaster>();
+        
+        if (raycaster) {
+            raycaster.enabled = true;
         }
     }
     
