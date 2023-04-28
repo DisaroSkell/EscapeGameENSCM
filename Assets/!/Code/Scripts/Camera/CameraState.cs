@@ -1,6 +1,6 @@
 /* This enum is used to represent the current state of the camera. */
 public enum CameraState {
-    Unfocused,              // Focus = 0
+    UnfocusedRoom1,         // Focus = 0
     FocusingCabinet,        // Focus = 1
     FocusingTableGroup1,    // Focus = 2
     FocusingTableGroup2,    // Focus = 3

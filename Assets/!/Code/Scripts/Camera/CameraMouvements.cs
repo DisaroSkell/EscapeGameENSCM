@@ -1,40 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /* The CameraMovements class sets the focus of the camera using an animator. */
 public class CameraMouvements : MonoBehaviour {
-    public GameObject returnButton;
+    public GameObject returnButtonRoom1;
+    public GameObject returnButtonRoom2;
+    private GameObject currentReturnButton;
+    private CameraState state;
+
     public GameObject rooms;
 
-    public CameraState state {
+    public CameraState State {
+        get {
+            return this.state;
+        }
         // Changing the state changes the animator to make camera focus the right object
         set {
-            animator.SetInteger("Focus", (int)value);
+            if (this.state != value) {
+                this.state = value;
+                animator.SetInteger("Focus", (int)value);
+            }
         }
     }
 
     public Animator animator;
 
     void Start() {
-        state = CameraState.Unfocused;
+        this.State = CameraState.UnfocusedRoom1;
+        this.currentReturnButton = this.returnButtonRoom1;
     }
 
     /// <summary>
-    /// This function sets the state of the camera to Unfocused.
-    /// Used by the Return button of Unity.
+    /// Only works with a state starting with "Unfocused".
+    /// This function sets the state of the camera to an unfocused state.
+    /// It desactivates the corresponding return button.
+    /// It resets the colliders.
     /// </summary>
-    public void ResetFocus() {
-        this.state = CameraState.Unfocused;
+    private void Unfocus(CameraState unfocus) {
+        if (unfocus == CameraState.UnfocusedRoom1 || unfocus == CameraState.UnfocusedRoom2) {
+            this.State = unfocus;
 
-        this.returnButton.SetActive(false);
+            this.currentReturnButton.SetActive(false);
 
-        FocusChanger.EnableCollidersFromChildren(rooms.transform);
+            // Disable all colliders
+            FocusChanger.DisableCollidersFromChildren(rooms.transform);
+
+            foreach (Transform room in this.rooms.transform) {
+                // Reenable colliders of direct children of rooms (here colliders of POVs)
+                FocusChanger.EnableCollidersFromDirectChildren(room);
+            }
+        }
     }
 
-    public void Room2() {
-        this.state = CameraState.UnfocusedRoom2;
+    /// <summary>
+    /// Used by the return button.
+    /// This function sets the state of the camera to UnfocusedRoom2.
+    /// It desactivates the corresponding return button.
+    /// It resets the colliders.
+    /// </summary>
+    public void UnfocusRoom1() {
+        this.Unfocus(CameraState.UnfocusedRoom1);
+    }
 
-        this.returnButton.SetActive(true);
+    /// <summary>
+    /// Used by the return button.
+    /// This function sets the state of the camera to UnfocusedRoom2.
+    /// It desactivates the corresponding return button.
+    /// It resets the colliders.
+    /// </summary>
+    public void UnfocusRoom2() {
+        this.Unfocus(CameraState.UnfocusedRoom2);
+    }
+
+    public void ChangeRoom(TextMeshProUGUI textMesh) {
+        if (this.State == CameraState.UnfocusedRoom1) {
+            this.State = CameraState.UnfocusedRoom2;
+            this.currentReturnButton = this.returnButtonRoom2;
+            textMesh.text = "↓";
+        } else if (this.State == CameraState.UnfocusedRoom2) {
+            this.State = CameraState.UnfocusedRoom1;
+            this.currentReturnButton = this.returnButtonRoom1;
+            textMesh.text = "↑";
+        }
     }
 }
