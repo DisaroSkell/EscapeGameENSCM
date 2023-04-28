@@ -66,6 +66,7 @@ public class PathBuilder {
         foreach (var coord in indexSet) {
             directionsIt.MoveNext();
             maze.OpenWall(coord.Item1, coord.Item2, directionsIt.Current);
+            maze.SetCellAsVisited(coord.Item1, coord.Item2);
         }
     }
 
