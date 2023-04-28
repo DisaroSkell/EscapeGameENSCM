@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5328695006630299211, guid: 6adf2611baf0d5b4f92bde79a6baaece, type: 3}
   type: 3
-  inventory: {fileID: 11400000, guid: 37966203f66402a4ca912ef7bedd9293, type: 2}
+  inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
+  interaction: {fileID: 0}

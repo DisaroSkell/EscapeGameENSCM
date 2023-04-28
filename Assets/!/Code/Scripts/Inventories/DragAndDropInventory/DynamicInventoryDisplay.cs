@@ -134,6 +134,14 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         Debug.Log(
             string.Format("interaction between inventory[{0}] and inventory[{1}]", mouse.indexFrom, mouse.indexTo)
         );
+
+        ItemObject? draggedItmObj = this.inventory.GetItem(mouse.indexFrom);
+        ItemObject? fixedItmObj = this.inventory.GetItem(mouse.indexTo);
+        if(fixedItmObj is not null && draggedItmObj is not null) {
+            Debug.Log(Interaction.isThereInteractionBetween(draggedItmObj, fixedItmObj));
+        }
+
+        
     }
 
     
