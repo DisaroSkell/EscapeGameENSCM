@@ -1,9 +1,9 @@
+using System;
+
 public class Maze {
-    private int size {
-        get {
-            return maze.Length;
-        }
-    }
+    private int hSize;
+
+    private int vSize;
 
     private int nbGates;
 
@@ -11,16 +11,22 @@ public class Maze {
     public PathBuilder pathBuilder;
 
     public Maze(int hSize, int vSize) {
-        nbGates = 0;
-        maze = new MazeCell[vSize][];
+        this.hSize = hSize;
+        this.vSize = vSize;
+
+        this.nbGates = 0;
+        this.maze = new MazeCell[vSize][];
 
         for (int i = 0; i < vSize; i++) {
-            maze[i] = new MazeCell[hSize];
+            this.maze[i] = new MazeCell[hSize];
 
             for (int j = 0; j < hSize; j++) {
-                maze[i][j] = new MazeCell();
+                this.maze[i][j] = new MazeCell();
             }
         }
+
+        Random rand = new Random();
+        this.pathBuilder = new PathBuilder(rand.Next(vSize), rand.Next(hSize));
     }
 
     public void Explore() {
@@ -28,9 +34,19 @@ public class Maze {
         this.OpenTwoGate();
     }
 
+    public void Explore(MazePath path) {
+        this.pathBuilder.CreatePath(this, path);
+        this.pathBuilder.CreatePaths(this);
+        this.OpenTwoGate();
+    }
+
     public void OpenTwoGate() {
+        if (this.nbGates != 0) {
+            return;
+        }
+
         this.OpenWall(0, 0, Direction.West);
-        this.OpenWall(this.size - 1, this.size - 1, Direction.East);
+        this.OpenWall(this.vSize - 1, this.hSize - 1, Direction.East);
         
         this.nbGates += 2;
     }
@@ -40,25 +56,26 @@ public class Maze {
             return;
         }
 
-        Direction direction = Direction.None;
-        
-        if (gate1.Item1 == 0) direction = Direction.North;
-        if (gate1.Item1 == size-1) direction = Direction.South;
-        if (gate1.Item2 == 0) direction = Direction.West;
-        if (gate1.Item2 == size-1) direction = Direction.East;
+        this.OpenGate(gate1);
 
-        OpenWall(gate1.Item1, gate1.Item2, direction);
-
-        direction = Direction.None;
-        
-        if (gate2.Item1 == 0) direction = Direction.North;
-        if (gate2.Item1 == size-1) direction = Direction.South;
-        if (gate2.Item2 == 0) direction = Direction.West;
-        if (gate2.Item2 == size-1) direction = Direction.East;
-
-        OpenWall(gate2.Item1, gate2.Item2, direction);
+        this.OpenGate(gate2);
         
         this.nbGates += 2;
+    }
+
+    private void OpenGate((int, int) gate) {
+        if (this.nbGates >= 2) {
+            return;
+        }
+
+        Direction direction = Direction.None;
+        
+        if (gate.Item1 == 0) direction = Direction.North;
+        if (gate.Item1 == vSize-1) direction = Direction.South;
+        if (gate.Item2 == 0) direction = Direction.West;
+        if (gate.Item2 == hSize-1) direction = Direction.East;
+
+        OpenWall(gate.Item1, gate.Item2, direction);
     }
 
     public int GetNbGates() {
@@ -66,7 +83,7 @@ public class Maze {
     }
 
     public void OpenWall(int l, int c, Direction direction) {
-        if (((l == 0 && direction == Direction.North) || (l == size-1 && direction == Direction.South) || (c == 0 && direction == Direction.West) || (c == size-1 && direction == Direction.East))) {
+        if (((l == 0 && direction == Direction.North) || (l == vSize-1 && direction == Direction.South) || (c == 0 && direction == Direction.West) || (c == hSize-1 && direction == Direction.East))) {
             if (this.GetNbGates() >= 2) {
                 return;
             }
@@ -80,12 +97,12 @@ public class Maze {
                 }
                 break;
             case Direction.South :
-                if (l < this.size - 1){
+                if (l < this.vSize - 1){
                     this.maze[l+1][c].OpenWall(Direction.North);
                 }
                 break;
             case Direction.East :
-                if (c < this.size - 1){
+                if (c < this.hSize - 1){
                     this.maze[l][c+1].OpenWall(Direction.West);
                 }
                 break;
@@ -105,10 +122,6 @@ public class Maze {
         return this.maze[l][c];
     }
 
-    public MazeCell GetCopyOfCell(int l, int c) {
-        return this.maze[l][c].Copy();
-    }
-
     public bool[] Neighbour(int l, int c) {
         bool[] n = new bool[4];
         for (int i = 0; i < 4; i++) {
@@ -117,13 +130,13 @@ public class Maze {
         if (l > 0) {
             n[0] = true;
         }
-        if (l < this.size - 1) {
+        if (l < this.vSize - 1) {
             n[1] = true;
         }
         if (c > 0) {
             n[3] = true;
         }
-        if (c < this.size - 1) {
+        if (c < this.hSize - 1) {
             n[2] = true;
         }
         return n;
@@ -163,13 +176,13 @@ public class Maze {
         int j = 0;
         bool allVisited = true;
 
-        while (allVisited && i < this.size) {
+        while (allVisited && i < this.vSize) {
             if (!this.maze[i][j].visited) {
                 allVisited = false;
             }
             j++;
 
-            if (j>=this.size) {
+            if (j>=this.hSize) {
                 j=0;
                 i++;
             }
@@ -178,23 +191,11 @@ public class Maze {
         return allVisited;
     }
 
-    public int GetSize() {
-        return this.size;
-    }
-
     public int GetHSize() {
         return this.maze[0].Length;
     }
 
     public int GetVSize() {
         return this.maze.Length;
-    }
-
-    public int GetBuilderLine() {
-        return this.pathBuilder.GetLine();
-    }
-
-    public int GetBuilderColumn() {
-        return this.pathBuilder.GetColumn();
     }
 }
