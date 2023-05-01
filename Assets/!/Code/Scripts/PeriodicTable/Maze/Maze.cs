@@ -1,42 +1,41 @@
 using System;
+using System.Collections.Generic;
 
-public class Maze {
+public class Maze<Cell> where Cell : MazeCell, new() {
     private int hSize;
 
     private int vSize;
 
     private int nbGates;
 
-    public MazeCell[][] maze;
-    public PathBuilder pathBuilder;
+    public Cell[][] maze;
 
     public Maze(int hSize, int vSize) {
         this.hSize = hSize;
         this.vSize = vSize;
 
         this.nbGates = 0;
-        this.maze = new MazeCell[vSize][];
+        this.maze = new Cell[vSize][];
 
         for (int i = 0; i < vSize; i++) {
-            this.maze[i] = new MazeCell[hSize];
+            this.maze[i] = new Cell[hSize];
 
             for (int j = 0; j < hSize; j++) {
-                this.maze[i][j] = new MazeCell();
+                this.maze[i][j] = new Cell();
             }
         }
 
         Random rand = new Random();
-        this.pathBuilder = new PathBuilder(rand.Next(vSize), rand.Next(hSize));
     }
 
     public void Explore() {
-        this.pathBuilder.CreatePaths(this);
+        this.CreatePaths();
         this.OpenTwoGate();
     }
 
     public void Explore(MazePath path) {
-        this.pathBuilder.CreatePath(this, path);
-        this.pathBuilder.CreatePaths(this);
+        this.CreatePath(path);
+        this.CreatePaths();
         this.OpenTwoGate();
     }
 
@@ -118,7 +117,7 @@ public class Maze {
         return this.maze[l][c].IsOpened(direction);
     }
 
-    public MazeCell GetCellAt(int l, int c) {
+    public Cell GetCellAt(int l, int c) {
         return this.maze[l][c];
     }
 
@@ -197,5 +196,73 @@ public class Maze {
 
     public int GetVSize() {
         return this.maze.Length;
+    }
+
+    public void CreatePaths() {
+        Random rand = new Random();
+        int line = rand.Next(this.vSize);
+        int column = rand.Next(this.hSize);
+
+        while(!this.IsMazeVisited()){
+            Direction direction = this.ChooseNeighbourDirection(line, column);
+            int[] ncPos = this.FindNeighbourCellWithDirection(line, column, direction);
+            
+            if(!this.IsCellVisited(ncPos[0], ncPos[1])){
+                this.OpenWall(line, column, direction);
+                this.SetCellAsVisited(ncPos[0], ncPos[1]);
+            }
+
+            switch (direction) {
+                case Direction.North :
+                    line--;
+                    break;
+                case Direction.South :
+                    line++;
+                    break;
+                case Direction.East :
+                    column++;
+                    break;
+                case Direction.West :
+                    column--;
+                    break;
+            }
+        }
+    }
+
+    public void CreatePath(MazePath path) {
+        List<(int, int)> indexSet = path.getIndexSet();
+        List<Direction> directions = path.getDirections();
+
+        // We open the 2 gates
+        this.OpenTwoGateAt(indexSet[0], indexSet[indexSet.Count-1]);
+        
+        // We go through the path.indexSet and path.directions to open the according walls in the maze
+        List<Direction>.Enumerator directionsIt = directions.GetEnumerator();
+
+        foreach (var coord in indexSet) {
+            directionsIt.MoveNext();
+            this.OpenWall(coord.Item1, coord.Item2, directionsIt.Current);
+            this.SetCellAsVisited(coord.Item1, coord.Item2);
+        }
+    }
+
+    private Direction ChooseNeighbourDirection(int line, int column){
+        Random r = new Random();
+        bool[] possibleDirection = this.Neighbour(line, column);
+        bool possible = false;
+        int n = 0;
+        while(!possible){
+            n = r.Next(4);
+            possible = possibleDirection[n];
+        }
+
+        switch(n){
+            case 0 : return Direction.North;
+            case 1 : return Direction.South;
+            case 2 : return Direction.East;
+            case 3 : return Direction.West;
+        }
+
+        return Direction.None;
     }
 }

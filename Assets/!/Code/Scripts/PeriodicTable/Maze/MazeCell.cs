@@ -4,7 +4,7 @@ public class MazeCell {
     public bool west;
     public bool south;
 
-    // mark if the cell has been visited by the pathBuilder
+    // mark if the cell has been visited when building
     public bool visited;
 
     public MazeCell() {
