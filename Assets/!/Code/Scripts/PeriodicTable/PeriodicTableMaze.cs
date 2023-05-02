@@ -4,13 +4,14 @@ using UnityEngine;
 public class PeriodicTableMaze : MonoBehaviour {
     public float atomSize;
 
+    // Position of the first Atom of the table (relative to the parent)
     public Vector3 firstAtomPosition;
 
     public float hSpacing;
 
     public float vSpacing;
 
-    public GameObject atomPrefab;
+    public TableElement atomPrefab;
 
     public Quaternion rotation;
 
@@ -18,9 +19,15 @@ public class PeriodicTableMaze : MonoBehaviour {
 
     public string atomImageFolder;
 
+    public MagnetInteractions magnet;
+
+    public MagnetInteractions magnetPrefab;
+    public float magnetLength;
+    public Quaternion magnetOrientation;
+
     private bool[][] isCellBlank;
 
-    private Maze<MazeCell> maze;
+    private Maze<AtomCell> maze;
 
     public void Start() {
         // TODO randomize those
@@ -120,7 +127,7 @@ public class PeriodicTableMaze : MonoBehaviour {
         this.isCellBlank[8][1] = true;
         this.isCellBlank[8][2] = true;
 
-        this.maze = new Maze<MazeCell>(18, 9);
+        this.maze = new Maze<AtomCell>(18, 9);
         this.maze.Explore(new MazePath(atomsIndex, arrows));
         
         CreateAtoms();
@@ -139,9 +146,13 @@ public class PeriodicTableMaze : MonoBehaviour {
 
                 atomPos += this.firstAtomPosition;
 
-                GameObject atom = Instantiate(this.atomPrefab, atomPos, Quaternion.identity, this.transform);
+                TableElement atom = (TableElement)Instantiate(this.atomPrefab, atomPos, Quaternion.identity, this.transform);
+
+                atom.Initialize(i, j);
 
                 atom.transform.localScale = new Vector3(atomSize, atomSize, 1);
+
+                this.maze.GetCellAt(i, j).position = atom.transform.position;
 
                 if (imageCounter < atomImages.Length && !this.isCellBlank[i][j]) {
                     atom.GetComponent<Renderer>().material.mainTexture = atomImages[imageCounter];
@@ -157,10 +168,16 @@ public class PeriodicTableMaze : MonoBehaviour {
             }
         }
 
+        // TODO Remove this
+        Vector3 magnetPos = new Vector3((float)this.transform.position.x + this.firstAtomPosition.x,
+                                        (float)this.transform.position.y + this.firstAtomPosition.y,
+                                        (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetLength);
+        this.magnet = (MagnetInteractions)Instantiate(this.magnetPrefab, magnetPos, this.magnetOrientation, this.transform);
+
         this.transform.rotation *= this.rotation;
     }
 
-    public Maze<MazeCell> GetMaze() {
+    public Maze<AtomCell> GetMaze() {
         return this.maze;
     }
 }
