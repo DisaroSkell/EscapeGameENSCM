@@ -9,7 +9,7 @@ public class WaySheet {
     }
 
     public void CreateWaySheet((int, int)[] atoms, Direction[] directions) {
-        PeriodicTableMaze periodicTable = new PeriodicTableMaze(atoms, directions);
+        // PeriodicTableMaze periodicTable = new PeriodicTableMaze(atoms, directions);
 
         // TODO : output
     }
