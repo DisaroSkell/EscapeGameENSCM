@@ -138,7 +138,16 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         ItemObject? draggedItmObj = this.inventory.GetItem(mouse.indexFrom);
         ItemObject? fixedItmObj = this.inventory.GetItem(mouse.indexTo);
         if(fixedItmObj is not null && draggedItmObj is not null) {
-            Debug.Log(Interaction.isThereInteractionBetween(draggedItmObj, fixedItmObj));
+            if(Interaction.isThereInteractionBetween(draggedItmObj, fixedItmObj)){
+                Interaction? interaction = draggedItmObj.interaction;
+                if(interaction is null ) {
+                    interaction = fixedItmObj.interaction;
+                }
+                if(interaction is null) {
+                    return; // can't arrive
+                }
+                interaction.MakeIteraction();
+            }
         }
 
         

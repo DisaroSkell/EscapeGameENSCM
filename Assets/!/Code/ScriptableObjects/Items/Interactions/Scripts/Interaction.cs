@@ -14,9 +14,9 @@ public class Interaction : ScriptableObject {
 
     public List<ItemObject> itemsToAdd;
 
-    public void makeIteraction(GameObject _callingObject, GameObject _calledObject) {
-        if(destroyDraggedObject) DestroyObject(_callingObject, draggedItem);
-        if(destroyFixedObject) DestroyObject(_calledObject, fixedItem);
+    public void MakeIteraction() {
+        if(destroyDraggedObject) draggedItem.inventory.RemoveItem(draggedItem);
+        if(destroyFixedObject) fixedItem.inventory.RemoveItem(fixedItem);
         AddAllObject();
     }
 

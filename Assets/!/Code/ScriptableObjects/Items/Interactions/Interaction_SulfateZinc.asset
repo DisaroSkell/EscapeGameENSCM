@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234ce811b3f05794c94b493c7c578c8b, type: 3}
+  m_Name: Interaction_SulfateZinc
+  m_EditorClassIdentifier: 
+  draggedItem: {fileID: 11400000, guid: 581bac4355d2ccb49aca31084a80e9d1, type: 2}
+  fixedItem: {fileID: 11400000, guid: 2df7dd303a6a8c340ad671db7a571298, type: 2}
+  destroyDraggedObject: 1
+  destroyFixedObject: 1
+  worksBothWays: 1
+  itemsToAdd:
+  - {fileID: 11400000, guid: c4c5f3207066de149bda41b060128f87, type: 2}
