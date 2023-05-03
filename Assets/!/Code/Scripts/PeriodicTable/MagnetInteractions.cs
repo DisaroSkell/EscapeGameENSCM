@@ -17,6 +17,10 @@ public class MagnetInteractions : MonoBehaviour {
         AtomCell previousCell = table.GetMaze().maze[indexPosition.Item1][indexPosition.Item2];
         AtomCell goalCell = table.GetMaze().maze[indexPosition.Item1][newColumn];
 
+        if (this.hasKey) {
+            this.encounterWallCheck(table, this.indexPosition, (this.indexPosition.Item1, newColumn));
+        }
+
         this.transform.localPosition += goalCell.position - previousCell.position;
 
         this.indexPosition = (this.indexPosition.Item1, newColumn);
@@ -31,6 +35,10 @@ public class MagnetInteractions : MonoBehaviour {
 
         AtomCell previousCell = table.GetMaze().maze[indexPosition.Item1][indexPosition.Item2];
         AtomCell goalCell = table.GetMaze().maze[newLine][indexPosition.Item2];
+
+        if (this.hasKey) {
+            this.encounterWallCheck(table, this.indexPosition, (newLine, this.indexPosition.Item2));
+        }
 
         this.transform.localPosition += goalCell.position - previousCell.position;
 
@@ -50,6 +58,22 @@ public class MagnetInteractions : MonoBehaviour {
                                                       key.transform.localPosition.z);
         } else {
             this.hasKey = false;
+        }
+    }
+
+    public void encounterWallCheck(PeriodicTableMaze table, (int, int) prevCell, (int, int) goalCell) {
+        if (prevCell == (-1, -1)) {
+            return;
+        }
+
+        (int, int)[] indexSet = {prevCell, goalCell};
+        Direction[] directions = {Direction.None, Direction.None};
+
+        bool encounteredWall = table.GetMaze().encountersWallOnPath(new MazePath(indexSet, directions));
+
+        if (encounteredWall) {
+            this.hasKey = false;
+            table.makeKeyFall();
         }
     }
 }

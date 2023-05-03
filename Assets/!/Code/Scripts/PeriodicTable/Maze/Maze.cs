@@ -265,4 +265,34 @@ public class Maze<Cell> where Cell : MazeCell, new() {
 
         return Direction.None;
     }
+
+    public bool encountersWallOnPath(MazePath path) {
+        // We take enumerators because we want to stop the moment we find a wall
+        List<(int, int)>.Enumerator indexIt = path.getIndexSet().GetEnumerator();
+        List<Direction>.Enumerator directionsIt = path.getDirections().GetEnumerator();
+
+        // We need to make sure we don't continue the while loop without a Current
+        bool hasNext = indexIt.MoveNext() && directionsIt.MoveNext();
+
+        // We also make sure to mark any wall we may find
+        bool foundWall = false;
+
+        while(hasNext && !foundWall) {
+            // Invariant: Both MoveNext returned true and the path is opened until here
+            int currentLine = indexIt.Current.Item1;
+            int currentColumn = indexIt.Current.Item2;
+            Direction currentDirection = directionsIt.Current;
+
+            // If we have a Direction.None it will act as a wall but we don't want to
+            if (currentDirection != Direction.None) {
+                foundWall = !this.maze[currentLine][currentColumn].IsOpened(currentDirection);
+            }
+
+            hasNext = indexIt.MoveNext() && directionsIt.MoveNext();
+        }
+        // While stopped: we either went through the whole path or found a wall
+        // In other words: If we found a wall we still have values (hasNext == true)
+
+        return hasNext;
+    }
 }

@@ -27,7 +27,7 @@ public class PeriodicTableMaze : MonoBehaviour {
 
     public KeyInteractions key;
     public KeyInteractions keyPrefab;
-    public Vector3 relativeKeyPosition;
+    public Vector3 relativeDefaultKeyPosition;
     public float keySize;
     public Quaternion keyOrientation;
 
@@ -174,9 +174,9 @@ public class PeriodicTableMaze : MonoBehaviour {
             }
         }
 
-        Vector3 keyPos = new Vector3((float)this.transform.position.x + this.relativeKeyPosition.x,
-                                     (float)this.transform.position.y + this.relativeKeyPosition.y,
-                                     (float)this.transform.position.z + this.relativeKeyPosition.z - this.keySize);
+        Vector3 keyPos = new Vector3((float)this.transform.position.x + this.relativeDefaultKeyPosition.x,
+                                     (float)this.transform.position.y + this.relativeDefaultKeyPosition.y,
+                                     (float)this.transform.position.z + this.relativeDefaultKeyPosition.z - this.keySize);
         this.key = (KeyInteractions)Instantiate(this.keyPrefab, keyPos, this.keyOrientation, this.transform);
 
         // TODO Remove this
@@ -190,5 +190,9 @@ public class PeriodicTableMaze : MonoBehaviour {
 
     public Maze<AtomCell> GetMaze() {
         return this.maze;
+    }
+
+    public void makeKeyFall() {
+        this.key.transform.localPosition = this.relativeDefaultKeyPosition;
     }
 }
