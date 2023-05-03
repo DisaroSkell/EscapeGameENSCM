@@ -20,6 +20,10 @@ public class MagnetInteractions : MonoBehaviour {
         this.transform.localPosition += goalCell.position - previousCell.position;
 
         this.indexPosition = (this.indexPosition.Item1, newColumn);
+
+        if (this.hasKey) {
+            makeKeyFollow(table);
+        }
     }
 
     public void verticalMouvement(int newLine) {
@@ -31,5 +35,21 @@ public class MagnetInteractions : MonoBehaviour {
         this.transform.localPosition += goalCell.position - previousCell.position;
 
         this.indexPosition = (newLine, this.indexPosition.Item2);
+
+        if (this.hasKey) {
+            makeKeyFollow(table);
+        }
+    }
+
+    public void makeKeyFollow(PeriodicTableMaze table) {
+        KeyInteractions key = table.key;
+
+        if (key is not null) {
+            key.transform.localPosition = new Vector3(this.transform.localPosition.x,
+                                                      this.transform.localPosition.y,
+                                                      key.transform.localPosition.z);
+        } else {
+            this.hasKey = false;
+        }
     }
 }

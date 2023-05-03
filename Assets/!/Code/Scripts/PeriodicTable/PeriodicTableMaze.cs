@@ -22,8 +22,14 @@ public class PeriodicTableMaze : MonoBehaviour {
     public MagnetInteractions magnet;
 
     public MagnetInteractions magnetPrefab;
-    public float magnetLength;
+    public float magnetSize;
     public Quaternion magnetOrientation;
+
+    public KeyInteractions key;
+    public KeyInteractions keyPrefab;
+    public Vector3 relativeKeyPosition;
+    public float keySize;
+    public Quaternion keyOrientation;
 
     private bool[][] isCellBlank;
 
@@ -168,10 +174,15 @@ public class PeriodicTableMaze : MonoBehaviour {
             }
         }
 
+        Vector3 keyPos = new Vector3((float)this.transform.position.x + this.relativeKeyPosition.x,
+                                     (float)this.transform.position.y + this.relativeKeyPosition.y,
+                                     (float)this.transform.position.z + this.relativeKeyPosition.z - this.keySize);
+        this.key = (KeyInteractions)Instantiate(this.keyPrefab, keyPos, this.keyOrientation, this.transform);
+
         // TODO Remove this
         Vector3 magnetPos = new Vector3((float)this.transform.position.x + this.firstAtomPosition.x,
                                         (float)this.transform.position.y + this.firstAtomPosition.y,
-                                        (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetLength);
+                                        (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetSize);
         this.magnet = (MagnetInteractions)Instantiate(this.magnetPrefab, magnetPos, this.magnetOrientation, this.transform);
 
         this.transform.rotation *= this.rotation;
