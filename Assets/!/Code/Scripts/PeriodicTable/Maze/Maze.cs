@@ -1,15 +1,24 @@
 using System;
 using System.Collections.Generic;
 
+/* Class for the creation and usage of a maze. */
 public class Maze<Cell> where Cell : MazeCell, new() {
+    // Horizontal size of the maze.
     private int hSize;
 
+    // Vertical size of the maze.
     private int vSize;
 
+    // The maze should not have more than two gates.
     private int nbGates;
 
     public Cell[][] maze;
-
+    
+    /// <summary>
+    /// Constructor of the maze. It does not create paths and gates.
+    /// </summary>
+    /// <param name="hSize">Horizontal size of the maze.</param>
+    /// <param name="vSize">Vertical size of the maze.</param>
     public Maze(int hSize, int vSize) {
         this.hSize = hSize;
         this.vSize = vSize;
@@ -24,56 +33,72 @@ public class Maze<Cell> where Cell : MazeCell, new() {
                 this.maze[i][j] = new Cell();
             }
         }
-
-        Random rand = new Random();
     }
 
+    /// <summary>
+    /// Creates random paths and gates for the maze.
+    /// It only creates things if neeeded (so calling Explore() after another Explore() will do nothing).
+    /// </summary>
     public void Explore() {
         this.CreatePaths();
         this.OpenTwoGate();
     }
 
+    /// <summary>
+    /// Creates a main path (and gates if it starts and/or ends at the maze border) for the maze.
+    /// It then calls Explore(). (Explore will not open gates if the path opens them)
+    /// </summary>
+    /// <param name="path">The main path to create.</param>
     public void Explore(MazePath path) {
         this.CreatePath(path);
-        this.CreatePaths();
-        this.OpenTwoGate();
+        this.Explore();
     }
 
+    /// <summary>
+    /// Opens two gates in the maze: one at the top left (to the north) and one at the bottom right (to the south).
+    /// It will not open any more gates if the maze already has two.
+    /// It will only open one if there is one gate.
+    /// </summary>
     public void OpenTwoGate() {
-        if (this.nbGates != 0) {
-            return;
-        }
-
-        this.OpenWall(0, 0, Direction.West);
-        this.OpenWall(this.vSize - 1, this.hSize - 1, Direction.East);
-        
-        this.nbGates += 2;
+        // The OpenGate((int, int)) method already does everything gate-related.
+        this.OpenGate((0, 0));
+        this.OpenGate((this.vSize - 1, this.hSize - 1));
     }
 
+    /// <summary>
+    /// Opens two gates in the maze at the given positions.
+    /// It will not open any more gates if the maze already has two.
+    /// It will only open one if there is one gate.
+    /// </summary>
+    /// <param name="gate1">Indexes (line, column) for position of the first gate.</param>
+    /// <param name="gate2">Indexes (line, column) for position of the second gate.</param>
     public void OpenTwoGateAt((int, int) gate1, (int, int) gate2) {
-        if (this.nbGates != 0) {
-            return;
-        }
-
+        // The OpenGate((int, int)) method already does everything gate-related.
         this.OpenGate(gate1);
-
         this.OpenGate(gate2);
-        
-        this.nbGates += 2;
     }
 
+    /// <summary>
+    /// Opens a gate in the maze at the given position.
+    /// It will not open any more gates if the maze already has two.
+    /// It will only open one if there is one gate.
+    /// If we select a corner position, it will choose North or South over East or West.
+    /// </summary>
+    /// <param name="gate">Indexes (line, column) for position of the gate.</param>
     private void OpenGate((int, int) gate) {
-        if (this.nbGates >= 2) {
-            return;
-        }
-
         Direction direction = Direction.None;
         
-        if (gate.Item1 == 0) direction = Direction.North;
-        if (gate.Item1 == vSize-1) direction = Direction.South;
+        // We pick the direction from the position.
         if (gate.Item2 == 0) direction = Direction.West;
         if (gate.Item2 == hSize-1) direction = Direction.East;
 
+        // North and South have the upper hand on East and West.
+        if (gate.Item1 == 0) direction = Direction.North;
+        if (gate.Item1 == vSize-1) direction = Direction.South;
+
+        // If direction == Direction.None here, then we'll not open anything since we are not at the border.
+
+        // The OpenWall(int, int, direction) method already does everything gate-related.
         OpenWall(gate.Item1, gate.Item2, direction);
     }
 
@@ -81,6 +106,14 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         return this.nbGates;
     }
 
+    /// <summary>
+    /// Opens a wall at the given position and direction.
+    /// If it leads to the outside of the maze, it counts as a gate.
+    /// It will not open the wall if it's a gate and there are already 2 gates.
+    /// </summary>
+    /// <param name="l">Line of the position.</param>
+    /// <param name="c">Column of the position.</param>
+    /// <param name="direction">Direction where we open.</param>
     public void OpenWall(int l, int c, Direction direction) {
         if (((l == 0 && direction == Direction.North) || (l == vSize-1 && direction == Direction.South) || (c == 0 && direction == Direction.West) || (c == hSize-1 && direction == Direction.East))) {
             if (this.GetNbGates() >= 2) {
@@ -121,6 +154,18 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         return this.maze[l][c];
     }
 
+    /// <summary>
+    /// Looks at neighbours cells to see if they exist.
+    /// </summary>
+    /// <param name="l">Line of the position.</param>
+    /// <param name="c">Column of the position.</param>
+    /// <returns>
+    /// Array of boolean that each indicates if there is a neighbour cell.
+    /// [0] for North.
+    /// [1] for South.
+    /// [2] for West.
+    /// [3] for East.
+    /// </returns>
     public bool[] Neighbour(int l, int c) {
         bool[] n = new bool[4];
         for (int i = 0; i < 4; i++) {
@@ -141,6 +186,17 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         return n;
     }
 
+    /// <summary>
+    /// Calculates the coordinates of the neighbour cell given the position and the direction to look at.
+    /// </summary>
+    /// <param name="l">Line of the position.</param>
+    /// <param name="c">Column of the position.</param>
+    /// <param name="direction">Direction to look at.</param>
+    /// <returns>
+    /// Array of boolean that each indicates if there is a neighbour cell.
+    /// [0] for line.
+    /// [1] for column.
+    /// </returns>
     public int[] FindNeighbourCellWithDirection(int l, int c, Direction direction) {
         int[] tmp = {l, c};
 
@@ -170,6 +226,13 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         return this.maze[l][c].visited;
     }
 
+    /// <summary>
+    /// Maze is visited when all cells in it are marked as visited.
+    /// </summary>
+    /// <returns>
+    /// Returns false if a cell that is not visited is encountered.
+    /// Else it retruns true.
+    /// </returns>
     public bool IsMazeVisited() {
         int i = 0;
         int j = 0;
@@ -198,6 +261,10 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         return this.maze.Length;
     }
 
+    /// <summary>
+    /// Creates random paths for the maze.
+    /// It visits all the cells and break walls to fully build the maze.
+    /// </summary>
     public void CreatePaths() {
         Random rand = new Random();
         int line = rand.Next(this.vSize);
@@ -229,9 +296,15 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         }
     }
 
+    /// <summary>
+    /// Creates a path in the maze.
+    /// It visits all the cells and break walls on the way.
+    /// It opens a wall at the start and the end of the given path.
+    /// </summary>
+    /// <param name="path">Path to create.</param>
     public void CreatePath(MazePath path) {
-        List<(int, int)> indexSet = path.getIndexSet();
-        List<Direction> directions = path.getDirections();
+        List<(int, int)> indexSet = path.GetIndexSet();
+        List<Direction> directions = path.GetDirections();
 
         // We open the 2 gates
         this.OpenTwoGateAt(indexSet[0], indexSet[indexSet.Count-1]);
@@ -246,6 +319,15 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         }
     }
 
+    /// <summary>
+    /// Used to choose a direction at random.
+    /// </summary>
+    /// <param name="line">Line of the position.</param>
+    /// <param name="column">Column of the position.</param>
+    /// <param name="direction">Direction where we open.</param>
+    /// <returns>
+    /// Returns a random direction between North, East, South and West.
+    /// </returns>
     private Direction ChooseNeighbourDirection(int line, int column){
         Random r = new Random();
         bool[] possibleDirection = this.Neighbour(line, column);
@@ -266,10 +348,18 @@ public class Maze<Cell> where Cell : MazeCell, new() {
         return Direction.None;
     }
 
-    public bool encountersWallOnPath(MazePath path) {
+    /// <summary>
+    /// Check if there is a wall on the given path.
+    /// </summary>
+    /// <param name="path">Path to check.</param>
+    /// <returns>
+    /// Returns true if a wall was encountered.
+    /// Else returns false.
+    /// </returns>
+    public bool EncountersWallOnPath(MazePath path) {
         // We take enumerators because we want to stop the moment we find a wall
-        List<(int, int)>.Enumerator indexIt = path.getIndexSet().GetEnumerator();
-        List<Direction>.Enumerator directionsIt = path.getDirections().GetEnumerator();
+        List<(int, int)>.Enumerator indexIt = path.GetIndexSet().GetEnumerator();
+        List<Direction>.Enumerator directionsIt = path.GetDirections().GetEnumerator();
 
         // We need to make sure we don't continue the while loop without a Current
         bool hasNext = indexIt.MoveNext() && directionsIt.MoveNext();

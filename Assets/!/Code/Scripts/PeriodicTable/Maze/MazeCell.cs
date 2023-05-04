@@ -1,7 +1,15 @@
+/* Class for a cell of the maze. */
 public class MazeCell {
+    // True if there is a wall to the north.
     public bool north;
+
+    // True if there is a wall to the east.
     public bool east;
+
+    // True if there is a wall to the west.
     public bool west;
+    
+    // True if there is a wall to the south.
     public bool south;
 
     // mark if the cell has been visited when building
@@ -15,10 +23,22 @@ public class MazeCell {
         this.visited = false;
     }
 
+    /// <summary>
+    /// A cell is call closed when all its sides have walls.
+    /// </summary>
+    /// <returns>
+    /// Returns true if all 4 of the direction variables are true.
+    /// Else returns false.
+    /// </returns>
     public bool IsClosed() {
         return(this.north && this.south && this.east && this.west);
     }
 
+
+    /// <summary>
+    /// Setter for the walls of the cell.
+    /// </summary>
+    /// <param name="direction">Direction of the wall to open.</param>
     public void OpenWall(Direction direction) {
         switch(direction){
             case Direction.North :
@@ -36,6 +56,14 @@ public class MazeCell {
         }
     }
 
+    /// <summary>
+    /// Getter for the walls of the cell.
+    /// </summary>
+    /// <param name="direction">Direction of the wall to check.</param>
+    /// <returns>
+    /// Returns true if there is a wall in the given direction.
+    /// Else returns false.
+    /// </returns>
     public bool IsOpened(Direction direction) {
         switch(direction){
             case Direction.North :
@@ -49,14 +77,5 @@ public class MazeCell {
             default :
                 return false;
         }
-    }
-
-    public MazeCell Copy() {
-        MazeCell cell = new MazeCell();
-        cell.north = this.north;
-        cell.south = this.south;
-        cell.east = this.east;
-        cell.west = this.west;
-        return cell;
     }
 }

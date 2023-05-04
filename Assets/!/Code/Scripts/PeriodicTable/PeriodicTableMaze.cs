@@ -1,40 +1,58 @@
 using System;
 using UnityEngine;
 
+/* Class for the Periodic Table which also happens to be a maze. */
 public class PeriodicTableMaze : MonoBehaviour {
+    // Size of an element of the periodic table.
     public float atomSize;
 
-    // Position of the first Atom of the table (relative to the parent)
+    // Position of the first Atom of the table (relative to the parent).
     public Vector3 firstAtomPosition;
 
+    // Horizontal spacing between elements of the periodic table.
     public float hSpacing;
 
+    // Vertical spacing between elements of the periodic table.
     public float vSpacing;
 
+    // Prefab of an element of the periodic table.
     public TableElement atomPrefab;
 
+    // Rotation of the whole table.
     public Quaternion rotation;
 
+    // Default atom image, used as a blank in the periodic table.
     public Texture defaultAtomImage;
 
+    // Name of the folder where the images of the atoms are stored in.
     public string atomImageFolder;
 
+    // Magnet attached to the table. Can be null.
     public MagnetInteractions magnet;
 
     public MagnetInteractions magnetPrefab;
     public float magnetSize;
     public Quaternion magnetOrientation;
 
+    // Key attached to the table. Can be null.
     public KeyInteractions key;
+    
     public KeyInteractions keyPrefab;
+    // Relative position of the key when it is unattached to the magnet.
     public Vector3 relativeDefaultKeyPosition;
     public float keySize;
     public Quaternion keyOrientation;
 
-    private bool[][] isCellBlank;
-
+    // The maze behind the table.
     private Maze<AtomCell> maze;
 
+    // Boolean tab that marks all the cells of the maze attribute. true = blank cell ; false = cell that contains an atom
+    private bool[][] isCellBlank;
+
+    /// <summary>
+    /// Unity Start method. Called at the start of the game.
+    /// It creates the whole maze and the display of the periodic table with prefabs.
+    /// </summary>
     public void Start() {
         // TODO randomize those
         (int, int)[] atomsIndex = {
@@ -72,6 +90,7 @@ public class PeriodicTableMaze : MonoBehaviour {
                                 Direction.North     // Nitrogen => Exit
                              };
 
+        // Blank cells (yes I did it one by one)
         this.isCellBlank = new bool[9][];
 
         for (int i = 0; i < 9; i++) {
@@ -139,13 +158,20 @@ public class PeriodicTableMaze : MonoBehaviour {
         CreateAtoms();
     }
 
-    public void CreateAtoms() {
+    /// <summary>
+    /// Creates the periodic table display with the prefabs.
+    /// It also generates the key.
+    /// </summary>
+    private void CreateAtoms() {
+        // Retrieve images from the given folder.
         Texture[] atomImages = Resources.LoadAll<Texture>(atomImageFolder);
 
+        // We count used image to access the correct image and avoid array overflow.
         int imageCounter = 0;
 
         for (int i = 0; i < this.maze.maze.Length; i++) {
             for (int j = 0; j < this.maze.maze[i].Length; j++) {
+                // The (i, j) atom's position is calculated with its index position, the first atom position, the atom size, and the spacing.
                 Vector3 atomPos = new Vector3((float)(this.transform.position.x + j*(this.atomSize + this.hSpacing)),
                                               (float)(this.transform.position.y - i*(this.atomSize + this.vSpacing)),
                                               this.transform.position.z);
@@ -156,16 +182,19 @@ public class PeriodicTableMaze : MonoBehaviour {
 
                 atom.Initialize(i, j);
 
+                // We scale the atom with the given size.
                 atom.transform.localScale = new Vector3(atomSize, atomSize, 1);
 
                 this.maze.GetCellAt(i, j).position = atom.transform.position;
 
+                // We make sure to put the correct image and name on the atom.
                 if (imageCounter < atomImages.Length && !this.isCellBlank[i][j]) {
                     atom.GetComponent<Renderer>().material.mainTexture = atomImages[imageCounter];
 
                     /* int underscoreIndex = atomImages[imageCounter].name.IndexOf("_");
                     atom.name = atomImages[imageCounter].name.Substring(underscoreIndex + 1); */
 
+                    // We increment the counter only if we used an image.
                     imageCounter++;
                 } else {
                     atom.GetComponent<Renderer>().material.mainTexture = this.defaultAtomImage;
@@ -174,25 +203,37 @@ public class PeriodicTableMaze : MonoBehaviour {
             }
         }
 
+        // Key instantiation with given parameters.
         Vector3 keyPos = new Vector3((float)this.transform.position.x + this.relativeDefaultKeyPosition.x,
                                      (float)this.transform.position.y + this.relativeDefaultKeyPosition.y,
                                      (float)this.transform.position.z + this.relativeDefaultKeyPosition.z - this.keySize);
         this.key = (KeyInteractions)Instantiate(this.keyPrefab, keyPos, this.keyOrientation, this.transform);
 
-        // TODO Remove this
+        // TODO Remove this (magnet will be instantiated with an interaction)
+        this.SetMagnet();
+
+        // We rotate the whole table with given Quaternion.
+        this.transform.rotation *= this.rotation;
+    }
+
+    /// <summary>
+    /// Instantiates a magnet at the first atom position.
+    /// </summary>
+    public void SetMagnet() {
         Vector3 magnetPos = new Vector3((float)this.transform.position.x + this.firstAtomPosition.x,
                                         (float)this.transform.position.y + this.firstAtomPosition.y,
                                         (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetSize);
         this.magnet = (MagnetInteractions)Instantiate(this.magnetPrefab, magnetPos, this.magnetOrientation, this.transform);
-
-        this.transform.rotation *= this.rotation;
     }
 
     public Maze<AtomCell> GetMaze() {
         return this.maze;
     }
 
-    public void makeKeyFall() {
+    /// <summary>
+    /// Makes the key return to its initial position.
+    /// </summary>
+    public void MakeKeyFall() {
         this.key.transform.localPosition = this.relativeDefaultKeyPosition;
     }
 }

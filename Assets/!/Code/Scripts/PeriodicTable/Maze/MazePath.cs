@@ -3,10 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class MazePath {
+    // List of the cell composing the path.
     private List<(int,int)> indexSet;
 
+    // List of the direction to go from one cell to the next.
     private List<Direction> directions;
 
+    /// <summary>
+    /// Constructor of path.
+    /// Creates a path going through all the cell given using the directions given.
+    /// It tries to be as straight as possible.
+    /// Preconditions:
+    ///                - The path can't cross itself.
+    ///                - Following the previous rule, indexSet can't contain the same cell twice.
+    ///                - directions and indexSet must be same sized.
+    ///                - If one cell and the next aren't aligned, the direction given must go in the next cell's way.
+    /// </summary>
+    /// <param name="indexSet">Cell to go though when creating the path.</param>
+    /// <param name="directions">Directions to follow to create the path.</param>
+    /// <returns>
+    /// Returns the created path if the preconditions are fulfilled.
+    /// Else raises an ArgumentException.
+    /// </returns>
     public MazePath((int, int)[] indexSet, Direction[] directions) {
         if (indexSet.Length != indexSet.Distinct().Count()) {
             // STOP HERE: Can't create path from duplicates cells
@@ -61,6 +79,18 @@ public class MazePath {
         }
     }
 
+    /// <summary>
+    /// Add all cells found between start (included) and goal (excluded) to this.indexSet.
+    /// Preconditions:
+    ///                - If start cell and goal cell aren't aligned, the direction given must go in the goal cell's way.
+    /// </summary>
+    /// <param name="start">Coordinates corresponding to the starting cell.</param>
+    /// <param name="goal">Coordinates corresponding to the goal cell.</param>
+    /// <param name="direction">Direction to go to the goal cell.</param>
+    /// <returns>
+    /// Returns the final position if the preconditions are fulfilled.
+    /// Else raises an ArgumentException.
+    /// </returns>
     private (int, int) AddCellsOnTheWay((int, int) start, (int, int) goal, Direction direction) {
         int line = start.Item1;
         int column = start.Item2;
@@ -124,11 +154,11 @@ public class MazePath {
         return (line, column);
     }
 
-    public List<(int, int)> getIndexSet() {
+    public List<(int, int)> GetIndexSet() {
         return this.indexSet;
     }
 
-    public List<Direction> getDirections() {
+    public List<Direction> GetDirections() {
         return this.directions;
     }
 }
