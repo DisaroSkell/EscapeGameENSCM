@@ -11,7 +11,7 @@ public class TableElement : MonoBehaviour, IPointerClickHandler {
     /// </summary>
     /// <param name="line">Line of the element in the maze.</param>
     /// <param name="column">Column of the element in the maze.</param>
-    public void Initialize(int line, int column) {
+    public virtual void Initialize(int line, int column) {
         this.index = (line, column);
     }
 

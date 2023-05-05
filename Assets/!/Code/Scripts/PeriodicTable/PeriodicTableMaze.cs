@@ -27,6 +27,16 @@ public class PeriodicTableMaze : MonoBehaviour {
     // Name of the folder where the images of the atoms are stored in.
     public string atomImageFolder;
 
+    // Prefab for the top element 
+    public TopElement topPrefab;
+    // Size for the top element 
+    public float topVerticalSize;
+
+    // Prefab for the bottom element 
+    public BottomElement bottomPrefab;
+    // Size for the bottom element 
+    public float bottomVerticalSize;
+
     // Magnet attached to the table. Can be null.
     public MagnetInteractions magnet;
 
@@ -169,8 +179,8 @@ public class PeriodicTableMaze : MonoBehaviour {
         // We count used image to access the correct image and avoid array overflow.
         int imageCounter = 0;
 
-        for (int i = 0; i < this.maze.maze.Length; i++) {
-            for (int j = 0; j < this.maze.maze[i].Length; j++) {
+        for (int i = 0; i < this.maze.GetVSize(); i++) {
+            for (int j = 0; j < this.maze.GetHSize(); j++) {
                 // The (i, j) atom's position is calculated with its index position, the first atom position, the atom size, and the spacing.
                 Vector3 atomPos = new Vector3((float)(this.transform.position.x + j*(this.atomSize + this.hSpacing)),
                                               (float)(this.transform.position.y - i*(this.atomSize + this.vSpacing)),
@@ -183,7 +193,7 @@ public class PeriodicTableMaze : MonoBehaviour {
                 atom.Initialize(i, j);
 
                 // We scale the atom with the given size.
-                atom.transform.localScale = new Vector3(atomSize, atomSize, 1);
+                atom.transform.localScale = new Vector3(this.atomSize, this.atomSize, 1);
 
                 this.maze.GetCellAt(i, j).position = atom.transform.position;
 
@@ -203,23 +213,84 @@ public class PeriodicTableMaze : MonoBehaviour {
             }
         }
 
-        // Key instantiation with given parameters.
-        Vector3 keyPos = new Vector3((float)this.transform.position.x + this.relativeDefaultKeyPosition.x,
-                                     (float)this.transform.position.y + this.relativeDefaultKeyPosition.y,
-                                     (float)this.transform.position.z + this.relativeDefaultKeyPosition.z - this.keySize);
-        this.key = (KeyInteractions)Instantiate(this.keyPrefab, keyPos, this.keyOrientation, this.transform);
+        // Horizontal average position.
+        float middlePos = (this.maze.GetCellAt(0, 0).position.x + this.maze.GetCellAt(0, this.maze.GetHSize()-1).position.x)/2;
+
+        this.InitTop(middlePos);
+        
+        this.InitBottom(middlePos);
+
+        this.InitKey();
 
         // TODO Remove this (magnet will be instantiated with an interaction)
-        this.SetMagnet();
+        this.InitMagnet();
 
         // We rotate the whole table with given Quaternion.
         this.transform.rotation *= this.rotation;
     }
 
     /// <summary>
+    /// Instantiates the top element.
+    /// </summary>
+    /// <param name="middlePos">The horizontal center of the table.</param>
+    public void InitTop(float middlePos) {
+        // Top element instanciation.
+        Vector3 topPos = new Vector3((float)(middlePos),
+                                      (float)(this.maze.GetCellAt(0, 0).position.y + this.topVerticalSize/2 + this.atomSize/2 + this.vSpacing),
+                                      this.transform.position.z);
+
+        TopElement top = (TopElement)Instantiate(this.topPrefab, topPos, Quaternion.identity, this.transform);
+
+        top.Initialize();
+
+        // The top element is taking the whole horizontal space.
+        float xTopScale = this.maze.GetHSize()*this.atomSize + (this.maze.GetHSize()-1)*this.hSpacing;
+
+        top.transform.localScale = new Vector3(xTopScale, this.topVerticalSize, 1);
+
+        // Top element image and naming.
+        top.GetComponent<Renderer>().material.mainTexture = this.defaultAtomImage;
+        top.name = "TopElement";
+    }
+
+    /// <summary>
+    /// Instantiates the bottom element.
+    /// </summary>
+    /// <param name="middlePos">The horizontal center of the table.</param>
+    public void InitBottom(float middlePos) {
+        // Bottom element instanciation.
+        Vector3 bottomPos = new Vector3((float)(middlePos),
+                                     (float)(this.maze.GetCellAt(this.maze.GetVSize()-1, 0).position.y - (this.bottomVerticalSize/2 + this.atomSize/2 + this.vSpacing)),
+                                     this.transform.position.z);
+
+        BottomElement bottom = (BottomElement)Instantiate(this.bottomPrefab, bottomPos, Quaternion.identity, this.transform);
+
+        bottom.Initialize();
+
+        // The bottom element is taking the whole horizontal space.
+        float xBottomScale = this.maze.GetHSize()*this.atomSize + (this.maze.GetHSize()-1)*this.hSpacing;
+
+        bottom.transform.localScale = new Vector3(xBottomScale, this.bottomVerticalSize, 1);
+
+        // Bottom element image and naming.
+        bottom.GetComponent<Renderer>().material.mainTexture = this.defaultAtomImage;
+        bottom.name = "BottomElement";
+    }
+
+    /// <summary>
+    /// Instantiates a key at the bottom of the table.
+    /// </summary>
+    public void InitKey() {
+        Vector3 keyPos = new Vector3((float)this.transform.position.x + this.relativeDefaultKeyPosition.x,
+                                     (float)this.transform.position.y + this.relativeDefaultKeyPosition.y,
+                                     (float)this.transform.position.z + this.relativeDefaultKeyPosition.z - this.keySize);
+        this.key = (KeyInteractions)Instantiate(this.keyPrefab, keyPos, this.keyOrientation, this.transform);
+    }
+
+    /// <summary>
     /// Instantiates a magnet at the first atom position.
     /// </summary>
-    public void SetMagnet() {
+    public void InitMagnet() {
         Vector3 magnetPos = new Vector3((float)this.transform.position.x + this.firstAtomPosition.x,
                                         (float)this.transform.position.y + this.firstAtomPosition.y,
                                         (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetSize);
