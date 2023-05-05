@@ -37,6 +37,17 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     public void ToTopMouvement() {
         this.Mouvement((-2, -2));
+
+        // If the magnet has the key while being at the top, the maze is solved.
+        if (this.hasKey) {
+            PeriodicTableMaze table = this.GetComponentInParent<PeriodicTableMaze>();
+
+            // TODO Add key to player's inventory
+            
+            // Destroy key object
+            Destroy(table.key.gameObject);
+            this.hasKey = false;
+        }
     }
 
     /// <summary>
