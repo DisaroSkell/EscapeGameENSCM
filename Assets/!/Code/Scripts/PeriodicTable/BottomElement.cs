@@ -20,4 +20,17 @@ public class BottomElement : TableElement {
     public void Initialize() {
         base.Initialize(-1, -1);
     }
+
+    /// <summary>
+    /// Function of the IPointerClickHandler interface.
+    /// Makes the magnet go to the bottom of the table.
+    /// </summary>
+    /// <param name="PointerEventData">Unity class that contains information about a pointer event.</param>
+    public override void OnPointerClick(PointerEventData eventData) {
+        MagnetInteractions magnet = GetMagnet();
+
+        if (magnet is not null) {
+            magnet.ToBottomMouvement();
+        }
+    }
 }

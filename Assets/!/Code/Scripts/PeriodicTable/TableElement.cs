@@ -38,7 +38,8 @@ public class TableElement : MonoBehaviour, IPointerClickHandler {
     /// Does nothing if there are no magnet on the table.
     /// </summary>
     /// <param name="PointerEventData">Unity class that contains information about a pointer event.</param>
-    public void OnPointerClick(PointerEventData eventData) {
+    public virtual void OnPointerClick(PointerEventData eventData) {
+        PeriodicTableMaze table = this.GetComponentInParent<PeriodicTableMaze>();
         MagnetInteractions magnet = GetMagnet();
 
         if (magnet is not null) {
@@ -47,6 +48,10 @@ public class TableElement : MonoBehaviour, IPointerClickHandler {
                 magnet.HorizontalMouvement(this.index.Item2);
             } else if (magnetPos.Item2 == this.index.Item2) {
                 magnet.VerticalMouvement(this.index.Item1);
+            } else if (magnetPos == (-1, -1) && this.index.Item1 == table.GetMaze().GetVSize()-1) {
+                magnet.FromBottomMouvement(this.index.Item2);
+            } else if (magnetPos == (-2, -2) && this.index.Item1 == 0) {
+                magnet.FromTopMouvement(this.index.Item2);
             }
         }
     }

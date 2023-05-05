@@ -59,6 +59,11 @@ public class PeriodicTableMaze : MonoBehaviour {
     // Boolean tab that marks all the cells of the maze attribute. true = blank cell ; false = cell that contains an atom
     private bool[][] isCellBlank;
 
+    // Position of the top element.
+    private Vector3 topPosition;
+    // Position of the bottom element.
+    private Vector3 bottomPosition;
+
     /// <summary>
     /// Unity Start method. Called at the start of the game.
     /// It creates the whole maze and the display of the periodic table with prefabs.
@@ -80,7 +85,8 @@ public class PeriodicTableMaze : MonoBehaviour {
                                     (3, 3),     // Titanium
                                     (3, 0),     // Potassium
                                     (1, 0),     // Lithium
-                                    (1, 14)     // Nitrogen
+                                    (1, 14),    // Nitrogen
+                                    (0, 14)     // Exit Cell
                                   };
         Direction[] arrows = {
                                 Direction.East,     // Uranium => Europium
@@ -97,7 +103,8 @@ public class PeriodicTableMaze : MonoBehaviour {
                                 Direction.None,     // Titanium => Potassium
                                 Direction.None,     // Potassium => Lithium
                                 Direction.None,     // Lithium => Nitrogen
-                                Direction.North     // Nitrogen => Exit
+                                Direction.North,    // Nitrogen => Exit
+                                Direction.None      // Exit =>
                              };
 
         // Blank cells (yes I did it one by one)
@@ -235,11 +242,11 @@ public class PeriodicTableMaze : MonoBehaviour {
     /// <param name="middlePos">The horizontal center of the table.</param>
     public void InitTop(float middlePos) {
         // Top element instanciation.
-        Vector3 topPos = new Vector3((float)(middlePos),
+        this.topPosition = new Vector3((float)(middlePos),
                                       (float)(this.maze.GetCellAt(0, 0).position.y + this.topVerticalSize/2 + this.atomSize/2 + this.vSpacing),
                                       this.transform.position.z);
 
-        TopElement top = (TopElement)Instantiate(this.topPrefab, topPos, Quaternion.identity, this.transform);
+        TopElement top = (TopElement)Instantiate(this.topPrefab, this.topPosition, Quaternion.identity, this.transform);
 
         top.Initialize();
 
@@ -259,11 +266,11 @@ public class PeriodicTableMaze : MonoBehaviour {
     /// <param name="middlePos">The horizontal center of the table.</param>
     public void InitBottom(float middlePos) {
         // Bottom element instanciation.
-        Vector3 bottomPos = new Vector3((float)(middlePos),
-                                     (float)(this.maze.GetCellAt(this.maze.GetVSize()-1, 0).position.y - (this.bottomVerticalSize/2 + this.atomSize/2 + this.vSpacing)),
-                                     this.transform.position.z);
+        this.bottomPosition = new Vector3((float)(middlePos),
+                                        (float)(this.maze.GetCellAt(this.maze.GetVSize()-1, 0).position.y - (this.bottomVerticalSize/2 + this.atomSize/2 + this.vSpacing)),
+                                        this.transform.position.z);
 
-        BottomElement bottom = (BottomElement)Instantiate(this.bottomPrefab, bottomPos, Quaternion.identity, this.transform);
+        BottomElement bottom = (BottomElement)Instantiate(this.bottomPrefab, this.bottomPosition, Quaternion.identity, this.transform);
 
         bottom.Initialize();
 
@@ -299,6 +306,14 @@ public class PeriodicTableMaze : MonoBehaviour {
 
     public Maze<AtomCell> GetMaze() {
         return this.maze;
+    }
+
+    public Vector3 GetTopPosition() {
+        return this.topPosition;
+    }
+
+    public Vector3 GetBottomPosition() {
+        return this.bottomPosition;
     }
 
     /// <summary>

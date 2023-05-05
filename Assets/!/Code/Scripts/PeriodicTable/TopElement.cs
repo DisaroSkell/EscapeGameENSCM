@@ -20,4 +20,20 @@ public class TopElement : TableElement {
     public void Initialize() {
         base.Initialize(-2, -2);
     }
+
+    /// <summary>
+    /// Function of the IPointerClickHandler interface.
+    /// Makes the magnet go to the top of the table.
+    /// </summary>
+    /// <param name="PointerEventData">Unity class that contains information about a pointer event.</param>
+    public override void OnPointerClick(PointerEventData eventData) {
+        MagnetInteractions magnet = GetMagnet();
+
+        if (magnet is not null) {
+            (int, int) magnetPos = magnet.GetCellPosition();
+            if (magnetPos != (-1, -1)) {
+                magnet.ToTopMouvement();
+            }
+        }
+    }
 }
