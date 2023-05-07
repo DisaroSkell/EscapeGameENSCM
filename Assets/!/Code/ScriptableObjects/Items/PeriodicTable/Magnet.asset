@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83f87e324fa4f34fbf81f931d0241e0, type: 3}
   m_Name: Magnet
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 7751487916705101643, guid: fd4cae0edb789774ab1ab180c990ec6f, type: 3}
   type: 3
   inventory: {fileID: 0}
   interaction: {fileID: 0}
