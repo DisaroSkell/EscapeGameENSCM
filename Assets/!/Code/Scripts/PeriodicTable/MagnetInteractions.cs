@@ -5,6 +5,8 @@ using UnityEngine;
 public class MagnetInteractions : MonoBehaviour {
     public bool hasKey;
 
+    public ItemObject keyObject;
+
     // Position of the magnet in the maze.
     //(-1, -1) corresponds to the bottom of the maze.
     //(-2, -2) corresponds to the top of the maze.
@@ -42,10 +44,15 @@ public class MagnetInteractions : MonoBehaviour {
         if (this.hasKey) {
             PeriodicTableMaze table = this.GetComponentInParent<PeriodicTableMaze>();
 
-            // TODO Add key to player's inventory
+            // adding key to the player inventory
+            if(this.keyObject is not null) {
+                keyObject.inventory.AddItem(keyObject);
+                this.keyObject = null;
+            }
             
             // Destroy key object
             Destroy(table.key.gameObject);
+            table.key = null; // remove key from table to avoid null pointer exception
             this.hasKey = false;
         }
     }

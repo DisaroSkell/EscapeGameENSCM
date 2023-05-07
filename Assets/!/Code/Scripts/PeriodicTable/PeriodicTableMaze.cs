@@ -48,6 +48,8 @@ public class PeriodicTableMaze : MonoBehaviour {
     public KeyInteractions key;
     
     public KeyInteractions keyPrefab;
+
+    public ItemObject keyObject;
     // Relative position of the key when it is unattached to the magnet.
     public Vector3 relativeDefaultKeyPosition;
     public float keySize;
@@ -302,6 +304,7 @@ public class PeriodicTableMaze : MonoBehaviour {
                                         (float)this.transform.position.y + this.firstAtomPosition.y,
                                         (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetSize);
         this.magnet = (MagnetInteractions)Instantiate(this.magnetPrefab, magnetPos, this.magnetOrientation, this.transform);
+        this.magnet.keyObject = this.keyObject;
     }
 
     public Maze<AtomCell> GetMaze() {

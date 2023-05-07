@@ -28,12 +28,11 @@ public class TopElement : TableElement {
     /// <param name="PointerEventData">Unity class that contains information about a pointer event.</param>
     public override void OnPointerClick(PointerEventData eventData) {
         MagnetInteractions magnet = GetMagnet();
-
-        if (magnet is not null) {
-            (int, int) magnetPos = magnet.GetCellPosition();
-            if (magnetPos != (-1, -1)) {
-                magnet.ToTopMouvement();
-            }
+        if(magnet is null) return;
+        
+        (int, int) magnetPos = magnet.GetCellPosition();
+        if (magnetPos != (-1, -1)) {
+            magnet.ToTopMouvement();
         }
     }
 }
