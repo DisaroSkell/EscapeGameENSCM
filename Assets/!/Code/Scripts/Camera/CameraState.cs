@@ -12,5 +12,6 @@ public enum CameraState {
     FocusingGloves,         // Focus = 9
     FocusingBookPile3,      // Focus = 10
     FocusingSafe,           // Focus = 11
-    FocusingSulfate         // Focus = 12
+    FocusingSulfate,        // Focus = 12
+    FocusingBookPile4       // Focus = 13
 }
