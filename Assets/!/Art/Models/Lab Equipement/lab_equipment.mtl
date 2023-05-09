@@ -1,0 +1,322 @@
+# Blender MTL File: 'lab_equipment.blend'
+# Material Count: 31
+
+newmtl Material.001
+Ns 736.382246
+Ka 1.000000 1.000000 1.000000
+Kd 0.246194 0.084160 0.002501
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -s 3.000000 3.000000 3.000000 C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Wood\\WoodPlywood001\\3K\\WoodPlywood001_NRM_3K.jpg
+map_Kd -s 3.000000 3.000000 3.000000 C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Wood\\WoodPlywood001\\3K\\WoodPlywood001_COL_3K.jpg
+map_Ks -s 3.000000 3.000000 3.000000 C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Wood\\WoodPlywood001\\3K\\WoodPlywood001_REFL_3K.jpg
+
+newmtl None
+Ns 500
+Ka 0.8 0.8 0.8
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+
+newmtl back_wall
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Tiles\\TilesRectangularLimestoneHoned001\\3K\\TilesRectangularLimestoneHoned001_NRM16_3K.tif
+map_Kd C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Tiles\\TilesRectangularLimestoneHoned001\\3K\\TilesRectangularLimestoneHoned001_COL_3K.jpg
+map_Ks C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Tiles\\TilesRectangularLimestoneHoned001\\3K\\TilesRectangularLimestoneHoned001_REFL_3K.jpg
+
+newmtl beaker_glass
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl bolt_material
+Ns 234.472976
+Ka 1.000000 1.000000 1.000000
+Kd 0.438542 0.438542 0.438542
+Ks 0.260417 0.260417 0.260417
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl burner_adjuster
+Ns 559.041935
+Ka 1.000000 1.000000 1.000000
+Kd 0.195983 0.195983 0.195983
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl burner_base
+Ns 335.076137
+Ka 1.000000 1.000000 1.000000
+Kd 0.438536 0.438536 0.438536
+Ks 0.584746 0.584746 0.584746
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl burner_boby
+Ns 445.281482
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.491525 0.491525 0.491525
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl burner_tip
+Ns 119.513061
+Ka 1.000000 1.000000 1.000000
+Kd 0.410929 0.236632 0.031916
+Ks 0.406780 0.406780 0.406780
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl cabinat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Wood\\WoodFlooring6\\WoodFlooring064_NRM_1K.jpg
+map_Kd C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Wood\\WoodFlooring6\\WoodFlooring064_COL_1K.jpg
+map_Ks C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Wood\\WoodFlooring6\\WoodFlooring064_REFL_1K.jpg
+
+newmtl chemical
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl chemical.001
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl chemical.002
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl glass
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl glass.001
+Ns 882.090000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl grip_material_black_metal
+Ns 206.640642
+Ka 1.000000 1.000000 1.000000
+Kd 0.012216 0.012216 0.012216
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl grip_material_black_metal.001
+Ns 609.472686
+Ka 1.000000 1.000000 1.000000
+Kd 0.012216 0.012216 0.012216
+Ks 0.072917 0.072917 0.072917
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl measuring_line_Cflask.001
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl measuring_line_Cflask.002
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl measuring_line_beaker
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl measuring_line_beaker.001
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl measuring_line_cylinder
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl metal_bar_iron_stage
+Ns 882.090000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl metal_shinnig_metal_grip
+Ns 412.597632
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.427083 0.427083 0.427083
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl netvex_logo
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl netvex_volume
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl netvex_volume.001
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl netvex_volume.002
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl stage
+Ns 156.249747
+Ka 1.000000 1.000000 1.000000
+Kd 0.014669 0.014669 0.014669
+Ks 0.718750 0.718750 0.718750
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl stand_material
+Ns 93.847668
+Ka 1.000000 1.000000 1.000000
+Kd 0.375743 0.276042 0.133971
+Ks 0.250000 0.250000 0.250000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl table
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.246193 0.096083 0.152581
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Tiles\\TilesRectangularWhite001\\3K\\TilesRectangularWhite001_NRM_3K.jpg
+map_Kd C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Tiles\\TilesRectangularWhite001\\3K\\TilesRectangularWhite001_COL_3K.jpg
+map_Ks C:\\Users\\Olawumi Boluwatife\\Pictures\\textures\\Tiles\\TilesRectangularWhite001\\3K\\TilesRectangularWhite001_REFL_3K.jpg
