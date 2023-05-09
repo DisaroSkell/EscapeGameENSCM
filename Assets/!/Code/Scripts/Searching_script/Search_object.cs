@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Books_1
+namespace SearchObject
 {
-public class Stack_of_Books_1 : MonoBehaviour, IPointerClickHandler
+public class Search_object : MonoBehaviour, IPointerClickHandler
 {
 
     public GameObject button;
-    public GameObject Popup1;
-    public GameObject Popup2;
-    public static int QRcode = 1;
+    public GameObject Popup_found;
+    public GameObject obj;
+    public bool QRcode;
+    public bool Phone;
+    public static bool QR;
+    public static bool phone;
+    public static string nameobj = "";
+    
 
     //Detect if a click occurs
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        QR = QRcode;
+        phone = Phone;
+        nameobj = obj.name;
         //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
-        Debug.Log(" Game Object Clicked!");
-        if (Popup1.activeSelf == false && Popup2.activeSelf == false){
+        if (Popup_found.activeSelf == false){
             ToggleVisibilityButtonSearch();
         }
         
