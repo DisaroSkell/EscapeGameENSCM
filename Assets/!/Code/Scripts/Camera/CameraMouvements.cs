@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 /* The CameraMovements class sets the focus of the camera using an animator. */
@@ -12,6 +13,10 @@ public class CameraMouvements : MonoBehaviour {
 
     public GameObject rooms;
 
+    public UnlockableDoor door;
+
+    public GameObject changeRoomButton;
+
     public CameraState State {
         get {
             return this.state;
@@ -21,6 +26,10 @@ public class CameraMouvements : MonoBehaviour {
             if (this.state != value) {
                 this.state = value;
                 animator.SetInteger("Focus", (int)value);
+
+                if (value != CameraState.UnfocusedRoom1 && value != CameraState.UnfocusedRoom2) {
+                    this.changeRoomButton.SetActive(false);
+                }
             }
         }
     }
@@ -30,6 +39,7 @@ public class CameraMouvements : MonoBehaviour {
     void Start() {
         this.State = CameraState.UnfocusedRoom1;
         this.currentReturnButton = this.returnButtonRoom1;
+        this.changeRoomButton.SetActive(false);
     }
 
     /// <summary>
@@ -50,6 +60,10 @@ public class CameraMouvements : MonoBehaviour {
             foreach (Transform room in this.rooms.transform) {
                 // Reenable colliders of direct children of rooms (here colliders of POVs)
                 FocusChanger.EnableCollidersFromDirectChildren(room);
+            }
+
+            if (!this.door.IsLocked()) {
+                this.changeRoomButton.SetActive(true);
             }
         }
     }
