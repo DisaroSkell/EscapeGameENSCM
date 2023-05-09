@@ -210,8 +210,8 @@ public class PeriodicTableMaze : MonoBehaviour {
                 if (imageCounter < atomImages.Length && !this.isCellBlank[i][j]) {
                     atom.GetComponent<Renderer>().material.mainTexture = atomImages[imageCounter];
 
-                    /* int underscoreIndex = atomImages[imageCounter].name.IndexOf("_");
-                    atom.name = atomImages[imageCounter].name.Substring(underscoreIndex + 1); */
+                    int underscoreIndex = atomImages[imageCounter].name.IndexOf("_");
+                    atom.name = atomImages[imageCounter].name.Substring(underscoreIndex + 1);
 
                     // We increment the counter only if we used an image.
                     imageCounter++;

@@ -51,9 +51,11 @@ public class MagnetInteractions : MonoBehaviour {
             }
             
             // Destroy key object
-            Destroy(table.key.gameObject);
-            table.key = null; // remove key from table to avoid null pointer exception
-            this.hasKey = false;
+            if(table.key is not null) {
+                Destroy(table.key.gameObject);
+                table.key = null;
+                this.hasKey = false;
+            }
         }
     }
 
