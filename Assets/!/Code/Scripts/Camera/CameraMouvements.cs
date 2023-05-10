@@ -88,6 +88,10 @@ public class CameraMouvements : MonoBehaviour {
         this.Unfocus(CameraState.UnfocusedRoom2);
     }
 
+    /// <summary>
+    /// Changes the room the camera is focusing.
+    /// </summary>
+    /// <param name="textMesh">Text of the button to change.</param>
     public void ChangeRoom(TextMeshProUGUI textMesh) {
         if (this.State == CameraState.UnfocusedRoom1) {
             this.State = CameraState.UnfocusedRoom2;
@@ -97,6 +101,9 @@ public class CameraMouvements : MonoBehaviour {
             this.State = CameraState.UnfocusedRoom1;
             this.currentReturnButton = this.returnButtonRoom1;
             textMesh.text = "↑";
+        } else {
+            this.currentReturnButton.GetComponent<Button>().onClick.Invoke();
+            this.ChangeRoom(textMesh);
         }
     }
 }
