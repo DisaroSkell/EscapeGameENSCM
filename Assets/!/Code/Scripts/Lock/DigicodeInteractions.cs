@@ -13,10 +13,10 @@ public class DigicodeInteractions : MonoBehaviour {
     /// <summary>
     /// Opens the unlock UI by creating a prefab.
     /// </summary>
-    /// <param name="door">Door linked to the digicode.</param>
-    public void OpenUnlockUI(UnlockableDoor door) {
+    /// <param name="unlockable">The unlockable object linked to the digicode.</param>
+    public void OpenUnlockUI(Unlockable unlockable) {
         this.unlockUI = (DigicodeScreen)Instantiate(unlockUIPrefab, unlockUiParent.transform.position, Quaternion.identity, unlockUiParent.transform);
-        unlockUI.Initialize(this, door);
+        unlockUI.Initialize(this, unlockable);
 
         unlockUI.gameObject.SetActive(true);
     }
