@@ -15,43 +15,7 @@ public class FocusChanger : MonoBehaviour, IPointerClickHandler {
         camMove.State = aim;
         returnButton.SetActive(true);
 
-        EnableCollidersFromChildren(this.transform);
-        DisableCollidersFromDirectChildren(this.transform.parent);
-    }
-
-    static public void DisableCollidersFromDirectChildren(Transform parent) {
-        Collider[] colliders = parent.GetComponentsInChildren<Collider>();
-
-        foreach (var collider in colliders) {
-            if(collider.gameObject.transform.parent == parent) {
-                collider.enabled = false;
-            }
-        }
-    }
-
-    static public void DisableCollidersFromChildren(Transform parent) {
-        Collider[] colliders = parent.GetComponentsInChildren<Collider>();
-
-        foreach (var collider in colliders) {
-            collider.enabled = false;
-        }
-    }
-
-    static public void EnableCollidersFromDirectChildren(Transform parent) {
-        Collider[] colliders = parent.GetComponentsInChildren<Collider>();
-
-        foreach (var collider in colliders) {
-            if(collider.gameObject.transform.parent == parent) {
-                collider.enabled = true;
-            }
-        }
-    }
-
-    static public void EnableCollidersFromChildren(Transform parent) {
-        Collider[] colliders = parent.GetComponentsInChildren<Collider>();
-
-        foreach (var collider in colliders) {
-            collider.enabled = true;
-        }
+        Utils.EnableCollidersFromChildren(this.transform);
+        Utils.DisableCollidersFromDirectChildren(this.transform.parent);
     }
 }

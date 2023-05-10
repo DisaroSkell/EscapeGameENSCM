@@ -55,11 +55,11 @@ public class CameraMouvements : MonoBehaviour {
             this.currentReturnButton.SetActive(false);
 
             // Disable all colliders
-            FocusChanger.DisableCollidersFromChildren(rooms.transform);
+            Utils.DisableCollidersFromChildren(rooms.transform);
 
             foreach (Transform room in this.rooms.transform) {
                 // Reenable colliders of direct children of rooms (here colliders of POVs)
-                FocusChanger.EnableCollidersFromDirectChildren(room);
+                Utils.EnableCollidersFromDirectChildren(room);
             }
 
             if (!this.door.IsLocked()) {
