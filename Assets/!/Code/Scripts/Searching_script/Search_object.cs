@@ -10,7 +10,6 @@ public class Search_object : MonoBehaviour, IPointerClickHandler
 
     public GameObject button;
     public GameObject Popup_found;
-    public GameObject obj;
     public bool QRcode;
     public bool Phone;
     public static bool QR;
@@ -23,7 +22,7 @@ public class Search_object : MonoBehaviour, IPointerClickHandler
     {
         QR = QRcode;
         phone = Phone;
-        nameobj = obj.name;
+        nameobj = this.gameObject.name;
         //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
         if (Popup_found.activeSelf == false){
             ToggleVisibilityButtonSearch();
