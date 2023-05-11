@@ -6,7 +6,9 @@ public enum ItemType {
     All,
     Document,
     Pictogram,
-    Default
+    Default,
+    MatchesCard,
+    Container
 }
 public abstract class ItemObject : ScriptableObject {
     public GameObject prefab;
@@ -15,4 +17,8 @@ public abstract class ItemObject : ScriptableObject {
     
     # nullable enable
     public Interaction? interaction;
+
+    public virtual GameObject GetPrefab() {
+        return this.prefab;
+    }
 }
