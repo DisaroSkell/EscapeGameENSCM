@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b23d574ae5f3e4fbf3b1e04a492933, type: 3}
+  m_Name: Card_E_2_2
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7751487916705101643, guid: 9234891c843b4d74c98834081d01922c, type: 3}
+  type: 4
+  inventory: {fileID: 11400000, guid: 1212908821a228944b1eb1788e22ab6b, type: 2}
+  interaction: {fileID: 0}
+  backPrefab: {fileID: 7751487916705101643, guid: 06d32e185078d4041bb8a0a9dbce6700, type: 3}
+  fliped: 0
