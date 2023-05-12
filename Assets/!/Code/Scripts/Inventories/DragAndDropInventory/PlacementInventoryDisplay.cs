@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
@@ -23,6 +24,7 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
             this.objectList.Add(child.gameObject);
             LinkDragEvents(child.gameObject);
         }
+        UpdateDisplay();
     }
 
     private void UpdateItemDisplay(int i) {
@@ -41,8 +43,11 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
 
             var rawImg = child.gameObject.GetComponent<RawImage>();
             if(item is not null) {
-                rawImg.texture = item.prefab.GetComponent<RawImage>().texture;
-                rawImg.color = item.prefab.GetComponent<RawImage>().color;
+                rawImg.texture = item.GetPrefab().GetComponent<RawImage>().texture;
+                rawImg.color = item.GetPrefab().GetComponent<RawImage>().color;
+                if(item.type == ItemType.MatchesCard) {
+                    SetObjFlipable(child.gameObject, (DoubleSidedItems)item);
+                }
             }
             else {
                 rawImg.texture = EmptySlot.gameObject.GetComponent<RawImage>().texture;
@@ -55,8 +60,7 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
         this.Display();
     }
 
-    protected override void OnDragEndAction(GameObject obj)
-    {
+    protected override void OnDragEndAction(GameObject obj) {
         PlayerMouse mouse = this.player.playerMouse;
         // GUARD: there is an item
         if(mouse.itemFrom is null) return;
@@ -75,6 +79,30 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
 
         this.inventory.Switch(mouse.indexFrom, mouse.indexTo);
 
+    }
+
+    public void SetObjFlipable(GameObject obj, DoubleSidedItems itemObject) {
+        // collider to interact with the object
+        BoxCollider2D bc = obj.GetComponent<BoxCollider2D>();
+        if(bc is null) {
+            bc = obj.AddComponent<BoxCollider2D>();
+        }
+        // attached item to the object
+        Item? newItem = obj.GetComponent<Item>();
+        if(newItem is null) {
+            newItem = obj.AddComponent<Item>();
+        }
+        newItem.item = itemObject;
+        newItem.inventory = itemObject.inventory;
+        // add event on click to flip item and update display
+        UnityAction handleItemClickedUnityAction = () => { this.HandleItemClicked(itemObject); };
+        newItem.OnPointerClickEvent.RemoveAllListeners();
+        newItem.OnPointerClickEvent.AddListener(handleItemClickedUnityAction);
+    }
+
+    public void HandleItemClicked(DoubleSidedItems item) {
+        item.Flip();
+        this.UpdateDisplay();
     }
 
     

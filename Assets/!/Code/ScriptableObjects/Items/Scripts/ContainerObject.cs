@@ -6,7 +6,7 @@ using UnityEngine;
 // a Container object is an object that open an inventory when clicked in a inventory
 public class ContainerObject : ItemObject
 {
-    public AbstractInventory inventoryToOpen;
+    public GameObject inventoryToOpen;
     public void Awake() {
         type = ItemType.Container;
    }

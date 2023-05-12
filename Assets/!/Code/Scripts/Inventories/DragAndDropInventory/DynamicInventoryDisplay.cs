@@ -15,6 +15,10 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
     public int Y_SPACE_BETWEEN_ITEMS;
 
     public bool takeInventory;
+
+    #nullable disable
+    public GameObject parentCanvas;
+    #nullable enable
     public override void Display() {
         for (int i = 0; i < inventory.Length; i++) {
             InstantiateObject(i);
@@ -45,6 +49,9 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         }
         else if (item is not null && item.GetType() == typeof(DocumentObject)) {
             SetObjViewable(obj, (DocumentObject)item);
+        }
+        else if (item is not null && item.type == ItemType.Container) {
+            SetObjContainerOpener(obj, (ContainerObject)item);
         }
         else {
             LinkDragEvents(obj);
@@ -88,11 +95,25 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         // set images to Document Generator and display images in the event
         UnityAction handleDocumentClickedUnityAction = () => { 
             documentGenerator.folderRessourcesName = itemObject.folderRessourcesName;
-            documentGenerator.Display(); 
+            documentGenerator.Display();
         };
         newItem.OnPointerClickEvent.AddListener(handleDocumentClickedUnityAction);
+    }
 
+    private void SetObjContainerOpener(GameObject obj, ContainerObject itemObject) {
+        // collider to interact with the object
+        BoxCollider2D bc = obj.AddComponent<BoxCollider2D>();
+        // attached item to the object
+        Item newItem = obj.AddComponent<Item>();
+        newItem.item = itemObject;
+        newItem.inventory = itemObject.inventory;
 
+        // PanelOpener opener = obj.AddComponent<PanelOpener>();
+        // opener.Panel = this.GetComponentInParent<Transform>().gameObject;
+        UnityAction handleItemClickedUnityAction = () => { Instantiate(itemObject.inventoryToOpen, this.parentCanvas.transform.position, Quaternion.identity, this.parentCanvas?.transform); };
+
+        // add event on click to open panel
+        newItem.OnPointerClickEvent.AddListener(handleItemClickedUnityAction);
     }
 
     /// <summary>
