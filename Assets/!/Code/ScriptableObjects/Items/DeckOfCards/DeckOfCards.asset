@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41220cb0b78c69d45b50584b77e4a3c8, type: 3}
   m_Name: DeckOfCards
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 6061711076875915812, guid: 8be5823d6352248469df2d415f1b51b3, type: 3}
   type: 5
-  inventory: {fileID: 0}
+  inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
   interaction: {fileID: 0}
-  inventoryToOpen: {fileID: 0}
+  inventoryToOpen: {fileID: 4403879457850878210, guid: eb1a79d664b250942ab0d7a08615f63b, type: 3}
