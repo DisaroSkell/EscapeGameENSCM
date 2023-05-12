@@ -21,10 +21,17 @@ public class UnlockScreen : MonoBehaviour {
         this.padlock = padlock;
 
         // UI inits
+
         this.pickers = new DigitPicker[padlock.code.Length];
+
+        // Distance between two pickers. Calculated from the number of pickers and the UI size.
+        double distBetweenPickers = (Screen.width * 0.5)/(padlock.code.Length - 1);
+
+        // Number of distance between pickers we have from leftmost picker to the center.
         double distXFromCenter = padlock.code.Length%2 == 0 ? (padlock.code.Length/2 - 0.5) * (-1) : (padlock.code.Length/2) * (-1);
+
         for (int i = 0; i < padlock.code.Length; i++) {
-            Vector3 coords = new Vector3((float)(this.transform.position.x + (distXFromCenter+i)*100), this.transform.position.y);
+            Vector3 coords = new Vector3((float)(this.transform.position.x + (distXFromCenter+i)*distBetweenPickers), this.transform.position.y);
 
             this.pickers[i] = (DigitPicker)Instantiate(digitPickerUI, coords, Quaternion.identity, this.transform);
             this.pickers[i].Initialize(padlock.currentTry[i], this);
