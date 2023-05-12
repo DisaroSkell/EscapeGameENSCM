@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/!/Level/Scenes/Endgame.unity
-    guid: d778ffdbe6648c64ea97a6a46fe0b10e
+    path: Assets/!/Level/Scenes/TitleScreen.unity
+    guid: ad552ede03038f04b94b75e4d667e043
+  - enabled: 1
+    path: Assets/!/Level/Scenes/MainScene.unity
+    guid: 1318875a6aa8e38488051d62f6087add
+  - enabled: 1
+    path: Assets/!/Level/Scenes/Tuto.unity
+    guid: 176a666b541a7f641a8bd950aa1346ec
+  - enabled: 1
+    path: Assets/!/Level/Scenes/Credits.unity
+    guid: 59df33130846e134194bfd6cdfbe839e
   m_configObjects: {}
