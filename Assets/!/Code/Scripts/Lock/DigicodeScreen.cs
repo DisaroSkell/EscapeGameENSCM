@@ -29,7 +29,9 @@ public class DigicodeScreen : MonoBehaviour {
             this.ResetTry();
         }
 
-        this.answer.text += number.ToString();
+        if (this.answer.text.Length < 6) {
+            this.answer.text += number.ToString();
+        }
     }
 
     /// <summary>
