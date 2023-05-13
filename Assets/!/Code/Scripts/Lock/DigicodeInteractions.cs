@@ -11,12 +11,9 @@ public class DigicodeInteractions : LockInteractions {
     /// Confirms the current try. 
     /// If the try is correct, the digicode will be unlocked.
     /// </summary>
-    public void ConfirmTry(string currentTry) {
-        bool result = this.code == currentTry;
-
-        if (result) {
-            this.unlocked = true;
-        }
+    public override void ConfirmTry(string currentTry) {
+        this.unlocked = this.code == currentTry;
+        base.ConfirmTry(currentTry);
     }
 
     /// <summary>

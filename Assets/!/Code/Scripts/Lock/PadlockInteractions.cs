@@ -19,11 +19,13 @@ public class PadlockInteractions : LockInteractions {
     /// If the try is correct, the object desactivates.
     /// </summary>
     public void ConfirmTry() {
-        bool result = this.code == new string (this.currentTry);
+        string currentTryStr = new string (this.currentTry);
 
-        if (result) {
+        if (this.code == currentTryStr) {
             this.gameObject.SetActive(false);
         }
+
+        base.ConfirmTry(currentTryStr);
     }
 
     /// <summary>

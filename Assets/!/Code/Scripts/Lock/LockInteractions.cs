@@ -10,6 +10,18 @@ public abstract class LockInteractions : MonoBehaviour, IPointerClickHandler {
 
     public GameObject unlockUiParent;
 
+    public Openable openable;
+
+    /// <summary>
+    /// Confirms the current try. 
+    /// If the try is correct, this will unlock.
+    /// </summary>
+    public virtual void ConfirmTry(string currentTry) {
+        if (this.code == currentTry && openable is not null) {
+            this.openable.Open();
+        }
+    }
+
     /// <summary>
     /// Function to check if the lock is still locking the object.
     /// </summary>
