@@ -15,6 +15,8 @@ public class PadlockUnlockScreen : UnlockScreen<PadlockInteractions> {
     /// </summary>
     /// <param name="PadlockInteractions">Padlock linked to the Unlock Screen.</param>
     public override void Initialize(PadlockInteractions padlock) {
+        base.Initialize(padlock);
+
         this.padlock = padlock;
 
         // UI inits

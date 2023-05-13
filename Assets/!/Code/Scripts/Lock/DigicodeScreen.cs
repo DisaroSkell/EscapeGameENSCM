@@ -12,6 +12,8 @@ public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
     /// </summary>
     /// <param name="DigicodeInteractions">Digicode linked to the Digicode Screen.</param>
     public override void Initialize(DigicodeInteractions digicode) {
+        base.Initialize(digicode);
+
         this.digicode = digicode;
         
         this.ResetTry();

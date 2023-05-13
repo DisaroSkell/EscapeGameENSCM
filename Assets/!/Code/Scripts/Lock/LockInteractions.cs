@@ -12,6 +12,8 @@ public abstract class LockInteractions : MonoBehaviour, IPointerClickHandler {
 
     public Openable openable;
 
+    private bool isUIOpened = false;
+
     /// <summary>
     /// Confirms the current try. 
     /// If the try is correct, this will unlock.
@@ -20,6 +22,10 @@ public abstract class LockInteractions : MonoBehaviour, IPointerClickHandler {
         if (this.code == currentTry && openable is not null) {
             this.openable.Open();
         }
+    }
+
+    public void SetUIOpened(bool newValue) {
+        this.isUIOpened = newValue;
     }
 
     /// <summary>
@@ -38,8 +44,9 @@ public abstract class LockInteractions : MonoBehaviour, IPointerClickHandler {
     /// </summary>
     /// <param name="PointerEventData">Unity class that contains information about a pointer event</param>
     public void OnPointerClick(PointerEventData eventData) {
-        if (!this.IsUnlocked()) {
+        if (!this.IsUnlocked() && !this.isUIOpened) {
             this.OpenUnlockUI();
+            this.isUIOpened = true;
         }
     }
 }
