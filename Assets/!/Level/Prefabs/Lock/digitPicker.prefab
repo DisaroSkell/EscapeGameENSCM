@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 3158562311219018604}
   - component: {fileID: 3158562311219018595}
   m_Layer: 5
-  m_Name: digitPicker
+  m_Name: DigitPicker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,20 +2,17 @@ using UnityEngine;
 using TMPro;
 
 // Class for the Digicode UI Screen.
-public class DigicodeScreen : MonoBehaviour {
+public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
     public TextMeshProUGUI answer;
 
     private DigicodeInteractions digicode;
-    private Unlockable unlockable;
 
     /// <summary>
     /// Function to call as a constructor just after instantiation.
     /// </summary>
-    /// <param name="digicode">Digicode linked to the Digicode Screen.</param>
-    /// <param name="unlockable">Unlockable object linked to the Digicode.</param>
-    public void Initialize(DigicodeInteractions digicode, Unlockable unlockable) {
+    /// <param name="DigicodeInteractions">Digicode linked to the Digicode Screen.</param>
+    public override void Initialize(DigicodeInteractions digicode) {
         this.digicode = digicode;
-        this.unlockable = unlockable;
         
         this.ResetTry();
     }
@@ -41,7 +38,7 @@ public class DigicodeScreen : MonoBehaviour {
     public void ConfirmTry() {
         if (this.digicode.code == this.answer.text) {
             Debug.Log("Correct code");
-            unlockable.Unlock();
+            this.digicode.ConfirmTry(this.answer.text);
             this.CloseWindow();
         } else {
             this.answer.text = "FAUX";
@@ -50,9 +47,5 @@ public class DigicodeScreen : MonoBehaviour {
 
     public void ResetTry() {
         this.answer.text = "";
-    }
-
-    public void CloseWindow() {
-        this.gameObject.SetActive(false);
     }
 }

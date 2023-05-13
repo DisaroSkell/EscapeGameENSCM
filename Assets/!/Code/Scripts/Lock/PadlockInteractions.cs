@@ -6,23 +6,31 @@ using UnityEngine.EventSystems;
 /* This class handles the interaction with a padlock.
 It opens an unlock screen when clicked.
 The user can then input a code by rotating numbers up and down. */
-public class PadlockInteraction : MonoBehaviour, IPointerClickHandler {
-    // Code to unlock the padlock.
-    public string code;
-
+public class PadlockInteractions : LockInteractions {
     public char[] currentTry;
+
+    public PadlockUnlockScreen unlockUIPrefab;
 
     // All alternatives for the current padlock.
     public string pickerAlternatives = "0123456789";
 
-    public GameObject unlockUiParent;
+    /// <summary>
+    /// Confirms the current try. 
+    /// If the try is correct, the object desactivates.
+    /// </summary>
+    public void ConfirmTry() {
+        bool result = this.code == new string (this.currentTry);
 
-    public UnlockScreen unlockUiPrefab;
+        if (result) {
+            this.gameObject.SetActive(false);
+        }
+    }
 
-    private UnlockScreen unlockUI;
-
-    bool IsCodeCorrect(string attempt) {
-        return code == attempt;
+    /// <summary>
+    /// Here, a padlock is locking an object if it is active.
+    /// </summary>
+    public override bool IsUnlocked() {
+        return !this.gameObject.activeSelf;
     }
 
     void Start() {
@@ -57,13 +65,8 @@ public class PadlockInteraction : MonoBehaviour, IPointerClickHandler {
         this.currentTry[index] = pickerAlternatives[newValueIndex];
     }
 
-    /// <summary>
-    /// Instantiates an unlock screen UI when the user clicks on it.
-    /// Function of the IPointerClickHandler interface.
-    /// </summary>
-    /// <param name="PointerEventData">Unity class that contains information about a pointer event</param>
-    public void OnPointerClick(PointerEventData eventData) {
-        this.unlockUI = (UnlockScreen)Instantiate(unlockUiPrefab, unlockUiParent.transform.position, Quaternion.identity, unlockUiParent.transform);
+    public override void OpenUnlockUI() {
+        PadlockUnlockScreen unlockUI = (PadlockUnlockScreen)Instantiate(this.unlockUIPrefab, unlockUiParent.transform.position, Quaternion.identity, unlockUiParent.transform);
         unlockUI.Initialize(this);
 
         unlockUI.gameObject.SetActive(true);

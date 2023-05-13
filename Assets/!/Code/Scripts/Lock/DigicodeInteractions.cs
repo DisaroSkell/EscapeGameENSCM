@@ -1,22 +1,34 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 // Class for interactions with the digicode.
-public class DigicodeInteractions : MonoBehaviour {
-    public string code;
-
-    public GameObject unlockUiParent;
-
+public class DigicodeInteractions : LockInteractions {
     public DigicodeScreen unlockUIPrefab;
 
-    private DigicodeScreen unlockUI;
+    private bool unlocked = false;
 
     /// <summary>
-    /// Opens the unlock UI by creating a prefab.
+    /// Confirms the current try. 
+    /// If the try is correct, the digicode will be unlocked.
     /// </summary>
-    /// <param name="unlockable">The unlockable object linked to the digicode.</param>
-    public void OpenUnlockUI(Unlockable unlockable) {
-        this.unlockUI = (DigicodeScreen)Instantiate(unlockUIPrefab, unlockUiParent.transform.position, Quaternion.identity, unlockUiParent.transform);
-        unlockUI.Initialize(this, unlockable);
+    public void ConfirmTry(string currentTry) {
+        bool result = this.code == currentTry;
+
+        if (result) {
+            this.unlocked = true;
+        }
+    }
+
+    /// <summary>
+    /// Here, a digicode is locking an object if it has its unlocked attribute at false.
+    /// </summary>
+    public override bool IsUnlocked() {
+        return this.unlocked;
+    }
+
+    public override void OpenUnlockUI() {
+        DigicodeScreen unlockUI = (DigicodeScreen)Instantiate(this.unlockUIPrefab, unlockUiParent.transform.position, Quaternion.identity, unlockUiParent.transform);
+        unlockUI.Initialize(this);
 
         unlockUI.gameObject.SetActive(true);
     }

@@ -13,7 +13,7 @@ public class CameraMouvements : MonoBehaviour {
 
     public GameObject rooms;
 
-    public UnlockableDoor door;
+    public Unlockable door;
 
     public GameObject changeRoomButton;
 

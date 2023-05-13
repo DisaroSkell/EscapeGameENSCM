@@ -8,14 +8,14 @@ public class DigitPicker : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI textMeshPro;
 
-    private UnlockScreen parent;
+    private PadlockUnlockScreen parent;
 
     /// <summary>
     /// Function to call as a constructor just after instantiation.
     /// </summary>
     /// <param name="digit">Digit to be displayed on the screen.</param>
     /// <param name="UnlockScreen">The parent UnlockScreen.</param>
-    public void Initialize(char digit, UnlockScreen parent) {
+    public void Initialize(char digit, PadlockUnlockScreen parent) {
         this.textMeshPro.text = digit.ToString();
         this.parent = parent;
     }
