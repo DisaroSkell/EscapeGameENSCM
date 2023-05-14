@@ -22,6 +22,27 @@ public class Utils {
     }
 
     /// <summary>
+    /// Gets all direct children of a game object, even inactive ones.
+    /// </summary>
+    /// <param name="parent">Parent we are searching in.</param>
+    /// <returns>
+    /// Returns the list of direct children as game objects.
+    /// </returns>
+    public static List<GameObject> GetAllDirectChildren(GameObject parent) {
+        List<GameObject> childrenGO = new List<GameObject>();
+
+        Transform[] childrenTransform = parent.GetComponentsInChildren<Transform>(true);
+
+        for (int i = 0; i < childrenTransform.Length; i++) {
+            if(childrenTransform[i].parent == parent.transform) {
+                childrenGO.Add(childrenTransform[i].gameObject);
+            }
+        }
+
+        return childrenGO;
+    }
+
+    /// <summary>
     /// Disables all children in parent.
     /// </summary>
     /// <param name="parent">Parent we are searching in.</param>

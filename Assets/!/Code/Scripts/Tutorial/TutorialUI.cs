@@ -12,14 +12,14 @@ public class TutorialUI : MonoBehaviour {
     public TextMeshProUGUI pageNumber;
 
     public void Start() {
-        this.pages = Utils.GetAllChildren(this.pagesParent);
-        this.SetCurrentPage(1);
+        this.pages = Utils.GetAllDirectChildren(this.pagesParent);
+        this.SetCurrentPage(0);
     }
 
     public void SetCurrentPage(int page) {
         Utils.DisableAllChildren(this.pagesParent);
         this.currentPage = page;
-        this.pageNumber.text = page.ToString();
+        this.pageNumber.text = (page + 1).ToString();
         this.pages[page].SetActive(true);
     }
 
@@ -36,7 +36,7 @@ public class TutorialUI : MonoBehaviour {
     /// If the page isn't the first, sets the page to the previous value.
     /// </summary>
     public void Previous() {
-        if (this.currentPage > 1) {
+        if (this.currentPage > 0) {
             this.SetCurrentPage(this.currentPage - 1);
         }
     }
