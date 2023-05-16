@@ -7,9 +7,9 @@ public class TriggeredSlot : MonoBehaviour
 {
     public UnityEvent trigger;
 
-    public void DeleteGameObjectPanel(GameObject panel) {
-        if(panel is null) return;
-        Destroy(panel);
+    public void DeleteGameObject(GameObject obj) {
+        if(obj is null) return;
+        Destroy(obj);
     }
 
 }
