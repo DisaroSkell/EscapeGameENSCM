@@ -7,10 +7,18 @@ public class MagnetInteractions : MonoBehaviour {
 
     public ItemObject keyObject;
 
+    // Periodic table linked to the magnet
+    private PeriodicTableMaze table;
+
     // Position of the magnet in the maze.
     //(-1, -1) corresponds to the bottom of the maze.
     //(-2, -2) corresponds to the top of the maze.
     private (int, int) indexPosition = (0, 0);
+
+    public void Initialize(ItemObject key) {
+        this.keyObject = key;
+        this.table = this.GetComponentInParent<PeriodicTableMaze>();
+    }
 
     public (int, int) GetCellPosition() {
         return this.indexPosition;
@@ -21,7 +29,14 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     /// <param name="newColumn">Column to move to.</param>
     public void HorizontalMouvement(int newColumn) {
+        // Turn off highlighting for previous column except the cell it was on.
+        this.table.GlowOffColumn(this.indexPosition.Item2);
+        this.table.GlowOnCell(this.indexPosition.Item1, this.indexPosition.Item2);
+
         this.Mouvement((this.indexPosition.Item1, newColumn));
+
+        // Turn one highlighting for next column.
+        this.table.GlowOnColumn(newColumn);
     }
 
     /// <summary>
@@ -29,7 +44,14 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     /// <param name="newLine">Line to move to.</param>
     public void VerticalMouvement(int newLine) {
+        // Turn off highlighting for previous line except the cell it was on.
+        this.table.GlowOffLine(this.indexPosition.Item1);
+        this.table.GlowOnCell(this.indexPosition.Item1, this.indexPosition.Item2);
+
         this.Mouvement((newLine, this.indexPosition.Item2));
+
+        // Turn one highlighting for next line.
+        this.table.GlowOnLine(newLine);
     }
 
     /// <summary>
@@ -38,12 +60,14 @@ public class MagnetInteractions : MonoBehaviour {
     /// If it doesn't encounter a wall and it has the key, the player gets the key in its inventory.
     /// </summary>
     public void ToTopMouvement() {
+        // Turn off highlighting for previous line and column of the cell it was on.
+        this.table.GlowOffLine(this.indexPosition.Item1);
+        this.table.GlowOffColumn(this.indexPosition.Item2);
+
         this.Mouvement((-2, -2));
 
         // If the magnet has the key while being at the top, the maze is solved.
         if (this.hasKey) {
-            PeriodicTableMaze table = this.GetComponentInParent<PeriodicTableMaze>();
-
             // adding key to the player inventory
             if(this.keyObject is not null) {
                 keyObject.inventory.AddItem(keyObject);
@@ -51,12 +75,15 @@ public class MagnetInteractions : MonoBehaviour {
             }
             
             // Destroy key object
-            if(table.key is not null) {
-                Destroy(table.key.gameObject);
-                table.key = null;
+            if(this.table.key is not null) {
+                Destroy(this.table.key.gameObject);
+                this.table.key = null;
                 this.hasKey = false;
             }
         }
+
+        // Turn on highlighting for the first line of the table.
+        this.table.GlowOnLine(0);
     }
 
     /// <summary>
@@ -64,7 +91,17 @@ public class MagnetInteractions : MonoBehaviour {
     /// It moves straight to the default key position and collects it.
     /// </summary>
     public void ToBottomMouvement() {
+        // We authorize top to bottom mouvement, so we have to be carefull.
+        if (this.indexPosition != (-2, -2)) {
+            // Turn off highlighting for previous line and column of the cell it was on.
+            this.table.GlowOffLine(this.indexPosition.Item1);
+            this.table.GlowOffColumn(this.indexPosition.Item2);
+        }
+
         this.Mouvement((-1, -1));
+
+        // Turn on highlighting for the last line of the table.
+        this.table.GlowOnLine(table.GetMaze().GetVSize() - 1);
     }
 
     /// <summary>
@@ -73,6 +110,9 @@ public class MagnetInteractions : MonoBehaviour {
     /// <param name="newColumn">Column to move to.</param>
     public void FromTopMouvement(int newColumn) {
         this.Mouvement((0, newColumn));
+
+        // Turn on highlighting for the column it goes to.
+        this.table.GlowOnColumn(newColumn);
     }
 
     /// <summary>
@@ -80,15 +120,16 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     /// <param name="newColumn">Column to move to.</param>
     public void FromBottomMouvement(int newColumn) {
-        PeriodicTableMaze table = this.GetComponentInParent<PeriodicTableMaze>();
-
-        this.Mouvement((table.GetMaze().GetVSize()-1, newColumn));
+        this.Mouvement((this.table.GetMaze().GetVSize()-1, newColumn));
 
         // Enter the maze => check if it's a gate
-        if (!table.GetMaze().GetCellAt(table.GetMaze().GetVSize()-1, newColumn).IsOpened(Direction.South)) {
+        if (!this.table.GetMaze().GetCellAt(this.table.GetMaze().GetVSize()-1, newColumn).IsOpened(Direction.South)) {
             this.hasKey = false;
-            table.MakeKeyFall();
+            this.table.MakeKeyFall();
         }
+
+        // Turn on highlighting for the column it goes to.
+        this.table.GlowOnColumn(newColumn);
     }
 
     /// <summary>
@@ -98,42 +139,40 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     /// <param name="goalPosition">Indexes of the cell to move to.</param>
     private void Mouvement((int, int) goalPosition) {
-        PeriodicTableMaze table = this.GetComponentInParent<PeriodicTableMaze>();
-
         // We first determine the previous position
         Vector3 previousCellPos;
 
         if (this.indexPosition == (-1, -1)) {
-            previousCellPos = table.GetBottomPosition();
+            previousCellPos = this.table.GetBottomPosition();
         } else if (this.indexPosition == (-2, -2)) {
-            previousCellPos = table.GetTopPosition();
+            previousCellPos = this.table.GetTopPosition();
         } else {
-            previousCellPos = table.GetMaze().maze[this.indexPosition.Item1][this.indexPosition.Item2].position;
+            previousCellPos = this.table.GetMaze().maze[this.indexPosition.Item1][this.indexPosition.Item2].position;
         }
 
         // We then determine the goal position
         Vector3 goalCellPos;
 
         if (goalPosition == (-1, -1)) {
-            goalCellPos = table.GetBottomPosition();
+            goalCellPos = this.table.GetBottomPosition();
         } else if (goalPosition == (-2, -2)) {
-            goalCellPos = table.GetTopPosition();
+            goalCellPos = this.table.GetTopPosition();
 
             if (this.hasKey) {
                 // We check wall encounters until the exit
-                this.EncounterWallCheck(table, this.indexPosition, (0, this.indexPosition.Item2));
+                this.EncounterWallCheck(this.indexPosition, (0, this.indexPosition.Item2));
 
                 // Then we check the maze exit
-                if (!table.GetMaze().GetCellAt(0, this.indexPosition.Item2).IsOpened(Direction.North)) {
+                if (!this.table.GetMaze().GetCellAt(0, this.indexPosition.Item2).IsOpened(Direction.North)) {
                     this.hasKey = false;
-                    table.MakeKeyFall();
+                    this.table.MakeKeyFall();
                 }
             }
         } else {
-            goalCellPos = table.GetMaze().maze[goalPosition.Item1][goalPosition.Item2].position;
+            goalCellPos = this.table.GetMaze().maze[goalPosition.Item1][goalPosition.Item2].position;
 
             if (this.hasKey) {
-                this.EncounterWallCheck(table, this.indexPosition, goalPosition);
+                this.EncounterWallCheck(this.indexPosition, goalPosition);
             }
         }
 
@@ -142,8 +181,8 @@ public class MagnetInteractions : MonoBehaviour {
         this.indexPosition = goalPosition;
 
         if (this.hasKey) {
-            MakeKeyFollow(table);
-        } else if (goalPosition == (-1, -1) && table.key is not null) {
+            MakeKeyFollow();
+        } else if (goalPosition == (-1, -1) && this.table.key is not null) {
             this.hasKey = true;
         }
     }
@@ -151,9 +190,8 @@ public class MagnetInteractions : MonoBehaviour {
     /// <summary>
     /// If the key exists and the magnet has it, makes the key follow the magnet in its mouvements.
     /// </summary>
-    /// <param name="table">The periodic table the magnet and the key are linked to.</param>
-    public void MakeKeyFollow(PeriodicTableMaze table) {
-        KeyInteractions key = table.key;
+    public void MakeKeyFollow() {
+        KeyInteractions key = this.table.key;
 
         if (key is not null) {
             key.transform.localPosition = new Vector3(this.transform.localPosition.x,
@@ -170,10 +208,9 @@ public class MagnetInteractions : MonoBehaviour {
     /// It is better to call this method only if the magnet has the key.
     /// Precondition: Do not use this if entering or exiting the maze.
     /// </summary>
-    /// <param name="table">The periodic table the magnet is linked to.</param>
     /// <param name="prevCell">The cell the magnet is coming from.</param>
     /// <param name="goalCell">The cell the magnet is going to.</param>
-    public void EncounterWallCheck(PeriodicTableMaze table, (int, int) prevCell, (int, int) goalCell) {
+    public void EncounterWallCheck((int, int) prevCell, (int, int) goalCell) {
         if (prevCell == (-1, -1) || prevCell == (-2, -2) || goalCell == (-1, -1) || goalCell == (-2, -2) || prevCell == goalCell) {
             return;
         }
@@ -181,11 +218,11 @@ public class MagnetInteractions : MonoBehaviour {
         (int, int)[] indexSet = {prevCell, goalCell};
         Direction[] directions = {Direction.None, Direction.None};
 
-        bool encounteredWall = table.GetMaze().EncountersWallOnPath(new MazePath(indexSet, directions));
+        bool encounteredWall = this.table.GetMaze().EncountersWallOnPath(new MazePath(indexSet, directions));
 
         if (encounteredWall) {
             this.hasKey = false;
-            table.MakeKeyFall();
+            this.table.MakeKeyFall();
         }
     }
 }

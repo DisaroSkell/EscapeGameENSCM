@@ -55,6 +55,11 @@ public class PeriodicTableMaze : MonoBehaviour {
     public float keySize;
     public Quaternion keyOrientation;
 
+    // Prefab of the highlighting.
+    public GameObject glowPrefab;
+    // Path of the image that will highlight atoms.
+    public string glowImagePath;
+
     // The maze behind the table.
     private Maze<AtomCell> maze;
 
@@ -183,7 +188,10 @@ public class PeriodicTableMaze : MonoBehaviour {
     /// </summary>
     private void CreateAtoms() {
         // Retrieve images from the given folder.
-        Texture[] atomImages = Resources.LoadAll<Texture>(atomImageFolder);
+        Texture[] atomImages = Resources.LoadAll<Texture>(this.atomImageFolder);
+
+        // Retrieve highlight image from the given path
+        Material glowImage = Resources.Load<Material>(this.glowImagePath);
 
         // We count used image to access the correct image and avoid array overflow.
         int imageCounter = 0;
@@ -199,12 +207,27 @@ public class PeriodicTableMaze : MonoBehaviour {
 
                 TableElement atom = (TableElement)Instantiate(this.atomPrefab, atomPos, Quaternion.identity, this.transform);
 
+                Vector3 glowPos = atomPos - new Vector3(0, 0, 0.0005f);
+
+                GameObject glowGO = Instantiate(this.glowPrefab, glowPos, Quaternion.identity, atom.transform);
+
                 atom.Initialize(i, j);
+
+                float halfHSpacingScale = (float)this.hSpacing/(2 * this.atomSize);
+                float halfVSpacingScale = (float)this.vSpacing/(2 * this.atomSize);
+
+                glowGO.transform.localScale = new Vector3(1 + halfHSpacingScale, 1 + halfVSpacingScale, 1);
+
+                glowGO.GetComponent<Renderer>().material = glowImage;
+
 
                 // We scale the atom with the given size.
                 atom.transform.localScale = new Vector3(this.atomSize, this.atomSize, 1);
 
-                this.maze.GetCellAt(i, j).position = atom.transform.position;
+                AtomCell currentCell = this.maze.GetCellAt(i, j);
+                currentCell.position = atom.transform.position;
+                currentCell.setGlower(glowGO);
+                currentCell.GlowOff();
 
                 // We make sure to put the correct image and name on the atom.
                 if (imageCounter < atomImages.Length && !this.isCellBlank[i][j]) {
@@ -304,7 +327,10 @@ public class PeriodicTableMaze : MonoBehaviour {
                                         (float)this.transform.position.y + this.firstAtomPosition.y,
                                         (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetSize);
         this.magnet = (MagnetInteractions)Instantiate(this.magnetPrefab, magnetPos, this.magnetOrientation, this.transform);
-        this.magnet.keyObject = this.keyObject;
+        this.magnet.Initialize(this.keyObject);
+
+        this.GlowOnLine(0);
+        this.GlowOnColumn(0);
     }
 
     public Maze<AtomCell> GetMaze() {
@@ -324,5 +350,49 @@ public class PeriodicTableMaze : MonoBehaviour {
     /// </summary>
     public void MakeKeyFall() {
         this.key.transform.localPosition = this.relativeDefaultKeyPosition;
+    }
+
+    public void GlowOnAll() {
+        for (int line = 0; line < this.maze.GetVSize(); line++) {
+            this.GlowOnLine(line);
+        }
+    }
+
+    public void GlowOnLine(int line) {
+        for (int column = 0; column < this.maze.GetHSize(); column++) {
+            this.maze.GetCellAt(line, column).GlowOn();
+        }
+    }
+
+    public void GlowOnColumn(int column) {
+        for (int line = 0; line < this.maze.GetVSize(); line++) {
+            this.maze.GetCellAt(line, column).GlowOn();
+        }
+    }
+
+    public void GlowOnCell(int line, int column) {
+        this.maze.GetCellAt(line, column).GlowOn();
+    }
+
+    public void GlowOffAll() {
+        for (int line = 0; line < this.maze.GetVSize(); line++) {
+            this.GlowOffLine(line);
+        }
+    }
+
+    public void GlowOffLine(int line) {
+        for (int column = 0; column < this.maze.GetHSize(); column++) {
+            this.maze.GetCellAt(line, column).GlowOff();
+        }
+    }
+
+    public void GlowOffColumn(int column) {
+        for (int line = 0; line < this.maze.GetVSize(); line++) {
+            this.maze.GetCellAt(line, column).GlowOff();
+        }
+    }
+
+    public void GlowOffCell(int line, int column) {
+        this.maze.GetCellAt(line, column).GlowOff();
     }
 }
