@@ -38,12 +38,22 @@ public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
     /// It either unlocks the door or displays an incorrect code message.
     /// </summary>
     public void ConfirmTry() {
-        if (this.digicode.code == this.answer.text) {
+        int tryCountWithError = this.digicode.GetTryCount();
+
+        if (this.digicode.code != this.answer.text) {
+            tryCountWithError++;
+        }
+
+        if (tryCountWithError >= this.digicode.maxNbTries) {
+            this.answer.text = "ALARM";
+            this.digicode.BlockDigicode();
+        } else if (this.digicode.code == this.answer.text) {
             Debug.Log("Correct code");
             this.digicode.ConfirmTry(this.answer.text);
             this.CloseWindow();
         } else {
             this.answer.text = "FAUX";
+            this.digicode.IncrementTryCount();
         }
     }
 
