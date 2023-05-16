@@ -8,7 +8,8 @@ public enum ItemType {
     Pictogram,
     Default,
     MatchesCard,
-    Container
+    Container,
+    Triggered
 }
 public abstract class ItemObject : ScriptableObject {
     public GameObject prefab;
