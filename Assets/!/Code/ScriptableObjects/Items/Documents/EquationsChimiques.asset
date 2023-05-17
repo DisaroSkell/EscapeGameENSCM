@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f6b4fa3943eec4e86d39550dbaafaa, type: 3}
   m_Name: EquationsChimiques
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7751487916705101643, guid: c33681f827ae2b942a192a54bdde4bd1, type: 3}
-  type: 0
-  description: 
+  prefab: {fileID: 7751487916705101643, guid: 95473569a32c5874d9a6248d06a1abe1, type: 3}
+  type: 1
+  inventory: {fileID: 11400000, guid: 37966203f66402a4ca912ef7bedd9293, type: 2}
+  interaction: {fileID: 0}
+  folderRessourcesName: equations_chimiques

@@ -14,11 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Container:
-  - {fileID: 11400000, guid: 20316262935a65c44ab115ef8d927eea, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 3aebc059d9668be42a32d1ae8b594b16, type: 2}
   - {fileID: 0}
   - {fileID: 0}

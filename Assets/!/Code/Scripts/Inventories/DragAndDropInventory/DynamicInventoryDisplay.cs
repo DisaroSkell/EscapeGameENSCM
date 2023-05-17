@@ -49,6 +49,7 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         }
         else if (item is not null && item.GetType() == typeof(DocumentObject)) {
             SetObjViewable(obj, (DocumentObject)item);
+            LinkDragEvents(obj);
         }
         else if (item is not null && item.type == ItemType.Container) {
             SetObjContainerOpener(obj, (ContainerObject)item);
