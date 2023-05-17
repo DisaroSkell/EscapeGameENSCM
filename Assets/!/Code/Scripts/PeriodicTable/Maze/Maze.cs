@@ -9,8 +9,10 @@ public class Maze<Cell> where Cell : MazeCell, new() {
     // Vertical size of the maze.
     private int vSize;
 
-    // The maze should not have more than two gates.
     private int nbGates;
+
+    // Max number of gates.
+    private static readonly int maxNbGates = 5;
 
     public Cell[][] maze;
     
@@ -56,8 +58,7 @@ public class Maze<Cell> where Cell : MazeCell, new() {
 
     /// <summary>
     /// Opens two gates in the maze: one at the top left (to the north) and one at the bottom right (to the south).
-    /// It will not open any more gates if the maze already has two.
-    /// It will only open one if there is one gate.
+    /// Opening gates should not make the gate count exceed maxNbGates.
     /// </summary>
     public void OpenTwoGate() {
         // The OpenGate((int, int)) method already does everything gate-related.
@@ -67,8 +68,7 @@ public class Maze<Cell> where Cell : MazeCell, new() {
 
     /// <summary>
     /// Opens two gates in the maze at the given positions.
-    /// It will not open any more gates if the maze already has two.
-    /// It will only open one if there is one gate.
+    /// Opening gates should not make the gate count exceed maxNbGates.
     /// </summary>
     /// <param name="gate1">Indexes (line, column) for position of the first gate.</param>
     /// <param name="gate2">Indexes (line, column) for position of the second gate.</param>
@@ -80,12 +80,11 @@ public class Maze<Cell> where Cell : MazeCell, new() {
 
     /// <summary>
     /// Opens a gate in the maze at the given position.
-    /// It will not open any more gates if the maze already has two.
-    /// It will only open one if there is one gate.
+    /// Opening gates should not make the gate count exceed maxNbGates.
     /// If we select a corner position, it will choose North or South over East or West.
     /// </summary>
     /// <param name="gate">Indexes (line, column) for position of the gate.</param>
-    private void OpenGate((int, int) gate) {
+    public void OpenGate((int, int) gate) {
         Direction direction = Direction.None;
         
         // We pick the direction from the position.
@@ -109,14 +108,14 @@ public class Maze<Cell> where Cell : MazeCell, new() {
     /// <summary>
     /// Opens a wall at the given position and direction.
     /// If it leads to the outside of the maze, it counts as a gate.
-    /// It will not open the wall if it's a gate and there are already 2 gates.
+    /// It will not open the wall if it's a gate and there are already maxNbGates.
     /// </summary>
     /// <param name="l">Line of the position.</param>
     /// <param name="c">Column of the position.</param>
     /// <param name="direction">Direction where we open.</param>
     public void OpenWall(int l, int c, Direction direction) {
         if (((l == 0 && direction == Direction.North) || (l == vSize-1 && direction == Direction.South) || (c == 0 && direction == Direction.West) || (c == hSize-1 && direction == Direction.East))) {
-            if (this.GetNbGates() >= 2) {
+            if (this.GetNbGates() >= Maze<Cell>.maxNbGates) {
                 return;
             }
             this.nbGates += 1;

@@ -29,14 +29,18 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     /// <param name="newColumn">Column to move to.</param>
     public void HorizontalMouvement(int newColumn) {
-        // Turn off highlighting for previous column except the cell it was on.
-        this.table.GlowOffColumn(this.indexPosition.Item2);
-        this.table.GlowOnCell(this.indexPosition.Item1, this.indexPosition.Item2);
+        if (this.hasKey) {
+            // Turn off highlighting for previous column except the cell it was on.
+            this.table.GlowOffColumn(this.indexPosition.Item2);
+            this.table.GlowOnCell(this.indexPosition.Item1, this.indexPosition.Item2);
+        }
 
         this.Mouvement((this.indexPosition.Item1, newColumn));
 
-        // Turn one highlighting for next column.
-        this.table.GlowOnColumn(newColumn);
+        if (this.hasKey) {
+            // Turn one highlighting for next column.
+            this.table.GlowOnColumn(newColumn);
+        }
     }
 
     /// <summary>
@@ -44,14 +48,18 @@ public class MagnetInteractions : MonoBehaviour {
     /// </summary>
     /// <param name="newLine">Line to move to.</param>
     public void VerticalMouvement(int newLine) {
-        // Turn off highlighting for previous line except the cell it was on.
-        this.table.GlowOffLine(this.indexPosition.Item1);
-        this.table.GlowOnCell(this.indexPosition.Item1, this.indexPosition.Item2);
+        if (this.hasKey) {
+            // Turn off highlighting for previous line except the cell it was on.
+            this.table.GlowOffLine(this.indexPosition.Item1);
+            this.table.GlowOnCell(this.indexPosition.Item1, this.indexPosition.Item2);
+        }
 
         this.Mouvement((newLine, this.indexPosition.Item2));
 
-        // Turn one highlighting for next line.
-        this.table.GlowOnLine(newLine);
+        if (this.hasKey) {
+            // Turn one highlighting for next line.
+            this.table.GlowOnLine(newLine);
+        }
     }
 
     /// <summary>
@@ -60,9 +68,11 @@ public class MagnetInteractions : MonoBehaviour {
     /// If it doesn't encounter a wall and it has the key, the player gets the key in its inventory.
     /// </summary>
     public void ToTopMouvement() {
-        // Turn off highlighting for previous line and column of the cell it was on.
-        this.table.GlowOffLine(this.indexPosition.Item1);
-        this.table.GlowOffColumn(this.indexPosition.Item2);
+        if (this.hasKey) {
+            // Turn off highlighting for previous line and column of the cell it was on.
+            this.table.GlowOffLine(this.indexPosition.Item1);
+            this.table.GlowOffColumn(this.indexPosition.Item2);
+        }
 
         this.Mouvement((-2, -2));
 
@@ -81,9 +91,6 @@ public class MagnetInteractions : MonoBehaviour {
                 this.hasKey = false;
             }
         }
-
-        // Turn on highlighting for the first line of the table.
-        this.table.GlowOnLine(0);
     }
 
     /// <summary>
@@ -91,35 +98,42 @@ public class MagnetInteractions : MonoBehaviour {
     /// It moves straight to the default key position and collects it.
     /// </summary>
     public void ToBottomMouvement() {
-        // We authorize top to bottom mouvement, so we have to be carefull.
-        if (this.indexPosition != (-2, -2)) {
+        // We authorize top to bottom and bottom to bottom mouvements, so we have to be carefull.
+        if (this.indexPosition != (-1, -1) && this.indexPosition != (-2, -2) && this.hasKey) {
             // Turn off highlighting for previous line and column of the cell it was on.
             this.table.GlowOffLine(this.indexPosition.Item1);
             this.table.GlowOffColumn(this.indexPosition.Item2);
         }
 
         this.Mouvement((-1, -1));
-
-        // Turn on highlighting for the last line of the table.
-        this.table.GlowOnLine(table.GetMaze().GetVSize() - 1);
     }
 
     /// <summary>
     /// Moves the magnet from the top of the table to the top row at the given column.
     /// </summary>
+    /// <param name="newLine">Line to move to.</param>
     /// <param name="newColumn">Column to move to.</param>
-    public void FromTopMouvement(int newColumn) {
+    public void FromTopMouvement(int newLine, int newColumn) {
+        // First we enter the maze
         this.Mouvement((0, newColumn));
 
-        // Turn on highlighting for the column it goes to.
-        this.table.GlowOnColumn(newColumn);
+        // Then we go where we wanted
+        this.Mouvement((newLine, newColumn));
+
+        if (this.hasKey) {
+            // Turn on highlighting for the line and column it goes to.
+            this.table.GlowOnLine(newLine);
+            this.table.GlowOnColumn(newColumn);
+        }
     }
 
     /// <summary>
     /// Moves the magnet from the bottm of the table to the bottom row at the given column.
     /// </summary>
+    /// <param name="newLine">Line to move to.</param>
     /// <param name="newColumn">Column to move to.</param>
-    public void FromBottomMouvement(int newColumn) {
+    public void FromBottomMouvement(int newLine, int newColumn) {
+        // First we enter the maze
         this.Mouvement((this.table.GetMaze().GetVSize()-1, newColumn));
 
         // Enter the maze => check if it's a gate
@@ -128,8 +142,14 @@ public class MagnetInteractions : MonoBehaviour {
             this.table.MakeKeyFall();
         }
 
-        // Turn on highlighting for the column it goes to.
-        this.table.GlowOnColumn(newColumn);
+        // Then we go where we wanted
+        this.Mouvement((newLine, newColumn));
+
+        if (this.hasKey) {
+            // Turn on highlighting for the line and column it goes to.
+            this.table.GlowOnLine(newLine);
+            this.table.GlowOnColumn(newColumn);
+        }
     }
 
     /// <summary>
@@ -223,6 +243,8 @@ public class MagnetInteractions : MonoBehaviour {
         if (encounteredWall) {
             this.hasKey = false;
             this.table.MakeKeyFall();
+            this.table.GlowOffLine(prevCell.Item1);
+            this.table.GlowOffColumn(prevCell.Item2);
         }
     }
 }

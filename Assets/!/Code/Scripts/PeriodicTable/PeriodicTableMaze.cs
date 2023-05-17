@@ -177,6 +177,12 @@ public class PeriodicTableMaze : MonoBehaviour {
         this.isCellBlank[8][2] = true;
 
         this.maze = new Maze<AtomCell>(18, 9);
+
+        // We add more gates to add a little confusion
+        this.maze.OpenGate((8,4));  // Thorium
+        this.maze.OpenGate((8,12)); // Californium
+        this.maze.OpenGate((8,16)); // Nobelium
+
         this.maze.Explore(new MazePath(atomsIndex, arrows));
         
         CreateAtoms();
@@ -329,11 +335,10 @@ public class PeriodicTableMaze : MonoBehaviour {
         this.magnet = (MagnetInteractions)Instantiate(this.magnetPrefab, magnetPos, this.magnetOrientation, this.transform);
         this.magnet.Initialize(this.keyObject);
 
-        this.GlowOnLine(0);
-        this.GlowOnColumn(0);
-
         // apply rotation back to periodic table with magnet
         this.transform.rotation *= this.rotation;
+
+        this.magnet.ToBottomMouvement();
     }
 
     public Maze<AtomCell> GetMaze() {

@@ -48,10 +48,10 @@ public class TableElement : MonoBehaviour, IPointerClickHandler {
                 magnet.HorizontalMouvement(this.index.Item2);
             } else if (magnetPos.Item2 == this.index.Item2) {
                 magnet.VerticalMouvement(this.index.Item1);
-            } else if (magnetPos == (-1, -1) && this.index.Item1 == table.GetMaze().GetVSize()-1) {
-                magnet.FromBottomMouvement(this.index.Item2);
-            } else if (magnetPos == (-2, -2) && this.index.Item1 == 0) {
-                magnet.FromTopMouvement(this.index.Item2);
+            } else if (magnetPos == (-1, -1)) {
+                magnet.FromBottomMouvement(this.index.Item1, this.index.Item2);
+            } else if (magnetPos == (-2, -2)) {
+                magnet.FromTopMouvement(this.index.Item1, this.index.Item2);
             }
         }
     }
