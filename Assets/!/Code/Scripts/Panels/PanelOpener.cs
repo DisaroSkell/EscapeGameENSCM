@@ -9,19 +9,30 @@ public class PanelOpener : MonoBehaviour
     
     public void OpenPanel() {
         if (Panel is null){return;}
-
-        Panel.SetActive(true);
+        try {
+            Panel.SetActive(true);
+        }
+        catch(MissingReferenceException) {
+        }
 
     }
 
     public void ClosePanel() {
         if (Panel is null){return;}
 
-        Panel.SetActive(false);
+        try {
+            Panel.SetActive(false);
+        }
+        catch(MissingReferenceException) {
+        }
     }
 
     public void SwitchPanelDisplay() {
         if (Panel is null){return;}
-        Panel.SetActive(!Panel.activeSelf);
+        try {
+            Panel.SetActive(!Panel.activeSelf);
+        }
+        catch(MissingReferenceException) {
+        }
     }
 }
