@@ -164,8 +164,23 @@ public class Timer : MonoBehaviour
         this.currentTime -= h*3600;
     }
     
+    public string GetElapsedTime(){
+        
+        this.currentTime = (this.SECONDS + 60 * (this.MINUTES + 60*this.HOURS)) - this.currentTime;
+        int nbSecond = Mathf.Abs((int)currentTime);
+        int seconds_ = nbSecond%60;
+        nbSecond -= seconds_;
+        int nbMinutes = nbSecond/60;
+        int minutes_ = nbMinutes%60;
+        nbMinutes -= minutes_;
+        int nbHours = nbMinutes/60;
+        int hours_ = nbHours%60;
+
+        return string.Format("{0:00}:{1:00}:{2:00}", hours_, minutes_, seconds_);
+    }
+
     public void Test() {
-        print("fin");
+        print(this.GetElapsedTime());
     }
     
 }
