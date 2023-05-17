@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 817965709079863850}
   - component: {fileID: 3530945454706969304}
   m_Layer: 0
-  m_Name: Bottle_FaisFlambe
+  m_Name: Bottle_FaitFlambe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

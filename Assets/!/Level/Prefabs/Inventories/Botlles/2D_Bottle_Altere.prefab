@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8556503155148951920}
   - component: {fileID: 9080067642143798357}
   m_Layer: 5
-  m_Name: Bottle_altere
+  m_Name: 2D_Bottle_Altere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

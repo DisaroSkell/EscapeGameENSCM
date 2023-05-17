@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83f87e324fa4f34fbf81f931d0241e0, type: 3}
-  m_Name: bottle_sous_pression
+  m_Script: {fileID: 11500000, guid: b9f6b4fa3943eec4e86d39550dbaafaa, type: 3}
+  m_Name: Bottle_NuitGravementSante
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7054882454691114526, guid: 7e43f906eb4e34545abb3426c07a9347, type: 3}
-  type: 3
+  prefab: {fileID: 5059040935244002045, guid: ed8475bae8f8a0c43a6830c209bf8c0d, type: 3}
+  type: 1
   inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
   interaction: {fileID: 0}
+  folderRessourcesName: Bottle_Picto/NuitGravementSante
