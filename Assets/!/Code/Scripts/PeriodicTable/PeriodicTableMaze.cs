@@ -254,9 +254,6 @@ public class PeriodicTableMaze : MonoBehaviour {
 
         this.InitKey();
 
-        // TODO Remove this (magnet will be instantiated with an interaction)
-        this.InitMagnet();
-
         // We rotate the whole table with given Quaternion.
         this.transform.rotation *= this.rotation;
     }
@@ -323,6 +320,9 @@ public class PeriodicTableMaze : MonoBehaviour {
     /// Instantiates a magnet at the first atom position.
     /// </summary>
     public void InitMagnet() {
+        // set back periodic table to its original rotation
+        this.transform.rotation = new Quaternion(0, 0, 0, 0);
+
         Vector3 magnetPos = new Vector3((float)this.transform.position.x + this.firstAtomPosition.x,
                                         (float)this.transform.position.y + this.firstAtomPosition.y,
                                         (float)this.transform.position.z + this.firstAtomPosition.z - this.magnetSize);
@@ -331,6 +331,9 @@ public class PeriodicTableMaze : MonoBehaviour {
 
         this.GlowOnLine(0);
         this.GlowOnColumn(0);
+
+        // apply rotation back to periodic table with magnet
+        this.transform.rotation *= this.rotation;
     }
 
     public Maze<AtomCell> GetMaze() {
