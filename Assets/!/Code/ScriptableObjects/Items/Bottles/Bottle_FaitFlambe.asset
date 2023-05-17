@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6994540404963620693, guid: 0d0f823f1a7ac534183141cbaa93732d, type: 3}
   type: 1
-  inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}
   interaction: {fileID: 0}
   folderRessourcesName: Bottle_Picto/FaitFlamber

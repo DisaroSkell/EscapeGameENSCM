@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4213519134092328454, guid: fb22a57d6b04a0141940e9f4063dbe6a, type: 3}
   type: 1
-  inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
+  inventory: {fileID: 11400000, guid: 46a0bba285884ad4bb0ee9276bb19996, type: 2}
   interaction: {fileID: 0}
   folderRessourcesName: Bottle_Picto/Tue
