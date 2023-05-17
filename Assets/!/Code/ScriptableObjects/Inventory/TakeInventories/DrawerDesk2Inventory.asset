@@ -15,5 +15,5 @@ MonoBehaviour:
   type: 0
   Container:
   - {fileID: 11400000, guid: 3aebc059d9668be42a32d1ae8b594b16, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 38a30f20d63eda64bb5c67d722cca8e5, type: 2}
+  - {fileID: 11400000, guid: 9132de73ce7b51040bbed3fc1a575dbc, type: 2}

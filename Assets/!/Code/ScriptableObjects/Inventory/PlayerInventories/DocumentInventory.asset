@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcc90f8a1a3e9b4c8eeca93a8fb2194, type: 3}
   m_Name: DocumentInventory
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   Container:
   - {fileID: 0}
   - {fileID: 0}

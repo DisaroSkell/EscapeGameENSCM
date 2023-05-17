@@ -16,4 +16,4 @@ MonoBehaviour:
   type: 1
   inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
   interaction: {fileID: 0}
-  folderRessourcesName: SulfateDeCu
+  folderRessourcesName: CopperSulfate/Uncolored

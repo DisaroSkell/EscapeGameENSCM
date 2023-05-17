@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Interaction_SulfateZinc
   m_EditorClassIdentifier: 
   draggedItem: {fileID: 11400000, guid: 581bac4355d2ccb49aca31084a80e9d1, type: 2}
-  fixedItem: {fileID: 11400000, guid: 2df7dd303a6a8c340ad671db7a571298, type: 2}
+  fixedItem: {fileID: 11400000, guid: aad183d9b99a365418193c44fe86ece1, type: 2}
   destroyDraggedObject: 1
   destroyFixedObject: 1
   worksBothWays: 1
