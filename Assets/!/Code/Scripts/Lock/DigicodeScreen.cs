@@ -7,6 +7,8 @@ public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
 
     private DigicodeInteractions digicode;
 
+    private string blockedMessage;
+
     /// <summary>
     /// Function to call as a constructor just after instantiation.
     /// </summary>
@@ -15,8 +17,23 @@ public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
         base.Initialize(digicode);
 
         this.digicode = digicode;
+
+        if (this.blockedMessage is null) {
+            this.blockedMessage = "ALARM";
+        }
         
         this.ResetTry();
+    }
+
+    /// <summary>
+    /// Function to call as a constructor just after instantiation.
+    /// </summary>
+    /// <param name="DigicodeInteractions">Digicode linked to the Digicode Screen.</param>
+    /// <param name="string">Message to display when the digicode is blocked.</param>
+    public void Initialize(DigicodeInteractions digicode, string blockedMessage) {
+        this.blockedMessage = blockedMessage;
+        
+        this.Initialize(digicode);
     }
 
     /// <summary>
@@ -24,7 +41,7 @@ public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
     /// </summary>
     /// <param name="number">Number to add.</param>
     public void InputNumber (int number) {
-        if (this.answer.text == "FAUX") {
+        if (this.answer.text == "FAUX" || (!this.digicode.IsBlocked() && this.answer.text == this.blockedMessage)) {
             this.ResetTry();
         }
 
@@ -45,7 +62,7 @@ public class DigicodeScreen : UnlockScreen<DigicodeInteractions> {
         }
 
         if (tryCountWithError >= this.digicode.maxNbTries) {
-            this.answer.text = "ALARM";
+            this.answer.text = this.blockedMessage;
             this.digicode.BlockDigicode();
         } else if (this.digicode.code == this.answer.text) {
             Debug.Log("Correct code");

@@ -9,6 +9,8 @@ public class DigicodeInteractions : LockInteractions {
     // Number of try before the object locks definitively. -1 for infinite tries.
     public int maxNbTries;
 
+    public string blockedMessage;
+
     private bool unlocked = false;
     
     // Current number of tries.
@@ -40,9 +42,8 @@ public class DigicodeInteractions : LockInteractions {
         } else if (this.code == currentTry) {
             this.unlocked = true;
             base.ConfirmTry(currentTry);
+            this.IncrementTryCount();
         }
-
-        this.IncrementTryCount();
     }
 
     /// <summary>
@@ -50,6 +51,10 @@ public class DigicodeInteractions : LockInteractions {
     /// </summary>
     public override bool IsUnlocked() {
         return this.unlocked;
+    }
+
+    public bool IsBlocked() {
+        return this.tryCount >= this.maxNbTries;
     }
 
     /// <summary>
@@ -62,10 +67,25 @@ public class DigicodeInteractions : LockInteractions {
     }
 
     /// <summary>
+    /// Resets the count of tries to the given number.
+    /// </summary>
+    public void ResetTryCount(int newTryCount) {
+        this.tryCount = newTryCount;
+    }
+
+    /// <summary>
     /// Resets the count of tries to 0.
     /// </summary>
     public void ResetTryCount() {
         this.tryCount = 0;
+    }
+
+    /// <summary>
+    /// Resets the count of tries to -10 and the max number of tries to -1 (for infinite tries).
+    /// </summary>
+    public void ResetInfiniteTryCount() {
+        this.maxNbTries = -1;
+        this.tryCount = -10;
     }
 
     /// <summary>
@@ -80,7 +100,7 @@ public class DigicodeInteractions : LockInteractions {
 
     public override void OpenUnlockUI() {
         DigicodeScreen unlockUI = (DigicodeScreen)Instantiate(this.unlockUIPrefab, unlockUiParent.transform.position, Quaternion.identity, unlockUiParent.transform);
-        unlockUI.Initialize(this);
+        unlockUI.Initialize(this, blockedMessage);
 
         unlockUI.gameObject.SetActive(true);
     }
