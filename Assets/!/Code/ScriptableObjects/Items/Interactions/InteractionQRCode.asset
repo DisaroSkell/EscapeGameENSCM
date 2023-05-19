@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2804fca8e510a7043aa8cfaa6485a34b, type: 3}
+  m_Name: InteractionQRCode
+  m_EditorClassIdentifier: 
+  draggedItem: {fileID: 11400000, guid: 15b7d1606598be54cb57dd11c77b51b4, type: 2}
+  fixedItem: {fileID: 11400000, guid: 347ab4ab301f5b047874255f5c8e041a, type: 2}
+  destroyDraggedObject: 1
+  destroyFixedObject: 1
+  worksBothWays: 1
+  itemsToAdd:
+  - {fileID: 11400000, guid: 70ff39e90f9e8b145aea50c174284307, type: 2}
+  inventoryToCheck: {fileID: 11400000, guid: dbdb203a32090454181fd3f775c85cad, type: 2}
+  solution: {fileID: 11400000, guid: 357e19f0bd8e4b8469e8272c5f3c52bc, type: 2}

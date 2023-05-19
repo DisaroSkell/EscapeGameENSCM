@@ -187,4 +187,20 @@ public class Inventory : AbstractInventory
         this.Container[_index] = _item;
         return true;
     }
+
+    public static bool Equals(Inventory inv1, Inventory inv2) {
+        if(inv1.Length != inv2.Length) return false;
+        Debug.Log("La longueur est la même");
+        int i = 0;
+        while(i < inv1.Length) {
+            ItemObject? item = inv1.GetItem(i);
+            if(item is not null) {
+                if(!item.Equals(inv2.GetItem(i))) {
+                    return false;
+                }
+            }
+            i++;
+        }
+        return true;
+    }
 }

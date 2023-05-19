@@ -47,14 +47,13 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
                 SetObjPickable(obj, item);
             }
         }
-        else if (item is not null && item.GetType() == typeof(DocumentObject)) {
-            SetObjViewable(obj, (DocumentObject)item);
-            LinkDragEvents(obj);
-        }
-        else if (item is not null && item.type == ItemType.Container) {
-            SetObjContainerOpener(obj, (ContainerObject)item);
-        }
         else {
+            if (item is not null && item.GetType() == typeof(DocumentObject)) {
+                SetObjViewable(obj, (DocumentObject)item);
+            }
+            else if (item is not null && item.type == ItemType.Container) {
+                SetObjContainerOpener(obj, (ContainerObject)item);
+            }
             LinkDragEvents(obj);
         }
     }
@@ -160,7 +159,9 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         ItemObject? draggedItmObj = this.inventory.GetItem(mouse.indexFrom);
         ItemObject? fixedItmObj = this.inventory.GetItem(mouse.indexTo);
         if(fixedItmObj is not null && draggedItmObj is not null) {
+            print("c'est pas nul");
             if(Interaction.isThereInteractionBetween(draggedItmObj, fixedItmObj)){
+                print("il y a une interaction");
                 Interaction? interaction = draggedItmObj.interaction;
                 if(interaction is null ) {
                     interaction = fixedItmObj.interaction;

@@ -9,7 +9,8 @@ public enum ItemType {
     Default,
     MatchesCard,
     Container,
-    Triggered
+    Triggered,
+    Rotating
 }
 public abstract class ItemObject : ScriptableObject {
     public GameObject prefab;
@@ -22,4 +23,13 @@ public abstract class ItemObject : ScriptableObject {
     public virtual GameObject GetPrefab() {
         return this.prefab;
     }
+
+    #nullable enable
+    // override object.Equals
+    public virtual bool Equals(ItemObject? itemObj)
+    {
+        if(itemObj is null) return false;
+        return this.prefab == itemObj.prefab;
+    }
+    
 }

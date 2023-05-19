@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcc90f8a1a3e9b4c8eeca93a8fb2194, type: 3}
+  m_Name: QRCode_SOL
+  m_EditorClassIdentifier: 
+  type: 7
+  Container:
+  - {fileID: 11400000, guid: 10116327df305dd4db538aa472da6b38, type: 2}
+  - {fileID: 11400000, guid: 72c9935ae8098dd4c9c8e9ae34a48e7a, type: 2}
+  - {fileID: 11400000, guid: 010449b0a120d944bbd22c7e23c312d7, type: 2}
+  - {fileID: 11400000, guid: b1d6d53443a0a164b8842aace1082654, type: 2}
+  - {fileID: 11400000, guid: 14c93fe101ddc0145910252e8dd8652e, type: 2}
+  - {fileID: 11400000, guid: 6b537ebc51ccfb04d9830c2cdeb45c87, type: 2}

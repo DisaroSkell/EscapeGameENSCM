@@ -48,6 +48,9 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
                 if(item.type == ItemType.MatchesCard) {
                     SetObjFlipable(child.gameObject, (DoubleSidedItems)item);
                 }
+                if(item.type == ItemType.Rotating) {
+                    SetObjRotable(child.gameObject, (RotatingItems)item);
+                }
             }
             else {
                 rawImg.texture = EmptySlot.gameObject.GetComponent<RawImage>().texture;
@@ -72,7 +75,7 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
         if(mouse.inventoryDisplayTo != this) return;
 
         // GUARD: item has the same type as the inventory
-        if(mouse.itemFrom.type != mouse.inventoryDisplayTo.inventory.type) return;
+        if(mouse.inventoryDisplayTo.inventory.type != ItemType.All && mouse.itemFrom.type != mouse.inventoryDisplayTo.inventory.type) return;
         
         // GUARD: indexes of items are set
         if(mouse.indexFrom < 0 || mouse.indexTo < 0) return;
@@ -100,8 +103,35 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
         newItem.OnPointerClickEvent.AddListener(handleItemClickedUnityAction);
     }
 
+    public void SetObjRotable(GameObject obj, RotatingItems itemObject) {
+        // collider to interact with the object
+        BoxCollider2D bc = obj.GetComponent<BoxCollider2D>();
+        if(bc is null) {
+            bc = obj.AddComponent<BoxCollider2D>();
+        }
+        // attached item to the object
+        Item? newItem = obj.GetComponent<Item>();
+        if(newItem is null) {
+            newItem = obj.AddComponent<Item>();
+        }
+        newItem.item = itemObject;
+        newItem.inventory = itemObject.inventory;
+        // add event on click to rotate item and update display
+        UnityAction handleItemClickedUnityAction = () => { this.HandleItemClicked(itemObject); };
+        newItem.OnPointerClickEvent.RemoveAllListeners();
+        newItem.OnPointerClickEvent.AddListener(handleItemClickedUnityAction);
+        
+        Vector3 eulerAngles = obj.transform.rotation.eulerAngles;
+        obj.transform.Rotate(0, 0, itemObject.GetAngle() - eulerAngles.z);
+    }
+
     public void HandleItemClicked(DoubleSidedItems item) {
         item.Flip();
+        this.UpdateDisplay();
+    }
+
+    public void HandleItemClicked(RotatingItems item) {
+        item.Rotate();
         this.UpdateDisplay();
     }
 
