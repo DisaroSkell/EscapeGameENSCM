@@ -35,4 +35,10 @@ public class PanelOpener : MonoBehaviour
         catch(MissingReferenceException) {
         }
     }
+
+    public void DestroyPanel() {
+        if (Panel is null){return;}
+        Destroy(Panel);
+        Panel = null;
+    }
 }
