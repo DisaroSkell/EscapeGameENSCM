@@ -95,10 +95,10 @@ public abstract class AbstractDragAndDropInventoryDisplay : AbstractInventoryDis
 
         // adding texture of draged item to the object
         var img = mouseObject.AddComponent<RawImage>();
-        img.texture = item.prefab.GetComponent<RawImage>().texture;
+        img.texture = item.GetPrefab().GetComponent<RawImage>().texture;
         img.raycastTarget = false;
         // setting size of floating object
-        RectTransform rtObj = item.prefab.GetComponent<RectTransform>();
+        RectTransform rtObj = item.GetPrefab().GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2((float)(rtObj.rect.width*0.8), (float)(rtObj.rect.height*0.8));
         rt.localScale = new Vector3(1, 1, 1);
 
