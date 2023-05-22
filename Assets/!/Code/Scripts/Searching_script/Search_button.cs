@@ -14,6 +14,8 @@ public class Search_button : MonoBehaviour
     private Search_object variab;
     private TextMeshProUGUI textMeshPro;
 
+    public ItemObject QRCodeDeck;
+
     public void ToggleVisibilityButton(){
         button.SetActive(false);
     }
@@ -29,6 +31,17 @@ public class Search_button : MonoBehaviour
             else{
                 textMeshPro = TextPopup.GetComponent<TextMeshProUGUI>();
                 textMeshPro.text = "Vous avez trouvé un morceau de QRcode !";
+                variab = GameObject.Find(Search_object.nameobj).GetComponent<Search_object>();
+                ItemObject qr = variab.item;
+                if(qr is not null) {
+                    // add QRCode deck to player inventory if no QR Code found
+                    if(QRCodeDeck is not null && qr.inventory.Count() == 0) {
+                        QRCodeDeck.inventory.AddItem(QRCodeDeck);
+                    }
+                    // add QRCode to QR Code deck
+                    qr.inventory.AddItem(qr);
+
+                }
                 textMeshPro.fontSize = 20;
                 Popup_found.SetActive(true);
             }
@@ -44,6 +57,10 @@ public class Search_button : MonoBehaviour
             else{
                 textMeshPro = TextPopup.GetComponent<TextMeshProUGUI>();
                 textMeshPro.text = "Vous avez trouvé un téléphone !";
+                variab = GameObject.Find(Search_object.nameobj).GetComponent<Search_object>();
+                if(variab.item is not null) {
+                    variab.item.inventory.AddItem(variab.item);
+                }
                 textMeshPro.fontSize = 20;
                 Popup_found.SetActive(true);
             }

@@ -10,6 +10,8 @@ public class Search_object : MonoBehaviour, IPointerClickHandler
 
     public GameObject button;
     public GameObject Popup_found;
+
+    public ItemObject item;
     public bool QRcode;
     public bool Phone;
     public static bool QR;

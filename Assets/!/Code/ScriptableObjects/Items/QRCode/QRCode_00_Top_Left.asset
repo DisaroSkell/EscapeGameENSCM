@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7751487916705101643, guid: 0bd351e8a091f6c41a5a6197cf4d3404, type: 3}
   type: 7
-  inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
+  inventory: {fileID: 11400000, guid: dbdb203a32090454181fd3f775c85cad, type: 2}
   interaction: {fileID: 0}
   currentAngle: 90
   degreesOfRotation: -90
