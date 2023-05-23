@@ -190,7 +190,6 @@ public class Inventory : AbstractInventory
 
     public static bool Equals(Inventory inv1, Inventory inv2) {
         if(inv1.Length != inv2.Length) return false;
-        Debug.Log("La longueur est la même");
         int i = 0;
         while(i < inv1.Length) {
             ItemObject? item = inv1.GetItem(i);
