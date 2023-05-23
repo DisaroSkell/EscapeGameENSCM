@@ -1,0 +1,184 @@
+@startuml periodictable
+
+package "Maze (Business Logic)" {
+    enum Direction {
+        North,
+        East,
+        South,
+        West,
+        None
+    }
+
+    class Maze<Cell extends MazeCell> {
+        + maze : Cell[][]
+        + constructor(int, int)
+        + Explore()
+        + Explore(MazePath)
+        + OpenTwoGate()
+        + OpenTwoGateAt((int, int), (int, int))
+        + OpenGate((int, int))
+        + GetNbGates() : int
+        + OpenWall(int, int, Direction)
+        + IsOpened(int, int, Direction) : bool
+        + GetCellAt(int, int) : Cell
+        + Neighbour(int, int) : bool[]
+        + FindNeighbourCellWithDirection(int, int, Direction) : int[]
+        + SetCellAsVisited(int, int)
+        + IsCellVisited(int, int) : bool
+        + IsMazeVisited() : bool
+        + GetHSize() : int
+        + GetVSize() : int
+        + CreatePaths()
+        + CreatePaths(MazePath)
+        + EncountersWallOnPath(MazePath) : bool
+    }
+
+    class MazeCell {
+        + north : bool
+        + east : bool
+        + west : bool
+        + south : bool
+        + visited : bool
+        + constructor()
+        + IsClosed() : bool
+        + OpenWall(Direction)
+        + IsOpened(Direction) : bool
+    }
+
+    class MazePath {
+        + constructor((int, int)[], Direction[])
+        + GetIndexSet() : List<(int, int)>
+        + GetDirections() : List<Direction>
+    }
+
+    Maze *- MazeCell
+}
+
+package UnityEngine {
+    class MonoBehaviour
+
+    package EventSystems {
+        interface IPointerClickHandler {
+            OnPointerClick(PointerEventData)
+        }
+    }
+}
+
+package PeriodicTable {
+    class AtomCell {
+        + position : Vector3
+        - glowElem : GameObject
+        + setGlower(GameObject)
+        + GlowOn()
+        + GlowOff()
+    }
+
+    AtomCell -l-|> MazeCell
+
+    class TableElement {
+        - index : (int, int)
+        + Initialize(int, int) <<virtual>>
+        + GetMagnet() : MagnetInteractions
+        + OnPointerClick(PointerEventData) <<virtual>>
+    }
+
+    TableElement -u-|> MonoBehaviour
+    TableElement .u.|> IPointerClickHandler
+
+    class TopElement {
+        + Initialize(int, int)
+        + Initialize()
+        + OnPointerClick(PointerEventData)
+    }
+
+    class BottomElement {
+        + Initialize(int, int)
+        + Initialize()
+        + OnPointerClick(PointerEventData)
+    }
+
+    TopElement -u-|> TableElement
+    BottomElement -u-|> TableElement
+
+    class KeyInteractions {
+        + indexPosition : (int, int)
+    }
+
+    class MagnetInteractions {
+        + hasKey : bool
+        + keyObject : ItemObject
+        - table : PeriodicTableMaze
+        - indexPosition : (int, int)
+        + Initialize(ItemObject)
+        + GetCellPosition() : (int, int)
+        + HorizontalMouvement(int)
+        + VerticalMouvement(int)
+        + ToTopMouvement()
+        + ToBottomMouvement()
+        + FromTopMouvement(int, int)
+        + FromBottomMouvement(int, int)
+        - Mouvement(int, int)
+        + MakeKeyFollow()
+        + EncounterWallCheck((int, int), (int, int))
+    }
+
+    class PeriodicTableMaze {
+        + atomSize : float
+        + firstAtomPosition : Vector3
+        + hSpacing : float
+        + vSpacing : float
+        + atomPrefab : TableElement
+        + rotation : Quaternion
+        + defaultAtomImage : Texture
+        + atomImageFolder : string
+        + topPrefab : TopElement
+        + topVerticalSize : float
+        + bottomPrefab : BottomElement
+        + bottomVerticalSize : float
+        + magnet : MagnetInteractions
+        + magnetPrefab : MagnetInteractions
+        + magnetSize : float
+        + magnetOrientation : Quaternion
+        + key : KeyInteractions
+        + keyPrefab : KeyInteractions
+        + keyObject : ItemObject
+        + relativeDefaultKeyPosition : Vector3
+        + keySize : float
+        + keyOrientation : Quaternion
+        + glowPrefab : GameObject
+        + glowImagePath : string
+        - maze : Maze<AtomCell>
+        - isCellBlank : bool[][]
+        - topPosition : Vector3
+        - bottomPosition : Vector3
+        + Start()
+        - CreateAtoms()
+        + InitTop(float)
+        + InitBottom(float)
+        + InitKey()
+        + InitMagnet()
+        + GetMaze() : Maze<AtomCell>
+        + GetTopPosition() : Vector3
+        + GetBottomPosition() : Vector3
+        + MakeKeyFall()
+        + GlowOnAll()
+        + GlowOnLine(int)
+        + GlowOnColumn(int)
+        + GlowOnCell(int, int)
+        + GlowOffAll()
+        + GlowOffLine(int)
+        + GlowOffColumn(int)
+        + GlowOffCell(int, int)
+    }
+
+    AtomCell -r[hidden]- MagnetInteractions
+    MagnetInteractions -r[hidden]- KeyInteractions
+    KeyInteractions -r[hidden]- TableElement
+    TableElement -r[hidden]- PeriodicTableMaze
+
+    KeyInteractions -u-|> MonoBehaviour
+    MagnetInteractions -u-|> MonoBehaviour
+    PeriodicTableMaze -u-|> MonoBehaviour
+}
+
+@enduml

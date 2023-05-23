@@ -1,0 +1,152 @@
+@startuml lock
+
+package UnityEngine {
+    class MonoBehaviour
+
+    package EventSystems {
+        interface IPointerClickHandler {
+            OnPointerClick(PointerEventData)
+        }
+    }
+}
+
+package Objets {
+    class Openable {
+        + animator : Animator
+        + Start()
+        + Open()
+        + Close()
+        + Toggle()
+    }
+
+    Openable -u-|> MonoBehaviour
+
+    package Lock {
+        abstract class LockInteractions {
+            + code : string
+            + unlockUiParent : GameObject
+            + openable : Openable
+            - isUIOpened : bool = false
+            + ConfirmTry(string) <<virtual>>
+            + SetUIOpened(bool)
+            + {abstract} IsUnlocked() : bool
+            + {abstract} OpenUnlockUI() : bool
+            + OnPointerClick(PointerEventData)
+        }
+
+        LockInteractions -u-|> MonoBehaviour
+        LockInteractions .u.|> IPointerClickHandler
+
+        class DigicodeInteractions {
+            + unlockUIPrefab : DigicodeScreen
+            + maxNbTries : int
+            - unlocked : bool = false
+            - tryCount : int
+            # blockedEvents : UnityEvent <<SerializeField>>
+            + Start()
+            + GetTryCount() : int
+            + ConfirmTry()
+            + IsUnlocked() : bool
+            + IncrementTryCount()
+            + ResetTryCount()
+            + BlockDigicode()
+            + OpenUnlockUI()
+        }
+
+        class PadlockInteractions {
+            + currentTry : char[]
+            + unlockUIPrefab : PadlockUnlockScreen
+            + pickerAlternatives : string
+            + ConfirmTry()
+            + IsUnlocked() : bool
+            + Start()
+            + RotateUpAt(int)
+            + RotateDownAt(int)
+            + OpenUnlockUI()
+        }
+
+        DigicodeInteractions -u-|> LockInteractions
+        PadlockInteractions -u-|> LockInteractions
+    }
+
+    package Unlockable {
+        abstract class Unlockable {
+            # openEvents : UnityEvent <<SerializeField>>
+            + {abstract} IsLocked() : bool
+            + {abstract} Unlock()
+            + TryOpen()
+            + OnPointerClick(PointerEventData)
+        }
+
+        Unlockable -u-|> MonoBehaviour
+        Unlockable .u.|> IPointerClickHandler
+
+        class UnlockableDigicoded {
+            + digicode : DigicodeInteractions
+            + IsLocked() : bool
+            + Unlock()
+        }
+
+        class UnlockableKeyLocked {
+            - locked : bool = false
+            + IsLocked() : bool
+            + Unlock()
+        }
+
+        class UnlockablePadlocked {
+            + padlock : PadlockInteractions
+            + IsLocked() : bool
+            + Unlock()
+        }
+
+        UnlockableDigicoded -u-|> Unlockable
+        UnlockableKeyLocked -u-|> Unlockable
+        UnlockablePadlocked -u-|> Unlockable
+    }
+}
+
+package "Interface Utilisateur" {
+    class UnlockScreen<Lock extends LockInteractions> {
+        - lockObj : Lock
+        + Initialize(Lock) <<virtual>>
+        + CloseWindow()
+    }
+
+    UnlockScreen -r-|> MonoBehaviour
+
+    class DigicodeScreen {
+        + answer : TextMeshProUGUI
+        - digicode : DigicodeInteractions
+        + Initialize(DigicodeInteractions)
+        + InputNumber(int)
+        + ConfirmTry()
+        + ResetTry()
+    }
+
+    class PadlockUnlockScreen {
+        - padlock : PadlockInteractions
+        + digitPickerUI : DigitPicker
+        - pickers : DigitPicker[]
+        + Initialize(PadlockInteractions)
+        + RotateUpPicker(DigitPicker)
+        + RotateDownPicker(DigitPicker)
+        + ConfirmTry()
+    }
+
+    PadlockUnlockScreen -r-|> UnlockScreen
+    DigicodeScreen -u-|> UnlockScreen
+
+    class DigitPicker {
+        - textMeshPro : TextMeshProUGUI <<SerializeField>>
+        - parent : PadlockUnlockScreen
+        + Initialize(char, PadlockUnlockScreen)
+        + UpdateDigit(char)
+        + RotateUp()
+        + RotateDown()
+    }
+
+    DigitPicker -r-|> MonoBehaviour
+    DigitPicker -d-* PadlockUnlockScreen : contains
+}
+
+@enduml
