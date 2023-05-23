@@ -130,20 +130,15 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
 
     protected override void OnDragEndAction(GameObject obj)
     {
-        print("test1");
         PlayerMouse mouse = this.player.playerMouse;
         // GUARD: there is an item
         if(mouse.itemFrom is null) return;
-        print("test2");
 
         // GUARD: drag end on an inventory
-        print(player.playerMouse.inventoryDisplayTo);
         if(mouse.inventoryDisplayTo is null) return;
-        print("test3");
         
         // GUARD: indexes of items are set
         if(mouse.indexFrom < 0 || mouse.indexTo < 0) return;
-        print("test4");
 
         if(mouse.inventoryDisplayTo.GetType() == typeof(PlacementInventoryDisplay)) {
             EndDragOnPlacementInventory();
@@ -164,9 +159,7 @@ public class DynamicInventoryDisplay : AbstractDragAndDropInventoryDisplay {
         ItemObject? draggedItmObj = this.inventory.GetItem(mouse.indexFrom);
         ItemObject? fixedItmObj = this.inventory.GetItem(mouse.indexTo);
         if(fixedItmObj is not null && draggedItmObj is not null) {
-            print("c'est pas nul");
             if(Interaction.isThereInteractionBetween(draggedItmObj, fixedItmObj)){
-                print("il y a une interaction");
                 Interaction? interaction = draggedItmObj.interaction;
                 if(interaction is null ) {
                     interaction = fixedItmObj.interaction;

@@ -43,14 +43,10 @@ public class Interaction : ScriptableObject {
             // return other way possible
             return isThereInteractionBetween(fixedItem, draggedItem);
         }
-        Debug.Log("avant test du type");
         if(draggedItemInteraction.GetType() == typeof(InteractionWithInventoryCheck)) {
-            Debug.Log("Le type est bon");
             InteractionWithInventoryCheck inv1 = (InteractionWithInventoryCheck)draggedItemInteraction;
             if(!Inventory.Equals(inv1.inventoryToCheck, inv1.solution)) return false;
-            Debug.Log("Les inventaires sont les mêmes");
         }
-        Debug.Log(draggedItemInteraction.draggedItem == draggedItem && draggedItemInteraction.fixedItem == fixedItem);
         return draggedItemInteraction.draggedItem == draggedItem && draggedItemInteraction.fixedItem == fixedItem;
 
 
