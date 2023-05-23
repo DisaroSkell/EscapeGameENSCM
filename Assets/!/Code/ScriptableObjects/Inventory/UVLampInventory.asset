@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcc90f8a1a3e9b4c8eeca93a8fb2194, type: 3}
   m_Name: UVLampInventory
   m_EditorClassIdentifier: 
-  type: 4
+  type: 0
   Container:
-  - {fileID: 11400000, guid: 27ff6b5d0995e6f45bebafb87fb1f8e4, type: 2}
-  - {fileID: 11400000, guid: c8200bc1afd5b6b4fada9c2e903ff695, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: c1e97b419119b3f438ef621ec9072fa9, type: 2}
+  - {fileID: 11400000, guid: 416366823fd7ee547bbc29852007f33c, type: 2}
+  - {fileID: 11400000, guid: cad9817cf8dadae4781ce67870bfb234, type: 2}
+  - {fileID: 11400000, guid: 895778bc8432d8a4e85341ca879f831f, type: 2}
+  - {fileID: 11400000, guid: 33bc44e23cf34914faef3facc5af9a48, type: 2}

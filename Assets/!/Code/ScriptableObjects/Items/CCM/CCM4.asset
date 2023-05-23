@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b23d574ae5f3e4fbf3b1e04a492933, type: 3}
   m_Name: CCM4
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 6273918608563892836, guid: 0591e96a18517124cbf57f0f025d8ac4, type: 3}
   type: 4
-  inventory: {fileID: 0}
+  inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
   interaction: {fileID: 0}
-  backPrefab: {fileID: 0}
+  backPrefab: {fileID: 6273918608563892836, guid: c8b0d835a4175a9429ff974feca60fcf, type: 3}
   fliped: 0
+  canBeFlippedOnClick: 0

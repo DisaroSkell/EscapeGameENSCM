@@ -58,6 +58,7 @@ public abstract class AbstractDragAndDropInventoryDisplay : AbstractInventoryDis
         player.playerMouse.itemTo = item;
         this.player.playerMouse.indexTo = this.objectList.IndexOf(obj);
         player.playerMouse.inventoryDisplayTo = this;
+        print(player.playerMouse.inventoryDisplayTo);
     }
     protected void OnDragEnd(GameObject obj) {
         Destroy(player.playerMouse.floatingObject);
@@ -75,6 +76,7 @@ public abstract class AbstractDragAndDropInventoryDisplay : AbstractInventoryDis
     protected void OnExit(GameObject obj) {
         player.playerMouse.itemTo = null;
         player.playerMouse.indexTo = -1;
+        print("CACA");
         player.playerMouse.inventoryDisplayTo = null;
     }
     protected void OnDragStart(GameObject obj) {

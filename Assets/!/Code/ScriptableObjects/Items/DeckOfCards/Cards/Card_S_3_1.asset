@@ -18,3 +18,4 @@ MonoBehaviour:
   interaction: {fileID: 0}
   backPrefab: {fileID: 7751487916705101643, guid: 27a1a52c604ed1e4f9e81e35adef2043, type: 3}
   fliped: 0
+  canBeFlippedOnClick: 1
