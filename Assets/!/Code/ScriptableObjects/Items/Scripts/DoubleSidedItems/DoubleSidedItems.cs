@@ -8,6 +8,8 @@ public abstract class DoubleSidedItems : ItemObject
 
     public bool fliped;
 
+    public bool canBeFlippedOnClick;
+
     public void Flip() {
         fliped = !fliped;
     }

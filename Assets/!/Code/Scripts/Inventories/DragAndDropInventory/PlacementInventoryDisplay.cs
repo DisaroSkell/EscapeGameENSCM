@@ -126,6 +126,7 @@ public class PlacementInventoryDisplay : AbstractDragAndDropInventoryDisplay
     }
 
     public void HandleItemClicked(DoubleSidedItems item) {
+        if(!item.canBeFlippedOnClick) return;
         item.Flip();
         this.UpdateDisplay();
     }
