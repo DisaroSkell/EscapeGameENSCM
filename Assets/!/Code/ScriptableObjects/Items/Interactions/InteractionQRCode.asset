@@ -18,6 +18,6 @@ MonoBehaviour:
   destroyFixedObject: 1
   worksBothWays: 1
   itemsToAdd:
-  - {fileID: 11400000, guid: 4327669c173c92d479562ee231469219, type: 2}
+  - {fileID: 11400000, guid: 2e110bf908beddf45a3446450f0cfaf4, type: 2}
   inventoryToCheck: {fileID: 11400000, guid: dbdb203a32090454181fd3f775c85cad, type: 2}
   solution: {fileID: 11400000, guid: 357e19f0bd8e4b8469e8272c5f3c52bc, type: 2}

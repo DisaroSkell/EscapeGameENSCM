@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83f87e324fa4f34fbf81f931d0241e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 41220cb0b78c69d45b50584b77e4a3c8, type: 3}
   m_Name: Audio
   m_EditorClassIdentifier: 
   prefab: {fileID: 7751487916705101643, guid: da9ad2f0d03ef1c4f96dc3d9e7426440, type: 3}
-  type: 3
+  type: 5
   inventory: {fileID: 11400000, guid: 85f226d983ae7eb49a6dcf6c35c486e5, type: 2}
   interaction: {fileID: 0}
+  inventoryToOpen: {fileID: 8420892151379171616, guid: 7e690872e295fab43b4217181d1dbb29, type: 3}
