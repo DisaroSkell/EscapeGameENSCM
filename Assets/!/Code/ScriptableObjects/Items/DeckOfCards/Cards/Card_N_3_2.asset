@@ -17,5 +17,5 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 1212908821a228944b1eb1788e22ab6b, type: 2}
   interaction: {fileID: 0}
   backPrefab: {fileID: 7751487916705101643, guid: 27a1a52c604ed1e4f9e81e35adef2043, type: 3}
-  fliped: 0
+  fliped: 1
   canBeFlippedOnClick: 1
