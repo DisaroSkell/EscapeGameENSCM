@@ -38,6 +38,7 @@ public class InventoryFlipper : MonoBehaviour
         power = !power;
         if(power) button_text.text = "OFF";
         else button_text.text = "ON";
+        SetAllCardState();
     }
 
     public void SetAllCardState() {
